@@ -80,10 +80,11 @@
 
 <script>
 // ---------------------------------------------------------------------------
-// EVENTS: add each Posh event here. Fields:
-//   title, date, venue, img (flyer in ../assets/), poshUrl (posh.vip event
-//   link), embed (optional: full Posh embed snippet HTML string — shows
-//   inline checkout instead of just a button), soldOut (optional: true)
+// EVENTS: add each Posh event here. Only poshSlug is needed for ticketing —
+// it's the last part of the event URL (posh.vip/e/<slug>). Fields:
+//   title, date, venue, img (flyer in ../assets/), poshSlug,
+//   embed (true = inline Posh checkout on this page; false = GET TICKETS
+//   button that opens the posh.vip event page), soldOut (optional: true)
 // ---------------------------------------------------------------------------
 var EVENTS = [
   // {
@@ -91,8 +92,8 @@ var EVENTS = [
   //   date: 'SATURDAY --/--/--  10PM–LATE',
   //   venue: 'ACCESS POINT REVEALED DAY-OF — LAS VEGAS, NV',
   //   img: '../assets/event-01.jpeg',
-  //   poshUrl: 'https://posh.vip/e/...',
-  //   embed: '',
+  //   poshSlug: 'last-transmission-002',
+  //   embed: true,
   //   soldOut: false
   // }
 ];
@@ -113,9 +114,9 @@ if (!EVENTS.length) {
           '<div><span class="label">WHERE&nbsp;</span>' + ev.venue + '</div>' +
         '</div>' +
         (ev.desc ? '<p class="desc">' + ev.desc + '</p>' : '') +
-        (ev.embed
-          ? '<div class="posh-embed">' + ev.embed + '</div>'
-          : '<a class="btn-outline' + (ev.soldOut ? ' soldout' : '') + '" href="' + ev.poshUrl + '" target="_blank" rel="noopener">' + (ev.soldOut ? 'Sold Out' : 'Get Tickets') + '</a>') +
+        (ev.embed && !ev.soldOut
+          ? '<div class="posh-embed"><iframe src="https://posh.vip/embed/checkout/' + ev.poshSlug + '" height="700px" width="100%" style="border:none" title="' + ev.title + ' tickets"></iframe></div>'
+          : '<a class="btn-outline' + (ev.soldOut ? ' soldout' : '') + '" href="https://posh.vip/e/' + ev.poshSlug + '" target="_blank" rel="noopener">' + (ev.soldOut ? 'Sold Out' : 'Get Tickets') + '</a>') +
       '</div>';
     wrap.appendChild(card);
   });
