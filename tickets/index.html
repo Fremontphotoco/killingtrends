@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tickets &mdash; Killing Trends</title>
+<meta name="description" content="Tickets for Killing Trends transmissions — underground events from the Office of Civil Disobedience, Las Vegas.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,500;0,125,700;0,125,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<style>
+.tickets-wrap { max-width: 1100px; margin: 0 auto; padding: 200px 24px 120px; }
+.tickets-wrap > h1 { color: var(--red); font-size: clamp(36px, 5vw, 64px); }
+.tickets-wrap .sub { margin-top: 18px; font-size: 16px; max-width: 560px; }
+
+.event-card {
+  margin-top: 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px;
+  align-items: start;
+  border-top: 1px solid #222;
+  padding-top: 56px;
+}
+.event-card img { width: 100%; }
+.event-card h2 { font-size: clamp(24px, 3vw, 38px); }
+.event-card .meta { margin-top: 18px; font-size: 15px; color: var(--ink); }
+.event-card .meta div { margin-top: 4px; }
+.event-card .meta .label { color: #777; }
+.event-card .desc { margin-top: 20px; font-size: 15px; }
+.event-card .btn-outline { margin-top: 36px; }
+.event-card .btn-outline.soldout { opacity: .4; pointer-events: none; }
+.posh-embed { margin-top: 32px; }
+.posh-embed iframe { width: 100%; border: 0; min-height: 480px; }
+@media (max-width: 860px) { .event-card { grid-template-columns: 1fr; gap: 28px; } }
+
+.empty-state {
+  margin-top: 90px;
+  border: 1px solid #222;
+  padding: 70px 30px;
+  text-align: center;
+}
+.empty-state .signal { color: var(--red); font-family: var(--mono); font-size: 13px; letter-spacing: 3px; }
+.empty-state h2 { margin-top: 18px; font-size: clamp(22px, 3vw, 34px); }
+.empty-state p { margin-top: 16px; font-size: 15px; color: #999; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav>
+    <a href="../">Home</a>
+    <a href="../shelter/">Shelter</a>
+    <a href="./" class="active">Tickets</a>
+    <a href="../events/">Events Archive</a>
+  </nav>
+  <a class="logo" href="../"><img src="../assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
+  <div class="spacer"></div>
+</header>
+
+<main class="tickets-wrap">
+  <h1>Tickets.</h1>
+  <p class="sub">Transmissions from the Office of Civil Disobedience. Ticketing handled by Posh &mdash; secure checkout, instant delivery.</p>
+
+  <div id="events"></div>
+
+  <div id="empty" class="empty-state" hidden>
+    <div class="signal">— NO ACTIVE TRANSMISSIONS —</div>
+    <h2>The next frequency has not been announced.</h2>
+    <p>Members hear it first. Join the list on the <a href="../#join" style="color:var(--ink);">home page</a> or follow
+    <a href="https://www.youtube.com/@killing-trends" style="color:var(--ink);">@killing-trends</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="mark">Killing Trends. &mdash; Office of Civil Disobedience</div>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// EVENTS: add each Posh event here. Fields:
+//   title, date, venue, img (flyer in ../assets/), poshUrl (posh.vip event
+//   link), embed (optional: full Posh embed snippet HTML string — shows
+//   inline checkout instead of just a button), soldOut (optional: true)
+// ---------------------------------------------------------------------------
+var EVENTS = [
+  // {
+  //   title: 'LAST TRANSMISSION 002',
+  //   date: 'SATURDAY --/--/--  10PM–LATE',
+  //   venue: 'ACCESS POINT REVEALED DAY-OF — LAS VEGAS, NV',
+  //   img: '../assets/event-01.jpeg',
+  //   poshUrl: 'https://posh.vip/e/...',
+  //   embed: '',
+  //   soldOut: false
+  // }
+];
+
+var wrap = document.getElementById('events');
+if (!EVENTS.length) {
+  document.getElementById('empty').hidden = false;
+} else {
+  EVENTS.forEach(function (ev) {
+    var card = document.createElement('div');
+    card.className = 'event-card';
+    card.innerHTML =
+      '<img src="' + ev.img + '" alt="' + ev.title + ' flyer" loading="lazy">' +
+      '<div>' +
+        '<h2>' + ev.title + '</h2>' +
+        '<div class="meta">' +
+          '<div><span class="label">WHEN&nbsp;&nbsp;</span>' + ev.date + '</div>' +
+          '<div><span class="label">WHERE&nbsp;</span>' + ev.venue + '</div>' +
+        '</div>' +
+        (ev.desc ? '<p class="desc">' + ev.desc + '</p>' : '') +
+        (ev.embed
+          ? '<div class="posh-embed">' + ev.embed + '</div>'
+          : '<a class="btn-outline' + (ev.soldOut ? ' soldout' : '') + '" href="' + ev.poshUrl + '" target="_blank" rel="noopener">' + (ev.soldOut ? 'Sold Out' : 'Get Tickets') + '</a>') +
+      '</div>';
+    wrap.appendChild(card);
+  });
+}
+</script>
+
+</body>
+</html>
