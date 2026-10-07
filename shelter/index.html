@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shelter &mdash; Killing Trends</title>
+<meta name="description" content="SHELTER — an 800-square-foot immersive environment that placed visitors inside a meticulously recreated 1950s-style bunker. A Killing Trends project, Las Vegas.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,500;0,125,700;0,125,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav>
+    <a href="../">Home</a>
+    <a href="./" class="active">Shelter</a>
+    <a href="../events/">Events Archive</a>
+  </nav>
+  <a class="logo" href="../"><img src="../assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
+  <div class="spacer"></div>
+</header>
+
+<section class="shelter-hero">
+  <div class="section-bg">
+    <img src="../assets/shelter-collage.webp" alt="SHELTER — nuclear-age collage. Opens 01.21.23">
+  </div>
+  <div class="section-inner">
+    <h1>Killing Trends presents <span class="red">Shelter.</span></h1>
+  </div>
+</section>
+
+<section class="text-section">
+  <div class="narrow">
+    <p>An <strong>800-square-foot immersive environment</strong> that placed visitors inside a meticulously recreated 1950s-style bunker, prompting them to consider how daily life and personal space might shift under the pressure of global instability. By grounding viewers in a confined, historically inspired setting, the installation made the vast, abstract nature of nuclear destruction feel immediate and human&mdash;while also illuminating Nevada&rsquo;s deep ties to the era of atomic testing.</p>
+  </div>
+</section>
+
+<section class="light">
+  <div class="split">
+    <div>
+      <h2>Take a step inside.</h2>
+      <p class="lede text-strong">We spoke with cultural historian Brian Paco &Aacute;lvarez about <em>Shelter&rsquo;s</em> significance and its lasting impact on both viewers and the cultural fabric of the Las Vegas Valley.</p>
+    </div>
+    <video src="../media/interview.mp4" poster="../assets/interview-poster.jpg" controls preload="metadata"></video>
+  </div>
+</section>
+
+<section>
+  <div class="dates">
+    <div>
+      <div class="label">BUILD TIME:</div>
+      <h3>November 2021 &ndash; December 2022</h3>
+    </div>
+    <div>
+      <div class="label">OPENED:</div>
+      <h3>January 21st, 2023 &ndash; March 1st, 2024</h3>
+    </div>
+  </div>
+</section>
+
+<section class="light carousel">
+  <div class="frame">
+    <button class="arrow prev" aria-label="Previous image">&#10094;</button>
+    <div class="slides" id="slides">
+      <div><img src="../assets/shelter-09.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-10.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-08.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-04.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-03.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-06.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-07.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-05.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-s1.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-02.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-s2.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-s3.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-s4.jpg" alt="Inside SHELTER" loading="lazy"></div>
+      <div><img src="../assets/shelter-11.jpg" alt="Inside SHELTER" loading="lazy"></div>
+    </div>
+    <button class="arrow next" aria-label="Next image">&#10095;</button>
+  </div>
+</section>
+
+<section>
+  <div class="listen">
+    <div>
+      <h2>Take a listen inside Shelter.</h2>
+      <p class="lede">Shelter featured a fully immersive audio experience woven throughout the installation. Take a listen to one of the soundscapes that played in the communications room.</p>
+    </div>
+    <div class="player-card" id="player-card">
+      <button id="play-btn" aria-label="Play">&#9654;</button>
+      <div class="divider"></div>
+      <div>
+        <div class="title">Communications Room</div>
+        <div class="time" id="play-time">4:07</div>
+      </div>
+      <audio id="soundscape" src="../media/communications-room.m4a" preload="none"></audio>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="section-bg">
+    <img src="../assets/shelter-bg.jpg" alt="SHELTER communications room bathed in red light" loading="lazy">
+  </div>
+  <div class="section-inner">
+    <div class="yt">
+      <iframe src="https://www.youtube.com/embed/KKmsvpkmudc" title="Eskuche | Live From Shelter: EP 002" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="mark">Killing Trends. &mdash; Office of Civil Disobedience</div>
+</footer>
+
+<script>
+// carousel
+var slides = document.getElementById('slides');
+document.querySelector('.arrow.prev').onclick = function () { slides.scrollBy({left: -slides.clientWidth, behavior: 'smooth'}); };
+document.querySelector('.arrow.next').onclick = function () { slides.scrollBy({left: slides.clientWidth, behavior: 'smooth'}); };
+
+// audio player
+var audio = document.getElementById('soundscape');
+var btn = document.getElementById('play-btn');
+var timeEl = document.getElementById('play-time');
+btn.addEventListener('click', function () {
+  if (audio.paused) { audio.play(); } else { audio.pause(); }
+});
+audio.addEventListener('play', function () { btn.innerHTML = '&#10074;&#10074;'; });
+audio.addEventListener('pause', function () { btn.innerHTML = '&#9654;'; });
+audio.addEventListener('timeupdate', function () {
+  var t = Math.floor(audio.currentTime);
+  timeEl.textContent = Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2) + ' / 4:07';
+});
+audio.addEventListener('error', function () {
+  document.getElementById('player-card').style.opacity = '0.45';
+  timeEl.textContent = 'soundscape returning soon';
+});
+</script>
+
+</body>
+</html>
