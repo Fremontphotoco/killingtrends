@@ -10,347 +10,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,500;0,125,700;0,125,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
-<style>
-/* ================= KT — THE TV ================= */
-:root { --phosphor: #fa0606; --phosphor-dim: #8a0b06; }
-
-body { background: #050000; }
-
-/* ---- scene: red bunker, tv on console ---- */
-.scene {
-  position: relative;
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  overflow: hidden;
-  background: #000;
-}
-.scene .room {
-  position: absolute; inset: 0;
-}
-.scene .room img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) brightness(.42) contrast(1.25);
-}
-.scene .room::before {
-  content: '';
-  position: absolute; inset: 0; z-index: 1;
-  background: #d40505;
-  mix-blend-mode: color;
-}
-.scene .room::after {
-  content: '';
-  position: absolute; inset: 0; z-index: 2;
-  background: radial-gradient(ellipse at 50% 42%, transparent 25%, rgba(0,0,0,.78) 85%);
-}
-
-/* top bar */
-.scene-bar {
-  position: relative; z-index: 6;
-  display: flex; align-items: center; gap: 18px;
-  padding: 20px clamp(18px, 3vw, 44px);
-  font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--phosphor);
-  text-shadow: 0 0 8px rgba(250,6,6,.6);
-}
-.scene-bar .logo-sm img { width: 54px; height: 54px; display: block; }
-.scene-bar nav { display: flex; gap: 20px; margin-left: auto; }
-.scene-bar nav a { color: var(--phosphor); text-decoration: none; padding-bottom: 2px; }
-.scene-bar nav a:hover, .scene-bar nav a.active { border-bottom: 1px solid var(--phosphor); }
-.rec { display: inline-flex; align-items: center; gap: 7px; }
-.rec i { width: 9px; height: 9px; border-radius: 50%; background: var(--phosphor); animation: blink 1.1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: .15; } }
-@media (max-width: 760px) {
-  .scene-bar { flex-wrap: wrap; gap: 10px; }
-  .scene-bar nav { gap: 12px; font-size: 11px; margin-left: 0; width: 100%; }
-  .scene-bar .sig { display: none; }
-}
-
-/* ---- the set ---- */
-.tv-wrap {
-  position: relative; z-index: 5;
-  display: grid; place-items: center;
-  padding: 2vh 16px 7vh;
-  perspective: 1600px;
-}
-.tv {
-  width: min(880px, 94vw);
-  transform: rotateY(-4deg) rotateX(.5deg);
-  transform-style: preserve-3d;
-}
-
-.tv .shell {
-  position: relative;
-  border-radius: 30px;
-  padding: clamp(18px, 3vw, 34px);
-  padding-right: clamp(86px, 13vw, 130px);
-  background:
-    linear-gradient(160deg, rgba(255,60,30,.09), transparent 38%),
-    linear-gradient(145deg, #232122 0%, #151314 42%, #0a0909 100%);
-  box-shadow:
-    inset 0 2px 2px rgba(255,120,90,.12),
-    inset 0 -14px 30px rgba(0,0,0,.75),
-    0 34px 70px rgba(0,0,0,.85),
-    0 0 90px rgba(250,6,6,.13);
-}
-
-/* screen + curved glass */
-.tv .glass {
-  position: relative;
-  aspect-ratio: 4 / 3.05;
-  border-radius: clamp(22px, 4vw, 46px);
-  overflow: hidden;
-  background: #020000;
-  box-shadow:
-    inset 0 0 0 4px #000,
-    inset 0 0 26px rgba(0,0,0,.95),
-    inset 0 0 90px rgba(0,0,0,.72);
-}
-.tv .glass video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) brightness(.7) contrast(1.25);
-}
-.tv .glass .tint { position: absolute; inset: 0; background: #e60505; mix-blend-mode: color; }
-.tv .glass .vig {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.72) 98%);
-}
-.tv .glass .lines {
-  position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(0,0,0,.34) 0 1px, transparent 1px 3px);
-  mix-blend-mode: multiply;
-}
-.tv .glass .glare {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 58% 42% at 24% 12%, rgba(255,210,190,.14), transparent 60%);
-}
-.tv .glass .roll {
-  position: absolute; left: 0; right: 0; height: 30%; pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(250,6,6,.06) 45%, rgba(255,255,255,.05) 50%, transparent);
-  animation: roll 6.5s linear infinite;
-}
-@keyframes roll { from { top: -32%; } to { top: 108%; } }
-.tv .glass { animation: flicker 4.2s steps(1) infinite; }
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  93.1% { opacity: 1; } 93.4% { opacity: .84; } 93.7% { opacity: 1; }
-  97.2% { opacity: 1; } 97.35% { opacity: .9; } 97.5% { opacity: 1; }
-}
-
-/* on-screen UI */
-.tv .osd {
-  position: absolute; inset: 0; z-index: 3;
-  display: grid; grid-template-rows: auto 1fr auto;
-  padding: clamp(14px, 3vw, 34px);
-  color: var(--phosphor);
-  text-shadow: 0 0 7px rgba(250,6,6,.65), 1px 0 0 rgba(255,80,40,.3);
-}
-.tv .osd .top {
-  display: flex; justify-content: space-between;
-  font-family: var(--mono); font-size: clamp(9px, 1.1vw, 11px); letter-spacing: 2px;
-  opacity: .85;
-}
-.tv .osd .mid { align-self: center; }
-.tv .osd h1 {
-  color: var(--phosphor);
-  font-size: clamp(17px, 2.9vw, 34px);
-  line-height: 1.1;
-  max-width: 17ch;
-  min-height: 3.2em;
-}
-.tv .osd h1 .cursor {
-  display: inline-block; width: .55em; height: .9em;
-  background: var(--phosphor); vertical-align: text-top; margin-left: 5px;
-  animation: blink .85s steps(1) infinite;
-}
-.tv .osd .sub {
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: clamp(9px, 1.25vw, 13px);
-  line-height: 1.7; max-width: 46ch;
-  color: #ff5a43;
-}
-.tv .osd .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.tbtn {
-  font-family: var(--mono); font-size: clamp(9px, 1.15vw, 12px); letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--phosphor); text-decoration: none;
-  border: 1px solid var(--phosphor-dim);
-  padding: 9px 14px;
-  background: rgba(20,0,0,.5);
-  transition: background .15s, color .15s;
-}
-.tbtn:hover { background: var(--phosphor); color: #140000; }
-
-/* control column */
-.tv .controls {
-  position: absolute;
-  top: clamp(18px, 3vw, 34px); bottom: clamp(18px, 3vw, 34px);
-  right: clamp(16px, 2.6vw, 30px);
-  width: clamp(54px, 8vw, 78px);
-  display: flex; flex-direction: column; align-items: center;
-  gap: clamp(10px, 2vh, 22px);
-}
-.knob {
-  width: 100%; aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 34% 30%, #3a3637, #141212 58%, #050505 100%);
-  box-shadow:
-    inset 0 2px 3px rgba(255,140,110,.18),
-    inset 0 -4px 8px rgba(0,0,0,.8),
-    0 4px 10px rgba(0,0,0,.6);
-  position: relative;
-}
-.knob::after {
-  content: '';
-  position: absolute; left: 50%; top: 8%;
-  width: 7%; height: 30%;
-  transform: translateX(-50%);
-  background: #c7372a;
-  box-shadow: 0 0 6px rgba(250,6,6,.6);
-  border-radius: 3px;
-}
-.knob.small { width: 64%; }
-.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; width: 78%; }
-.btn-grid span {
-  aspect-ratio: 1.15;
-  background: linear-gradient(180deg, #2a2626, #0c0a0a);
-  box-shadow: inset 0 1px 1px rgba(255,140,110,.14), inset 0 -2px 4px rgba(0,0,0,.7);
-  border-radius: 3px;
-}
-.btn-grid span.lit { background: linear-gradient(180deg, #ff5230, #a00a02); box-shadow: 0 0 12px rgba(250,6,6,.55); }
-.pwr {
-  margin-top: auto;
-  width: 34%; aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #ff6a3e, #8f0a01 70%);
-  box-shadow: 0 0 14px rgba(250,6,6,.7);
-  animation: blink 2.6s steps(1) infinite;
-}
-
-/* speaker grille + chin */
-.tv .chin {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-top: clamp(12px, 2vw, 20px);
-  padding: 0 6px;
-}
-.tv .grille {
-  width: clamp(120px, 24%, 210px); height: clamp(14px, 2vw, 20px);
-  background: repeating-linear-gradient(90deg, #000 0 4px, #1d1a1a 4px 8px);
-  border-radius: 3px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.9);
-}
-.tv .brand {
-  font-family: var(--mono); font-size: clamp(8px, 1vw, 11px); letter-spacing: 3px;
-  color: #6d5c55; text-transform: uppercase;
-}
-
-/* console shadow under the set */
-.tv-shadow {
-  width: min(760px, 80vw); height: 46px;
-  margin: -18px auto 0;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,.85), transparent 70%);
-  transform: translateZ(0);
-}
-
-@media (max-width: 640px) {
-  .tv { transform: none; }
-  .tv .osd h1 { min-height: 0; }
-  .tv .osd .sub { display: none; }
-}
-
-/* ---- lower sections in red-mono ---- */
-.redzone .promo .section-bg img,
-.redzone .members .section-bg video {
-  filter: grayscale(1) brightness(.66) contrast(1.18);
-}
-.redzone .members .section-bg.blurred video {
-  filter: grayscale(1) brightness(.6) contrast(1.18) blur(14px);
-  transform: scale(1.12);
-}
-.redzone .section-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: #e60505;
-  mix-blend-mode: color;
-}
-.redzone .promo h2, .redzone .promo h2 a { color: var(--phosphor) !important; text-shadow: 0 0 10px rgba(250,6,6,.5); }
-.redzone .promo h2 .red { color: #fff; }
-.redzone .btn-outline { border-color: var(--phosphor); color: var(--phosphor); }
-.redzone .btn-outline:hover { background: var(--phosphor); color: #140000; }
-.redzone .members h2 { color: var(--phosphor); }
-.redzone .members input { border-color: var(--phosphor-dim); color: #ff6a55; }
-.redzone .members input::placeholder { color: rgba(255,90,67,.55); }
-</style>
 </head>
 <body>
 
-<div class="scene">
-  <div class="room">
-    <img src="assets/shelter-bg.jpg" alt="">
+<header class="site-header">
+  <nav>
+    <a href="./" class="active">Home</a>
+    <a href="shelter/">Shelter</a>
+    <a href="tickets/">Tickets</a>
+    <a href="events/">Events Archive</a>
+  </nav>
+  <a class="logo" href="./"><img src="assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
+  <div class="spacer"></div>
+</header>
+
+<section class="hero">
+  <div class="section-bg">
+    <video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline></video>
   </div>
-
-  <div class="scene-bar">
-    <a class="logo-sm" href="./"><img src="assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
-    <span class="rec"><i></i>CH 001 — OCD/KT</span>
-    <span class="sig">SIGNAL: STRONG</span>
-    <nav>
-      <a href="./" class="active">Home</a>
-      <a href="shelter/">Shelter</a>
-      <a href="tickets/">Tickets</a>
-      <a href="events/">Events Archive</a>
-    </nav>
-  </div>
-
-  <div class="tv-wrap">
-    <div>
-      <div class="tv">
-        <div class="shell">
-          <div class="glass">
-            <video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline></video>
-            <div class="tint"></div>
-            <div class="vig"></div>
-            <div class="roll"></div>
-            <div class="lines"></div>
-            <div class="glare"></div>
-            <div class="osd">
-              <div class="top">
-                <span>KT//OCD</span>
-                <span id="clock">—</span>
-              </div>
-              <div class="mid">
-                <h1><span id="type-h"></span><span class="cursor"></span></h1>
-                <p class="sub" id="type-s"></p>
-              </div>
-              <div class="actions">
-                <a class="tbtn" href="shelter/">[ Enter Shelter ]</a>
-                <a class="tbtn" href="tickets/">[ Tickets ]</a>
-                <a class="tbtn" href="#join">[ Join ]</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="controls">
-            <div class="knob"></div>
-            <div class="knob small"></div>
-            <div class="btn-grid"><span class="lit"></span><span></span><span></span><span class="lit"></span></div>
-            <div class="pwr"></div>
-          </div>
-
-          <div class="chin">
-            <div class="grille"></div>
-            <div class="brand">Civil Defense Model 001</div>
-          </div>
-        </div>
-      </div>
-      <div class="tv-shadow"></div>
+  <div class="section-inner">
+    <div class="black-box">
+      <h1>What will the dark side of innovation create?</h1>
+    </div>
+    <div></div>
+    <div class="black-box manifesto">
+      <p><strong>We are as gods and might as well get good at it. So far, remotely done power and glory&mdash;as via government, big business, formal education, and church&mdash;has succeeded to the point where gross defects obscure actual gains. In response to this dilemma and to these gains a realm of intimate, personal power is developing&mdash;power of the individual to conduct his own education, find his own inspiration, shape his own environment, and share his adventure with whoever is interested.</strong></p>
+      <p><strong>Tools that aid this process are sought and promoted by</strong></p>
+      <p><strong>KILLING TRENDS.</strong></p>
     </div>
   </div>
-</div>
+</section>
 
-<div class="redzone">
 <section class="promo">
   <div class="section-bg">
     <img src="assets/shelter-collage.webp" alt="SHELTER — opens 01.21.23" loading="lazy">
@@ -381,39 +71,12 @@ body { background: #050000; }
     </form>
   </div>
 </section>
-</div>
 
 <footer>
   <div class="mark">Killing Trends. &mdash; Office of Civil Disobedience</div>
 </footer>
 
 <script>
-// typewriter transmission
-(function () {
-  var H = 'WHAT WILL THE DARK SIDE OF INNOVATION CREATE?';
-  var S = '> Tools for intimate, personal power are sought and promoted by KILLING TRENDS.';
-  var hEl = document.getElementById('type-h');
-  var sEl = document.getElementById('type-s');
-  var i = 0, j = 0;
-  (function typeH() {
-    if (i <= H.length) { hEl.textContent = H.slice(0, i++); setTimeout(typeH, 38); }
-    else setTimeout(typeS, 350);
-  })();
-  function typeS() {
-    if (j <= S.length) { sEl.textContent = S.slice(0, j++); setTimeout(typeS, 14); }
-  }
-})();
-
-// terminal clock
-(function tick() {
-  var d = new Date();
-  function p(n){ return ('0'+n).slice(-2); }
-  document.getElementById('clock').textContent =
-    'REC ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
-  setTimeout(tick, 1000);
-})();
-
-// join form -> email
 document.getElementById('join-form').addEventListener('submit', function (e) {
   e.preventDefault();
   var f = new FormData(this);
