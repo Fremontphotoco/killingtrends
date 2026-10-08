@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artpark Afterdark &mdash; Killing Trends</title>
+<meta name="description" content="Artpark Afterdark with Lee Reynolds, Brett Rubin and Wizdumb. Downtown Las Vegas. Tune in.">
+<meta name="theme-color" content="#140000">
+<meta property="og:title" content="Artpark Afterdark">
+<meta property="og:description" content="Lee Reynolds · Brett Rubin · Wizdumb. Downtown Las Vegas.">
+<meta property="og:image" content="https://killingtrends.com/afterdark/bunker.jpg">
+<link rel="preload" as="image" href="bunker.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Archivo:wdth,wght@100..125,700..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f4e7c9;
+    --cream-dim: rgba(244, 231, 201, .62);
+    --glow: rgba(255, 40, 20, .55);
+    --bg: #0b0000;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+  body {
+    font-family: 'VT323', ui-monospace, Menlo, monospace;
+    color: var(--cream);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Blurred fill so portrait screens never show bare edges */
+  .backdrop {
+    position: fixed; inset: -40px;
+    background: url(bunker.jpg) center / cover no-repeat;
+    filter: blur(28px) brightness(.45) saturate(1.2);
+  }
+
+  .viewport { position: fixed; inset: 0; overflow: hidden; }
+  /* Cinematic vignette over everything except the UI chrome */
+  .vignette {
+    position: fixed; inset: 0; pointer-events: none; z-index: 5;
+    background: radial-gradient(ellipse 85% 80% at 50% 48%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 85%, rgba(0,0,0,.85) 100%);
+  }
+
+  /* The scene is the image at its true aspect ratio. JS sizes and places it. */
+  .scene {
+    position: absolute; left: 0; top: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+  .scene > img.bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    display: block; user-select: none; -webkit-user-drag: none;
+  }
+  /* Feathered edges so the image melts into the blurred fill */
+  .scene .feather {
+    position: absolute; inset: 0; pointer-events: none;
+    box-shadow: inset 0 0 60px 30px var(--bg);
+    opacity: 0; transition: opacity .3s;
+  }
+  .scene.letterboxed .feather { opacity: 1; }
+
+  /* Red light flicker: a lamp halo plus a whole-scene dip */
+  .lamp {
+    position: absolute; pointer-events: none; border-radius: 50%;
+    left: 96.4%; top: 18.9%; width: 18%; aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,60,40,.55), rgba(255,0,0,0) 65%);
+    mix-blend-mode: screen; opacity: .5;
+  }
+  .dim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: #000; opacity: 0;
+  }
+  .scene.flick .lamp { animation: lampflick .9s steps(1) 1; }
+  .scene.flick .dim  { animation: dimflick .9s steps(1) 1; }
+  @keyframes lampflick { 0%{opacity:.5} 10%{opacity:.05} 20%{opacity:.6} 32%{opacity:.1} 44%{opacity:.55} 70%{opacity:.25} 80%{opacity:.5} }
+  @keyframes dimflick  { 0%{opacity:0} 10%{opacity:.28} 20%{opacity:0} 32%{opacity:.18} 44%{opacity:0} 70%{opacity:.1} 80%{opacity:0} }
+
+  /* ---------- The TV glass ---------- */
+  .screen {
+    position: absolute; left: 0; top: 0;
+    width: 560px; height: 500px;           /* base size, mapped onto the glass by matrix3d */
+    transform-origin: 0 0;
+    border-radius: 9% / 10%;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(70, 6, 4, .55), rgba(10, 0, 0, .82) 75%);
+    box-shadow: inset 0 0 70px 18px rgba(0,0,0,.85), 0 0 40px 6px rgba(255, 30, 10, .18);
+  }
+  .screen::before { /* scanlines */
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,.28) 0 2px, rgba(0,0,0,0) 2px 4px);
+    mix-blend-mode: multiply;
+  }
+  .screen::after { /* curved-glass vignette + reflection */
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 4;
+    background:
+      radial-gradient(ellipse 120% 95% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.65) 100%),
+      linear-gradient(160deg, rgba(255,200,180,.10) 0%, rgba(255,200,180,0) 30%);
+  }
+  .crt {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 56px;
+    text-shadow: 0 0 6px rgba(255, 90, 60, .7), 0 0 18px var(--glow);
+    animation: roll 9s linear infinite;
+  }
+  @keyframes roll { 0%,96%,100% { transform: translateY(0) } 97% { transform: translateY(-1.5px) } 98% { transform: translateY(1px) } }
+
+  .panel { width: 100%; text-align: center; display: none; transform-origin: 50% 50%; }
+  .panel.on { display: block; }
+
+  .title {
+    font-family: 'Archivo', 'Helvetica Neue', sans-serif; font-weight: 900; font-stretch: 100%;
+    font-size: 70px;   /* sized to the glass; the matrix already scales it */ line-height: .86; letter-spacing: -1px; margin: 0 0 26px;
+    text-align: left; display: inline-block; text-transform: uppercase;
+    color: #fff1d8;
+    text-shadow: 0 0 2px rgba(255,240,215,.9), 0 0 14px rgba(255,120,80,.75), 0 0 38px rgba(255,40,20,.6), 0 0 80px rgba(255,20,0,.35);
+  }
+  
+  .kicker { font-size: calc(26px * var(--fs)); color: var(--cream-dim); letter-spacing: 4px; margin: 0 0 30px; }
+  .blink { animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0 } }
+
+  a { color: inherit; }
+  button, a.btn {
+    font: inherit; color: inherit; background: none; border: 0; cursor: pointer;
+    text-shadow: inherit; text-decoration: none;
+  }
+  .enter {
+    font-size: calc(34px * var(--fs)); letter-spacing: 5px; padding: 14px 22px;
+    border: 2px solid transparent; border-radius: 4px;
+  }
+
+  .menu { list-style: none; margin: 0; padding: 0; display: inline-block; text-align: left; }
+  .menu li { margin: 10px 0; }
+  .menu button {
+    font-size: calc(48px * var(--fs)); letter-spacing: 4px; padding: 6px 18px 6px 52px;
+    position: relative; width: 100%; text-align: left; border-radius: 4px;
+    min-height: 64px;
+  }
+  .menu button::before {
+    content: "▶"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: .6em; opacity: 0;
+  }
+  .menu button.sel { background: rgba(244, 231, 201, .12); }
+  .menu button.sel::before { opacity: 1; }
+
+  .head { font-size: calc(42px * var(--fs)); letter-spacing: 4px; margin: 0 0 10px; font-weight: 400; }
+  .rule { border: 0; border-top: 2px dashed rgba(244,231,201,.35); margin: 0 auto 14px; width: 70%; }
+  .lineup { list-style: none; padding: 0; margin: 0 0 24px; }
+  .lineup li { font-family: 'Archivo', sans-serif; font-weight: 900; font-stretch: 112%; font-size: calc(46px * min(var(--fs), 1.1)); white-space: nowrap; letter-spacing: 0; line-height: 1.05; margin-bottom: 6px; text-shadow: 0 0 12px rgba(255,120,80,.7), 0 0 34px rgba(255,40,20,.5); }
+  .lineup li small { display: block; font-size: .42em; color: var(--cream-dim); letter-spacing: 3px; margin-bottom: 8px; }
+  .info { margin: 0 auto 16px; font-size: calc(27px * var(--fs)); line-height: 1.15; text-align: left; display: inline-block; }
+  .info dt { color: var(--cream-dim); font-size: .8em; letter-spacing: 3px; }
+  .info dd { margin: 0 0 7px; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .chip {
+    font-size: calc(32px * var(--fs)); letter-spacing: 3px; padding: 8px 18px; min-height: 56px;
+    border: 2px solid rgba(244,231,201,.7); border-radius: 4px; display: inline-flex; align-items: center;
+  }
+  .chip:hover, .chip.sel { background: rgba(244,231,201,.14); }
+
+  .screen :focus-visible { outline: 2px dashed var(--cream); outline-offset: 3px; }
+  .menu button:focus-visible { outline-offset: 0; }
+
+  /* Power-on / channel-change flicker */
+  .screen.zap .crt { animation: zap .55s steps(6) 1; }
+  @keyframes zap {
+    0%   { opacity: 1; filter: brightness(3) blur(1px); transform: scaleY(.02); }
+    20%  { opacity: .3; transform: scaleY(1.05) translateX(-6px); }
+    40%  { opacity: 1; filter: brightness(1.6); transform: translateX(4px); }
+    60%  { opacity: .5; transform: none; }
+    100% { opacity: 1; filter: none; transform: none; }
+  }
+  .screen .static {
+    position: absolute; inset: -20%; z-index: 1; pointer-events: none; opacity: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .7  0 0 0 0 .6  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .screen.zap .static { animation: staticfade .55s steps(4) 1; }
+  @keyframes staticfade { 0% { opacity: .55; transform: translate(0,0) } 50% { opacity: .35; transform: translate(-8%, 6%) } 100% { opacity: 0; transform: translate(4%, -3%) } }
+
+  /* ---------- Physical TV controls ---------- */
+  .hw {
+    position: absolute; transform: translate(-50%, -50%);
+    border-radius: 6px; padding: 0; cursor: pointer;
+  }
+  .hw.round { border-radius: 50%; }
+  .hw::after {
+    content: ""; position: absolute; inset: -18%; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(circle, rgba(255,190,150,.95), rgba(255,70,30,.55) 40%, rgba(255,0,0,0) 72%);
+    mix-blend-mode: screen; opacity: 0; transition: opacity .35s ease-out;
+  }
+  .hw:hover::after { opacity: .28; }
+  .hw.lit::after { opacity: 1; transition: opacity .05s; }
+  .hw:focus-visible { outline: 2px dashed var(--cream); outline-offset: 4px; }
+
+  /* ---------- Chrome outside the scene ---------- */
+  .corner {
+    position: fixed; z-index: 10; top: max(14px, env(safe-area-inset-top));
+    font-size: 20px; letter-spacing: 2px; color: var(--cream);
+    background: rgba(10,0,0,.55); border: 1px solid rgba(244,231,201,.3); border-radius: 4px;
+    padding: 6px 12px; text-shadow: 0 0 8px var(--glow); min-height: 40px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .corner.left { left: max(14px, env(safe-area-inset-left)); }
+  .corner.right { right: max(14px, env(safe-area-inset-right)); }
+  .corner:focus-visible { outline: 2px dashed var(--cream); outline-offset: 3px; }
+  .hint {
+    position: fixed; z-index: 10; left: 50%; top: max(22px, calc(env(safe-area-inset-top) + 8px));
+    transform: translateX(-50%); font-size: 17px; letter-spacing: 2px; color: var(--cream-dim);
+    text-shadow: 0 0 8px #000; white-space: nowrap; pointer-events: none;
+  }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crt, .blink, .scene.flick .lamp, .scene.flick .dim { animation: none !important; }
+    .screen.zap .crt { animation: fadein .25s ease-out 1 !important; }
+    .screen.zap .static { animation: none !important; }
+    @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+  }
+  @media (hover: none) { .hint .kbd { display: none; } }
+  @media (max-width: 1000px), (max-height: 560px) { .hint { display: none; } }
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"></div>
+
+<a class="corner left" href="../">&larr; KILLING TRENDS</a>
+<button class="corner right" id="soundBtn" aria-pressed="false">SOUND: OFF</button>
+
+<main class="viewport" id="viewport">
+  <div class="scene" id="scene">
+    <img class="bg" src="bunker.jpg" alt="" width="1450" height="1085" draggable="false">
+    <div class="lamp" aria-hidden="true"></div>
+    <div class="dim" aria-hidden="true"></div>
+    <div class="feather" aria-hidden="true"></div>
+
+    <section class="screen" id="screen" aria-label="TV screen">
+      <div class="static" aria-hidden="true"></div>
+      <div class="crt">
+
+        <div class="panel on" id="p-boot">
+          <h1 class="title">ARTPARK<br>AFTERDARK</h1>
+          <p class="kicker" id="bootKicker"></p>
+          <button class="enter" id="enterBtn"><span class="blink">CLICK TO ENTER</span></button>
+        </div>
+
+        <nav class="panel" id="p-menu" aria-label="Afterdark menu">
+          <h2 class="head">&#9673; CHANNEL SELECT</h2>
+          <ul class="menu" id="menu">
+            <li><button data-go="lineup">LINEUP</button></li>
+            <li><button data-go="info">EVENT INFO</button></li>
+            <li><button data-go="tickets">GET TICKETS</button></li>
+          </ul>
+        </nav>
+
+        <div class="panel" id="p-lineup">
+          <h2 class="head">LINEUP</h2>
+          <hr class="rule">
+          <ul class="lineup" id="lineupList"></ul>
+          <div class="actions"><button class="chip back">&larr; BACK</button></div>
+        </div>
+
+        <div class="panel" id="p-info">
+          <h2 class="head">EVENT INFO</h2>
+          <hr class="rule">
+          <dl class="info" id="infoList"></dl>
+          <div class="actions"><button class="chip back">&larr; BACK</button></div>
+        </div>
+
+        <div class="panel" id="p-tickets">
+          <h2 class="head">GET TICKETS</h2>
+          <hr class="rule">
+          <dl class="info" id="ticketInfo"></dl>
+          <div class="actions">
+            <a class="chip" id="ticketLink" target="_blank" rel="noopener">BUY TICKETS &#8599;</a>
+            <button class="chip back">&larr; BACK</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Physical controls (positions are in image coordinates, see HW below) -->
+    <div id="hwLayer"></div>
+  </div>
+</main>
+
+<div class="vignette" aria-hidden="true"></div>
+<div class="hint" aria-hidden="true"><span class="kbd">ARROWS + ENTER &middot; ESC BACK &middot; </span>THE TV BUTTONS WORK TOO</div>
+<div class="sr" aria-live="polite" id="live"></div>
+
+<script>
+/* ============================================================
+   EDIT EVENT DETAILS HERE
+   ============================================================ */
+const EVENT = {
+  name:     'ARTPARK AFTERDARK',
+  date:     'FRI · OCT 23, 2026',
+  time:     '9PM – 2AM',
+  venue:    'SECRET DOWNTOWN LAS VEGAS ART PARK',
+  venueNote:'LOCATION REVEALED DAY OF SHOW',
+  extras:   'BYOB · LIMITED CAPACITY · 100 TICKETS',
+  ticketUrl:'https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds',
+  lineup: [
+    { name: 'LEE REYNOLDS', tag: 'HEADLINER' },
+    { name: 'BRETT RUBIN',  tag: '' },
+    { name: 'WIZDUMB',      tag: '' }
+  ]
+};
+
+/* ============================================================
+   Image geometry (pixels in bunker.jpg, 1450 x 1085)
+   ============================================================ */
+const IMG = { w: 1450, h: 1085 };
+// Corners of the TV glass, slightly inset from the rim: TL, TR, BR, BL
+const GLASS = [[392, 262], [902, 304], [936, 738], [414, 760]];
+// Clickable hardware on the TV
+const HW = [
+  { x: 421, y: 935, w: 54, h: 56, act: 'lineup',  label: 'Lineup button' },
+  { x: 488, y: 925, w: 52, h: 54, act: 'info',    label: 'Event info button' },
+  { x: 552, y: 915, w: 50, h: 52, act: 'tickets', label: 'Get tickets button' },
+  { x: 613, y: 907, w: 48, h: 50, act: 'back',    label: 'Back button' },
+  { x: 1054, y: 433, w: 30, h: 30, act: 'up',     label: 'Channel up' },
+  { x: 1086, y: 436, w: 30, h: 30, act: 'down',   label: 'Channel down' },
+  { x: 1060, y: 480, w: 30, h: 30, act: 'select', label: 'Select' },
+  { x: 1095, y: 482, w: 30, h: 30, act: 'back',   label: 'Back' },
+  { x: 1066, y: 326, w: 78, h: 78, act: 'down',   label: 'Channel dial', round: true },
+  { x: 1101, y: 586, w: 78, h: 78, act: 'up',     label: 'Tuning dial', round: true },
+  { x: 1119, y: 735, w: 84, h: 84, act: 'sound',  label: 'Volume dial, toggles sound', round: true },
+  { x: 1028, y: 850, w: 34, h: 34, act: 'power',  label: 'Power button', round: true },
+  { x: 1128, y: 1010, w: 90, h: 50, act: 'select', label: 'Enter button' }
+];
+
+const $ = (s, r = document) => r.querySelector(s);
+const scene = $('#scene'), screen = $('#screen'), viewport = $('#viewport');
+const reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
+let reduced = reduceMQ.matches;
+reduceMQ.addEventListener?.('change', e => { reduced = e.matches; applyTransform(); });
+
+/* ---------- Fill content from EVENT ---------- */
+$('#bootKicker').textContent = EVENT.date + '  ·  DTLV';
+$('#lineupList').innerHTML = EVENT.lineup.map(a =>
+  `<li>${a.tag ? `<small>${a.tag}</small>` : ''}${a.name}</li>`).join('');
+const dl = rows => rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+$('#infoList').innerHTML = dl([
+  ['WHEN', EVENT.date + ' · ' + EVENT.time],
+  ['WHERE', EVENT.venue + (EVENT.venueNote ? `<br><span style="color:var(--cream-dim)">${EVENT.venueNote}</span>` : '')],
+  ['DOOR', EVENT.extras]
+]);
+$('#ticketInfo').innerHTML = dl([['EVENT', EVENT.name], ['WHEN', EVENT.date + ' · ' + EVENT.time], ['DOOR', EVENT.extras]]);
+$('#ticketLink').href = EVENT.ticketUrl;
+
+/* ---------- Hardware hotspots ---------- */
+const hwLayer = $('#hwLayer');
+HW.forEach(h => {
+  const b = document.createElement('button');
+  b.className = 'hw' + (h.round ? ' round' : '');
+  b.style.left = (h.x / IMG.w * 100) + '%';
+  b.style.top = (h.y / IMG.h * 100) + '%';
+  b.style.width = (h.w / IMG.w * 100) + '%';
+  b.style.height = (h.h / IMG.h * 100) + '%';
+  b.setAttribute('aria-label', h.label);
+  b.dataset.act = h.act;
+  b.addEventListener('click', () => { light(b); press(h.act); });
+  hwLayer.appendChild(b);
+});
+function light(el) {
+  el.classList.add('lit');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('lit'), 260);
+}
+
+/* ---------- Homography: map the base screen rect onto the 4 glass corners ---------- */
+function solve(A, b) { // gaussian elimination, 8x8
+  const n = b.length;
+  for (let i = 0; i < n; i++) {
+    let m = i; for (let r = i + 1; r < n; r++) if (Math.abs(A[r][i]) > Math.abs(A[m][i])) m = r;
+    [A[i], A[m]] = [A[m], A[i]]; [b[i], b[m]] = [b[m], b[i]];
+    for (let r = i + 1; r < n; r++) {
+      const f = A[r][i] / A[i][i];
+      for (let c = i; c < n; c++) A[r][c] -= f * A[i][c];
+      b[r] -= f * b[i];
+    }
+  }
+  const x = new Array(n);
+  for (let i = n - 1; i >= 0; i--) {
+    let s = b[i]; for (let c = i + 1; c < n; c++) s -= A[i][c] * x[c];
+    x[i] = s / A[i][i];
+  }
+  return x;
+}
+function matrix3d(w, h, dst) {
+  const src = [[0, 0], [w, 0], [w, h], [0, h]], A = [], b = [];
+  for (let i = 0; i < 4; i++) {
+    const [x, y] = src[i], [u, v] = dst[i];
+    A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u);
+    A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v);
+  }
+  const [a, bb, c, d, e, f, g, hh] = solve(A, b);
+  return `matrix3d(${a},${d},0,${g},${bb},${e},0,${hh},0,0,1,0,${c},${f},0,1)`;
+}
+
+/* ---------- Responsive framing ---------- */
+const GLASS_BOX = (() => {
+  const xs = GLASS.map(p => p[0]), ys = GLASS.map(p => p[1]);
+  return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
+})();
+const TV_DECK = { y0: 236, y1: 985 };   // glass top to bottom button row
+let frame = { s: 1, ox: 0, oy: 0 };
+let par = { x: 0, y: 0, tx: 0, ty: 0 };
+
+function layout() {
+  const vw = innerWidth, vh = innerHeight;
+  const gw = GLASS_BOX.x1 - GLASS_BOX.x0, gh = GLASS_BOX.y1 - GLASS_BOX.y0;
+  const cover = Math.max(vw / IMG.w, vh / IMG.h);
+  // Never let the glass overflow: it must fit with breathing room
+  const fit = Math.min(vw * 0.94 / gw, vh * 0.78 / gh);
+  // Prefer showing the whole control deck (glass top to button row), but only shrink
+  // as far as still filling the width, so wide screens never letterbox for it.
+  const deck = vh * 0.97 / (TV_DECK.y1 - TV_DECK.y0);
+  const s = Math.min(cover * 1.04, fit, Math.max(deck, vw / IMG.w * 1.02));
+  const W = IMG.w * s, H = IMG.h * s;
+  const gcx = (GLASS_BOX.x0 + GLASS_BOX.x1) / 2 * s;
+  const gcy = (H > vh && deck >= s) ? (TV_DECK.y0 + TV_DECK.y1) / 2 * s : (GLASS_BOX.y0 + GLASS_BOX.y1) / 2 * s;
+  const clampAxis = (want, size, view) =>
+    size >= view ? Math.min(0, Math.max(view - size, want)) : Math.max(0, Math.min(view - size, want));
+  const ox = clampAxis(vw / 2 - gcx, W, vw);
+  const oy = clampAxis((H > vh && deck >= s ? vh * 0.5 : vh * 0.46) - gcy, H, vh);
+  frame = { s, ox, oy };
+  scene.style.width = W + 'px';
+  scene.style.height = H + 'px';
+  scene.classList.toggle('letterboxed', W < vw - 1 || H < vh - 1);
+
+  const BW = 560, BH = 500;
+  screen.style.transform = matrix3d(BW, BH, GLASS.map(([x, y]) => [x * s, y * s]));
+  // On-screen glass width drives text scale so small phones stay readable
+  const shown = gw * s / BW;
+  document.documentElement.style.setProperty('--fs', Math.min(1.5, Math.max(1, 0.75 / shown)).toFixed(3));
+  applyTransform();
+  if (typeof fitPanel === 'function') fitPanel();
+}
+function applyTransform() {
+  const px = reduced ? 0 : par.x, py = reduced ? 0 : par.y;
+  scene.style.transform = `translate3d(${frame.ox + px}px, ${frame.oy + py}px, 0)`;
+}
+addEventListener('resize', layout);
+document.fonts && document.fonts.ready.then(() => layout());
+addEventListener('orientationchange', () => setTimeout(layout, 150));
+layout();
+
+/* ---------- Gentle mouse parallax ---------- */
+const MAX = 12;
+addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return;
+  par.tx = -((e.clientX / innerWidth) - .5) * 2 * MAX;
+  par.ty = -((e.clientY / innerHeight) - .5) * 2 * MAX * .6;
+}, { passive: true });
+(function tick() {
+  if (!reduced) {
+    par.x += (par.tx - par.x) * .06; par.y += (par.ty - par.y) * .06;
+    if (Math.abs(par.tx - par.x) > .05 || Math.abs(par.ty - par.y) > .05) applyTransform();
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ---------- Occasional red light flicker ---------- */
+(function flickerLoop() {
+  setTimeout(() => {
+    if (!reduced && !document.hidden) {
+      scene.classList.remove('flick'); void scene.offsetWidth; scene.classList.add('flick');
+      if (sound.on) sound.buzz();
+    }
+    flickerLoop();
+  }, 7000 + Math.random() * 9000);
+})();
+
+/* ---------- Optional sound (off by default, synthesized) ---------- */
+const sound = {
+  on: false, ctx: null, hum: null,
+  init() {
+    if (this.ctx) return;
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  },
+  blip(freq = 880, dur = .05, vol = .05) {
+    if (!this.on) return;
+    const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+    o.type = 'square'; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001, c.currentTime + dur);
+    o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime + dur);
+  },
+  zap() {
+    if (!this.on) return;
+    const c = this.ctx, len = c.sampleRate * .35, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const src = c.createBufferSource(), g = c.createGain();
+    src.buffer = buf; g.gain.value = .06; src.connect(g).connect(c.destination); src.start();
+  },
+  buzz() { this.blip(110, .25, .025); },
+  toggle() {
+    this.init();
+    this.on = !this.on;
+    if (this.on) {
+      this.ctx.resume();
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = 'sine'; o.frequency.value = 60; g.gain.value = .012;
+      o.connect(g).connect(this.ctx.destination); o.start(); this.hum = o;
+      this.blip(660, .08);
+    } else if (this.hum) { this.hum.stop(); this.hum = null; }
+    const btn = $('#soundBtn');
+    btn.textContent = 'SOUND: ' + (this.on ? 'ON' : 'OFF');
+    btn.setAttribute('aria-pressed', String(this.on));
+    say('Sound ' + (this.on ? 'on' : 'off'));
+  }
+};
+$('#soundBtn').addEventListener('click', () => sound.toggle());
+
+/* ---------- Screen state machine ---------- */
+const PANELS = ['boot', 'menu', 'lineup', 'info', 'tickets'];
+const NAMES = { boot: 'Artpark Afterdark. Click to enter.', menu: 'Menu', lineup: 'Lineup', info: 'Event info', tickets: 'Get tickets' };
+let state = 'boot', sel = 0;
+const menuBtns = [...document.querySelectorAll('#menu button')];
+const live = $('#live');
+function say(t) { live.textContent = ''; setTimeout(() => live.textContent = t, 30); }
+
+function zap() {
+  screen.classList.remove('zap'); void screen.offsetWidth; screen.classList.add('zap');
+  sound.zap();
+}
+function show(next, { focus = true } = {}) {
+  if (next === state) return;
+  zap();
+  PANELS.forEach(p => $('#p-' + p).classList.toggle('on', p === next));
+  const prev = state; state = next;
+  if (next === 'menu') {
+    if (prev !== 'boot') sel = Math.max(0, ['lineup', 'info', 'tickets'].indexOf(prev));
+    paintSel();
+    if (focus) menuBtns[sel].focus({ preventScroll: true });
+  } else if (focus) {
+    const t = $('#p-' + next).querySelector(next === 'tickets' ? '#ticketLink' : 'button');
+    t && t.focus({ preventScroll: true });
+  }
+  fitPanel();
+  say(NAMES[next]);
+}
+function fitPanel() {
+  const p = document.querySelector('.panel.on'); if (!p) return;
+  p.style.transform = '';
+  const crt = p.parentElement, cs = getComputedStyle(crt);
+  const availH = crt.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  const availW = crt.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const k = Math.min(1, availH / p.scrollHeight, availW / p.scrollWidth);
+  if (k < 1) p.style.transform = `scale(${(k * 0.97).toFixed(3)})`;
+}
+function paintSel() { menuBtns.forEach((b, i) => b.classList.toggle('sel', i === sel)); }
+function move(d) {
+  if (state !== 'menu') return;
+  sel = (sel + d + menuBtns.length) % menuBtns.length;
+  paintSel(); menuBtns[sel].focus({ preventScroll: true }); sound.blip(520 + sel * 120);
+}
+function select() {
+  if (state === 'boot') show('menu');
+  else if (state === 'menu') show(menuBtns[sel].dataset.go);
+  else if (state === 'tickets') window.open(EVENT.ticketUrl, '_blank', 'noopener');
+}
+function back() {
+  if (state === 'boot') return;
+  show(state === 'menu' ? 'boot' : 'menu');
+}
+function press(act) {
+  sound.blip(act === 'back' ? 330 : 740);
+  switch (act) {
+    case 'lineup': case 'info': case 'tickets': show(act); break;
+    case 'back': back(); break;
+    case 'up': state === 'boot' ? show('menu') : move(-1); break;
+    case 'down': state === 'boot' ? show('menu') : move(1); break;
+    case 'select': select(); break;
+    case 'sound': sound.toggle(); break;
+    case 'power': state === 'boot' ? show('menu') : show('boot'); break;
+  }
+}
+
+$('#enterBtn').addEventListener('click', () => show('menu'));
+menuBtns.forEach((b, i) => {
+  b.addEventListener('click', () => { sel = i; show(b.dataset.go); });
+  b.addEventListener('focus', () => { sel = i; paintSel(); });
+  b.addEventListener('mouseenter', () => { if (state === 'menu') { sel = i; paintSel(); } });
+});
+document.querySelectorAll('.back').forEach(b => b.addEventListener('click', back));
+// Tapping anywhere on the glass while on the boot screen enters too
+screen.addEventListener('click', e => { if (state === 'boot' && !e.target.closest('button')) show('menu'); });
+
+addEventListener('keydown', e => {
+  const k = e.key;
+  if (k === 'ArrowUp' || k === 'ArrowLeft') { if (state === 'menu') { e.preventDefault(); move(-1); } }
+  else if (k === 'ArrowDown' || k === 'ArrowRight') { if (state === 'menu') { e.preventDefault(); move(1); } }
+  else if (k === 'Escape' || k === 'Backspace') { e.preventDefault(); back(); }
+  else if ((k === 'Enter' || k === ' ') && state === 'boot' && !e.target.closest('button,a')) { e.preventDefault(); show('menu'); }
+});
+</script>
+</body>
+</html>
