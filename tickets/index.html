@@ -5,128 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Transmissions &mdash; Killing Trends</title>
 <meta name="description" content="Tickets for Killing Trends transmissions — underground events from the Office of Civil Disobedience, Las Vegas.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Killing Trends">
+<meta property="og:title" content="Transmissions — Killing Trends">
+<meta property="og:description" content="Tickets for Killing Trends transmissions — underground events from the Office of Civil Disobedience, Las Vegas.">
+<meta property="og:url" content="https://killingtrends.com/tickets/">
+<meta property="og:image" content="https://killingtrends.com/assets/og-afterdark.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="../assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,500;0,125,700;0,125,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
 <style>
-.tickets-wrap { max-width: 1100px; margin: 0 auto; padding: 180px 24px 120px; }
-.page-head { text-align: center; }
-.page-head .signal { color: var(--red); font-family: var(--mono); font-size: 13px; letter-spacing: 3px; }
-.page-head h1 { margin-top: 16px; color: var(--red); font-size: clamp(36px, 5vw, 64px); }
-.page-head .sub { margin: 16px auto 0; font-size: 15px; max-width: 480px; color: #999; }
+.page-head { padding-top: 20px; }
+.page-head .top { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+.page-head .mega { font-size: clamp(36px, 13.4vw, 260px); line-height: .8; white-space: nowrap; }
 
 .event-card {
-  margin-top: 72px;
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 48px;
-  align-items: start;
-  border-top: 1px solid #222;
-  padding-top: 56px;
+  margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--red-dim);
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; align-items: start;
 }
-.event-card img { width: 100%; }
-.event-card h2 { font-size: clamp(24px, 3vw, 38px); }
-.event-card .meta { margin-top: 18px; font-size: 15px; color: var(--ink); }
-.event-card .meta div { margin-top: 4px; }
-.event-card .meta .label { color: #777; }
-.event-card .desc { margin-top: 20px; font-size: 15px; }
-.event-card .btn-outline { margin-top: 36px; }
-.event-card .btn-outline.soldout { opacity: .4; pointer-events: none; }
-.posh-embed { margin-top: 32px; }
-.posh-embed iframe { width: 100%; border: 0; min-height: 480px; }
+.event-card .flyer .duo { aspect-ratio: auto; }
+.event-card .flyer img { width: 100%; height: auto; }
+.event-card .num { font-size: 13px; margin-bottom: 14px; display: block; }
+.event-card h2 { font-size: clamp(54px, 7vw, 120px); }
+.event-card .meta { margin-top: 26px; display: grid; gap: 12px; font-size: 13px; text-transform: lowercase; }
+.event-card .meta .label { color: var(--red-soft); display: inline-block; min-width: 70px; margin: 0; }
+.event-card .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
+.event-card .btn-outline { margin-top: 32px; }
+.posh-embed { margin-top: 32px; padding: 8px; }
+.posh-embed iframe { width: 100%; border: 0; height: 340px; display: block; }
 @media (max-width: 860px) { .event-card { grid-template-columns: 1fr; gap: 28px; } }
 
-.empty-state {
-  margin-top: 90px;
-  border: 1px solid #222;
-  padding: 70px 30px;
-  text-align: center;
-}
-.empty-state .signal { color: var(--red); font-family: var(--mono); font-size: 13px; letter-spacing: 3px; }
-.empty-state h2 { margin-top: 18px; font-size: clamp(22px, 3vw, 34px); }
-.empty-state p { margin-top: 16px; font-size: 15px; color: #999; }
+.empty-state { margin-top: 90px; padding: 70px 30px; text-align: center; }
+.empty-state h2 { margin-top: 18px; font-size: clamp(40px, 6vw, 90px); }
+.empty-state p { margin: 22px auto 0; max-width: 52ch; font-size: 14px; }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <nav>
-    <a href="../">Home</a>
-    <a href="../shelter/">Shelter</a>
-    <a href="./" class="active">Transmissions</a>
+    <a href="../"><span class="n">[0]</span>home</a>
+    <a href="../shelter/"><span class="n">[1]</span>shelter</a>
+    <a href="./" class="active"><span class="n">[2]</span>transmissions</a>
   </nav>
   <a class="logo" href="../"><img src="../assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
-  <nav class="nav-right"><a href="../events/">Events Archive</a></nav>
+  <nav class="nav-right"><a href="../events/"><span class="n">[3]</span>archive</a><a href="../connect/"><span class="n">[4]</span>connect</a></nav>
 </header>
 
-<main class="tickets-wrap">
+<main class="wrap">
   <div class="page-head">
-    <div class="signal">&mdash; OFFICE OF CIVIL DISOBEDIENCE &mdash;</div>
-    <h1>Transmissions.</h1>
+    <div class="top">
+      <p class="micro"><span class="idx">2</span><br>office<br><span class="proto">of civil disobedience</span></p>
+      <p class="micro right">tune in<br>&gt;&gt; live frequencies</p>
+    </div>
+    <h1 class="mega led glow">Transmissions.</h1>
   </div>
 
   <div id="events"></div>
 
-  <div id="empty" class="empty-state" hidden>
-    <div class="signal">— NO ACTIVE TRANSMISSIONS —</div>
-    <h2>The next frequency has not been announced.</h2>
-    <p>Members hear it first. Join the list on the <a href="../#join" style="color:var(--ink);">home page</a>, follow
-    <a href="https://posh.vip/g/killingtrends" style="color:var(--ink);">Killing Trends on Posh</a>, or watch
-    <a href="https://www.youtube.com/@killing-trends" style="color:var(--ink);">@killing-trends</a>.</p>
+  <div id="empty" class="empty-state frame" hidden>
+    <div class="micro">&mdash; no active transmissions &mdash;</div>
+    <h2 class="led glow">The next frequency has not been announced.</h2>
+    <p>Members hear it first. Join the list on the <a href="../#join">home page</a>, follow
+    <a href="https://posh.vip/g/killingtrends">Killing Trends on Posh</a>, or watch
+    <a href="https://www.youtube.com/@killing-trends">@killing-trends</a>.</p>
   </div>
 </main>
 
 <footer>
-  <div class="mark">Killing Trends. &mdash; Office of Civil Disobedience</div>
+  <p class="creed-line">Tools that aid the power of the individual to conduct their own education, find their own inspiration, and shape their own environment are sought and promoted by</p>
+  <div class="big led glow">Killing trends.</div>
+  <div class="row">
+    <span>office <span class="proto">of civil disobedience</span></span>
+    <span><a href="https://posh.vip/g/killingtrends" target="_blank" rel="noopener">posh</a> &middot; <a href="https://www.youtube.com/@killing-trends" target="_blank" rel="noopener">youtube</a></span>
+    <span>&copy; 21st century</span>
+  </div>
 </footer>
 
+<script src="../js/events.js"></script>
 <script>
-// ---------------------------------------------------------------------------
-// EVENTS: add each Posh event here. Only poshSlug is needed for ticketing —
-// it's the last part of the event URL (posh.vip/e/<slug>). Fields:
-//   title, date, venue, img (flyer in ../assets/), poshSlug,
-//   embed (true = inline Posh checkout on this page; false = GET TICKETS
-//   button that opens the posh.vip event page), soldOut (optional: true)
-// ---------------------------------------------------------------------------
-var EVENTS = [
-  {
-    title: 'Afterdark in the Art Park',
-    date: 'FRI OCT 23 — 9PM–2AM',
-    venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
-    desc: 'Lee Reynolds, Brett Rubin & Wizdumb. BYOB. Limited capacity — 100 tickets.',
-    img: '../assets/event-afterdark-red.jpg',
-    poshSlug: 'after-dark-in-the-art-park-with-lee-reynolds',
-    embed: true,
-    soldOut: false
-  }
-];
-
+var EVENTS = window.KT_EVENTS || [];
 var wrap = document.getElementById('events');
 if (!EVENTS.length) {
   document.getElementById('empty').hidden = false;
 } else {
-  EVENTS.forEach(function (ev) {
+  EVENTS.forEach(function (ev, i) {
     var card = document.createElement('div');
     card.className = 'event-card';
     card.innerHTML =
-      '<img src="' + ev.img + '" alt="' + ev.title + ' flyer" loading="lazy">' +
+      '<div class="flyer frame"><div class="duo true-color"><img src="../assets/' + ev.img + '" alt="' + ev.title + ' flyer" loading="lazy"></div></div>' +
       '<div>' +
-        '<h2>' + ev.title + '</h2>' +
+        '<span class="num">[' + i + '] project ://transmission</span>' +
+        '<h2 class="led glow">' + ev.title + '</h2>' +
         '<div class="meta">' +
           '<div><span class="label">WHEN&nbsp;&nbsp;</span>' + ev.date + '</div>' +
           '<div><span class="label">WHERE&nbsp;</span>' + ev.venue + '</div>' +
         '</div>' +
         (ev.desc ? '<p class="desc">' + ev.desc + '</p>' : '') +
         (ev.embed && !ev.soldOut
-          ? '<div class="posh-embed"><iframe src="https://posh.vip/embed/checkout/' + ev.poshSlug + '" height="700px" width="100%" style="border:none" title="' + ev.title + ' tickets"></iframe></div>'
+          ? '<div class="posh-embed frame"><iframe src="https://posh.vip/embed/checkout/' + ev.poshSlug + '" height="340" width="100%" style="border:none" title="' + ev.title + ' tickets"></iframe></div>'
           : '<a class="btn-outline' + (ev.soldOut ? ' soldout' : '') + '" href="https://posh.vip/e/' + ev.poshSlug + '" target="_blank" rel="noopener">' + (ev.soldOut ? 'Sold Out' : 'Get Tickets') + '</a>') +
       '</div>';
     wrap.appendChild(card);
   });
 }
 </script>
+<script src="../js/site.js"></script>
 
 </body>
 </html>

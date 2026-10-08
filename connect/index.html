@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect &mdash; Killing Trends</title>
+<meta name="description" content="Connect with Killing Trends — bookings, artists, vendors, collaborations and press. Office of Civil Disobedience, Las Vegas.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Killing Trends">
+<meta property="og:title" content="Connect — Killing Trends">
+<meta property="og:description" content="Connect with Killing Trends — bookings, artists, vendors, collaborations and press. Office of Civil Disobedience, Las Vegas.">
+<meta property="og:url" content="https://killingtrends.com/connect/">
+<meta property="og:image" content="https://killingtrends.com/assets/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<style>
+  .page-head { padding-top: 20px; }
+  .page-head .top { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+  .page-head .mega { font-size: clamp(90px, 24vw, 440px); line-height: .8; }
+  /* ---------- Connect form ---------- */
+  .cx { display: grid; grid-template-columns: repeat(12, 1fr); gap: 50px 20px; }
+  .cx .grp { grid-column: span 6; }
+  .cx .grp.full { grid-column: 1 / -1; }
+  .cx .q { display: flex; gap: 16px; align-items: baseline; margin-bottom: 18px; font-size: 12px; text-transform: lowercase; }
+  .cx .q .big-q { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: clamp(40px, 5.5vw, 96px); line-height: .85; }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; }
+  .fields .wide { grid-column: 1 / -1; }
+  .cx textarea { resize: vertical; min-height: 110px; text-transform: none; }
+  .cx .send { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .cx .send .btn { font-size: 14px; padding: 14px 26px; }
+  .cx .err { color: var(--red); font-size: 12px; min-height: 1.2em; }
+  @media (max-width: 860px) { .cx .grp { grid-column: 1 / -1; } .fields { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav>
+    <a href="../"><span class="n">[0]</span>home</a>
+    <a href="../shelter/"><span class="n">[1]</span>shelter</a>
+    <a href="../tickets/"><span class="n">[2]</span>transmissions</a>
+  </nav>
+  <a class="logo" href="../"><img src="../assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
+  <nav class="nav-right"><a href="../events/"><span class="n">[3]</span>archive</a><a href="./" class="active"><span class="n">[4]</span>connect</a></nav>
+</header>
+
+<main>
+<section class="wrap page-head">
+  <div class="top">
+    <p class="micro"><span class="idx">4</span><br>office<br><span class="proto">of civil disobedience</span></p>
+    <p class="micro right">las vegas<br>nevada<br>&gt;&gt; est. underground</p>
+  </div>
+  <h1 class="mega led glow">Connect.</h1>
+</section>
+
+
+<section class="pad wrap" aria-labelledby="cx-title">
+  <h2 id="cx-title" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Connect form</h2>
+  <form class="cx" id="connect-form" novalidate>
+    <div class="grp full rv">
+      <div class="q"><span class="idx">1</span><span class="big-q led glow">Send a signal.</span></div>
+      <div class="fields">
+        <input type="text" name="name" placeholder="://name" autocomplete="name" aria-label="Name" required>
+        <input type="text" name="contact" id="contact" placeholder="://email or phone" autocomplete="email" aria-label="Email or phone" required>
+        <textarea name="message" class="wide" placeholder="://what are we building" aria-label="Message"></textarea>
+      </div>
+    </div>
+    <div class="grp full send rv">
+      <span class="err" id="cx-err" role="alert"></span>
+      <button type="submit" class="btn">send</button>
+    </div>
+  </form>
+</section>
+</main>
+
+<footer>
+  <p class="creed-line">Tools that aid the power of the individual to conduct their own education, find their own inspiration, and shape their own environment are sought and promoted by</p>
+  <div class="big led glow">Killing trends.</div>
+  <div class="row">
+    <span>office <span class="proto">of civil disobedience</span></span>
+    <span><a href="https://posh.vip/g/killingtrends" target="_blank" rel="noopener">posh</a> &middot; <a href="https://www.youtube.com/@killing-trends" target="_blank" rel="noopener">youtube</a></span>
+    <span>&copy; 21st century</span>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+// Connect form: opens a prefilled email to Killing Trends
+(function () {
+  var f = document.getElementById('connect-form');
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = new FormData(f), err = document.getElementById('cx-err');
+    var name = (d.get('name') || '').trim(), c = (d.get('contact') || '').trim();
+    if (!name || !c) { err.textContent = '// name and contact needed'; return; }
+    err.textContent = '';
+    var body = 'Name: ' + name + '\nContact: ' + c + '\n\n' + (d.get('message') || '');
+    location.href = 'mailto:jesse@fremontphotoco.com?subject=' + encodeURIComponent('KILLING TRENDS — CONNECT') + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+</body>
+</html>
