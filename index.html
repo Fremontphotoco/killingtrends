@@ -13,6 +13,23 @@
 </head>
 <body>
 
+<style>
+.ticket-bar { position: relative; z-index: 20; display: flex; justify-content: center; align-items: center; gap: 16px; height: 46px; overflow: hidden; background: var(--red); color: #000; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 2px; text-decoration: none; white-space: nowrap; }
+.ticket-bar .dot { animation: kt-pulse 1.2s infinite; }
+.ticket-bar .cta { border: 1px solid #000; padding: 4px 12px; }
+.ticket-bar:hover .cta { background: #000; color: var(--red); }
+.site-header { top: 46px; }
+@keyframes kt-pulse { 50% { opacity: .25; } }
+@media (max-width: 720px) { .ticket-bar .mid { display: none; } }
+</style>
+
+<a class="ticket-bar" href="tickets/">
+  <span class="dot">&#9679;</span>
+  <span>FRI OCT 23 &mdash; AFTER DARK IN THE ART PARK</span>
+  <span class="mid">SECRET DOWNTOWN LAS VEGAS LOCATION &middot; 100 TICKETS</span>
+  <span class="cta">GET TICKETS &rarr;</span>
+</a>
+
 <header class="site-header">
   <nav>
     <a href="./" class="active">Home</a>
