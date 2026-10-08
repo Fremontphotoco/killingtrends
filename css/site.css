@@ -120,8 +120,8 @@ h2    { font-size: clamp(48px, 7.5vw, 128px); }
 .site-header nav a .n { color: var(--red-dim); margin-right: 4px; }
 .site-header nav a:hover, .site-header nav a.active { background: var(--red); color: #000; }
 .site-header nav a.active .n, .site-header nav a:hover .n { color: #000; }
-.logo { display: block; width: 46px; height: 46px; border-radius: 50%; background: var(--red); overflow: hidden; }
-.logo img { width: 100%; height: 100%; filter: grayscale(1) contrast(1.6) brightness(1.1); mix-blend-mode: multiply; }
+.logo { display: block; width: 52px; height: 52px; justify-self: center; }
+.logo img { width: 100%; height: 100%; object-fit: contain; }
 @media (max-width: 720px) {
   .site-header { grid-template-columns: 1fr auto; row-gap: 10px; }
   .site-header .logo { grid-column: 2; grid-row: 1; width: 38px; height: 38px; }
