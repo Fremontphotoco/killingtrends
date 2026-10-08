@@ -91,15 +91,6 @@
     .scatter { display: none; }
   }
 
-  /* ---------- Projects ---------- */
-  .projects-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 50px; flex-wrap: wrap; }
-  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 70px 4vw; }
-  .projects a { text-decoration: none; display: block; }
-  .projects .duo { aspect-ratio: 16 / 10; }
-  .projects .p2 { margin-top: 18vw; }
-  .projects a:hover .caption { background: var(--red); color: #000; }
-  @media (max-width: 720px) { .projects { grid-template-columns: 1fr; } .projects .p2 { margin-top: 0; } }
-
   /* ---------- Members ---------- */
   .members { display: grid; grid-template-columns: auto 1fr; gap: 6vw; align-items: center; overflow: hidden; }
   .members .vert { writing-mode: vertical-rl; transform: rotate(180deg); justify-self: start; font-size: clamp(70px, 8.5vw, 150px); }
@@ -167,31 +158,6 @@
       <p>Tools that aid this process are sought and promoted by</p>
     </div>
     <div class="sign rv"><h2 class="big led glow">Killing<br>&nbsp;&nbsp;&nbsp;trends.</h2></div>
-  </div>
-</section>
-
-<section class="pad wrap" aria-labelledby="proj-title">
-  <div class="projects-head">
-    <h2 id="proj-title" class="led glow">://projects.</h2>
-    <p class="micro right">we make nights<br>go out of bounds<br><span class="idx">2</span> purpose</p>
-  </div>
-  <div class="projects">
-    <a class="rv" href="shelter/">
-      <div class="frame duo"><img src="assets/shelter-collage.webp" alt="SHELTER — nuclear-age bunker installation" loading="lazy"></div>
-      <div class="caption"><span class="idx">0</span><span class="what">project<br>://shelter</span><span class="tag">immersive<br>installation</span></div>
-    </a>
-    <a class="rv p2" href="afterdark/">
-      <div class="frame duo"><img src="afterdark/bunker.jpg" alt="Artpark Afterdark — red bunker TV" loading="lazy"></div>
-      <div class="caption"><span class="idx">1</span><span class="what">project<br>://afterdark</span><span class="tag">transmission<br>oct 23</span></div>
-    </a>
-    <a class="rv" href="tickets/">
-      <div class="frame duo"><img src="assets/crowd.jpg" alt="Killing Trends crowd" loading="lazy"></div>
-      <div class="caption"><span class="idx">2</span><span class="what">project<br>://transmissions</span><span class="tag">tickets<br>live</span></div>
-    </a>
-    <a class="rv p2" href="events/">
-      <div class="frame duo"><img src="assets/event-01.jpeg" alt="Last Transmission 001 flyer" loading="lazy"></div>
-      <div class="caption"><span class="idx">3</span><span class="what">project<br>://archive</span><span class="tag">past<br>events</span></div>
-    </a>
   </div>
 </section>
 
