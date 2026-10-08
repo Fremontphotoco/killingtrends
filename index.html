@@ -8,90 +8,178 @@
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,500;0,125,700;0,125,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<style>
+  /* ---------- Hero: stacked giant type around a framed video ---------- */
+  .hero { min-height: calc(100vh - 38px); padding-top: 10px; padding-bottom: 60px; overflow: hidden; }
+  .hero .stack { position: relative; z-index: 1; }
+  .hero .stack .mega { display: block; font-size: clamp(64px, 12.5vw, 230px); white-space: nowrap; }
+  .hero .l2 { padding-left: 16vw; }
+  .hero .l2b { padding-left: 4vw; }
+  .hero .l3 { text-align: right; }
+  .hero .vid {
+    position: absolute; z-index: 2; left: 50%; top: 52%;
+    width: min(36vw, 560px); aspect-ratio: 16 / 10; transform: translate(-50%, -50%);
+  }
+  .hero .vid .duo { width: 100%; height: 100%; }
+  .hero .notes { position: absolute; z-index: 3; font-size: 12px; text-transform: lowercase; line-height: 1.35; }
+  .hero .n1 { left: calc(var(--gutter) + 14px); bottom: 70px; }
+  .hero .n2 { right: calc(var(--gutter) + 14px); bottom: 70px; text-align: right; }
+  .hero .n3 { left: 50%; transform: translateX(-50%); bottom: 26px; }
+  @media (max-width: 720px) {
+    .hero { min-height: auto; padding-bottom: 40px; }
+    .hero .l2, .hero .l2b { padding-left: 0; }
+    .hero .stack .mega { white-space: normal; font-size: 18.5vw; }
+    .hero .vid { position: relative; left: auto; top: auto; transform: none; width: 100%; margin: 28px 0; }
+    .hero .notes { position: static; transform: none; margin-top: 14px; text-align: left; }
+  }
+
+  /* ---------- Manifesto ---------- */
+  .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .manifesto .lead { grid-column: 1 / span 4; font-size: 12px; text-transform: lowercase; }
+  .manifesto .body { grid-column: 6 / span 6; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.5; }
+  .manifesto .body p { margin: 0 0 1.1em; }
+  .manifesto .body p:nth-child(2) { padding-left: 12%; }
+  .manifesto .sign { grid-column: 1 / -1; margin-top: 40px; }
+  .scatter { position: relative; height: 0; }
+  .scatter span { position: absolute; font-size: 12px; text-transform: lowercase; white-space: nowrap; }
+  @media (max-width: 860px) {
+    .manifesto .lead, .manifesto .body { grid-column: 1 / -1; }
+    .scatter { display: none; }
+  }
+
+  /* ---------- Projects ---------- */
+  .projects-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 50px; flex-wrap: wrap; }
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 70px 4vw; }
+  .projects a { text-decoration: none; display: block; }
+  .projects .duo { aspect-ratio: 16 / 10; }
+  .projects .p2 { margin-top: 18vw; }
+  .projects a:hover .caption { background: var(--red); color: #000; }
+  @media (max-width: 720px) { .projects { grid-template-columns: 1fr; } .projects .p2 { margin-top: 0; } }
+
+  /* ---------- Members ---------- */
+  .members { display: grid; grid-template-columns: auto 1fr; gap: 6vw; align-items: center; overflow: hidden; }
+  .members .vert { writing-mode: vertical-rl; transform: rotate(180deg); justify-self: start; font-size: clamp(70px, 8.5vw, 150px); }
+  .members .creed { font-size: clamp(15px, 1.4vw, 19px); margin: 0 0 40px; }
+  .members .creed p { margin: 0; }
+  .members .creed p:nth-child(2) { padding-left: 14%; }
+  .members .creed p:nth-child(3) { padding-left: 28%; }
+  .members form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+  .members form .wide, .members form button { grid-column: 1 / -1; }
+  .members form button { justify-self: start; margin-top: 18px; }
+  .members .vid { aspect-ratio: 16 / 9; margin-bottom: 40px; }
+  @media (max-width: 860px) { .members { grid-template-columns: 1fr; } .members .vert { writing-mode: horizontal-tb; transform: none; font-size: clamp(70px, 18vw, 140px); } }
+</style>
 </head>
 <body>
 
-<style>
-.ticket-bar { position: relative; z-index: 20; display: flex; justify-content: center; align-items: center; gap: 16px; height: 46px; overflow: hidden; background: var(--red); color: #000; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 2px; text-decoration: none; white-space: nowrap; }
-.ticket-bar .dot { animation: kt-pulse 1.2s infinite; }
-.ticket-bar .cta { border: 1px solid #000; padding: 4px 12px; }
-.ticket-bar:hover .cta { background: #000; color: var(--red); }
-.site-header { top: 46px; }
-@keyframes kt-pulse { 50% { opacity: .25; } }
-@media (max-width: 720px) { .ticket-bar .mid { display: none; } }
-</style>
-
 <a class="ticket-bar" href="tickets/">
   <span class="dot">&#9679;</span>
-  <span>FRI OCT 23 &mdash; AFTER DARK IN THE ART PARK</span>
-  <span class="mid">SECRET DOWNTOWN LAS VEGAS LOCATION &middot; 100 TICKETS</span>
-  <span class="cta">GET TICKETS &rarr;</span>
+  <span>fri oct 23 &mdash; afterdark in the art park</span>
+  <span class="mid">secret downtown las vegas location &middot; 100 tickets</span>
+  <span class="cta">get tickets &gt;&gt;</span>
 </a>
 
 <header class="site-header">
   <nav>
-    <a href="./" class="active">Home</a>
-    <a href="shelter/">Shelter</a>
-    <a href="tickets/">Transmissions</a>
+    <a href="./" class="active"><span class="n">[0]</span>home</a>
+    <a href="shelter/"><span class="n">[1]</span>shelter</a>
+    <a href="tickets/"><span class="n">[2]</span>transmissions</a>
   </nav>
   <a class="logo" href="./"><img src="assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
-  <nav class="nav-right"><a href="events/">Events Archive</a></nav>
+  <nav class="nav-right"><a href="events/"><span class="n">[3]</span>events archive</a></nav>
 </header>
 
-<section class="hero">
-  <div class="section-bg">
-    <video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline></video>
+<main>
+
+<section class="hero wrap" aria-labelledby="hero-title">
+  <h1 id="hero-title" class="stack glow">
+    <span class="mega led l1">What will</span>
+    <span class="mega led l2">the dark side</span>
+    <span class="mega led l2b">of innovation</span>
+    <span class="mega led l3">create?</span>
+  </h1>
+  <div class="vid frame">
+    <div class="duo true-color"><video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline aria-label="Killing Trends reel"></video></div>
   </div>
-  <div class="section-inner">
-    <div class="black-box">
-      <h1>What will the dark side of innovation create?</h1>
+  <div class="notes n1"><span class="idx">0</span><br>office<br><span class="proto">of civil disobedience</span></div>
+  <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
+  <div class="notes n3 dim">scroll &darr;</div>
+</section>
+
+<section class="pad wrap" aria-label="Manifesto">
+  <div class="scatter" aria-hidden="true">
+    <span style="left:58%;top:-40px">*</span>
+    <span style="left:4%;top:120px" class="dim">://</span>
+    <span style="right:2%;top:40px">&gt;&gt;</span>
+  </div>
+  <div class="manifesto">
+    <div class="lead rv"><span class="idx">1</span><br><br>not some club<br>that sells a night<br><br>*<br><br>we build tools<br>for the individual</div>
+    <div class="body rv">
+      <p>We are as gods and might as well get good at it. So far, remotely done power and glory&mdash;as via government, big business, formal education, and church&mdash;has succeeded to the point where gross defects obscure actual gains.</p>
+      <p>In response to this dilemma and to these gains a realm of intimate, personal power is developing&mdash;power of the individual to conduct his own education, find his own inspiration, shape his own environment, and share his adventure with whoever is interested.</p>
+      <p>Tools that aid this process are sought and promoted by</p>
     </div>
-    <div></div>
-    <div class="black-box manifesto">
-      <p><strong>We are as gods and might as well get good at it. So far, remotely done power and glory&mdash;as via government, big business, formal education, and church&mdash;has succeeded to the point where gross defects obscure actual gains. In response to this dilemma and to these gains a realm of intimate, personal power is developing&mdash;power of the individual to conduct his own education, find his own inspiration, shape his own environment, and share his adventure with whoever is interested.</strong></p>
-      <p><strong>Tools that aid this process are sought and promoted by</strong></p>
-      <p><strong>KILLING TRENDS.</strong></p>
-    </div>
+    <div class="sign rv"><h2 class="big led glow">Killing<br>&nbsp;&nbsp;&nbsp;trends.</h2></div>
   </div>
 </section>
 
-<section class="promo">
-  <div class="section-bg">
-    <img src="assets/shelter-collage.webp" alt="SHELTER — opens 01.21.23" loading="lazy">
+<section class="pad wrap" aria-labelledby="proj-title">
+  <div class="projects-head">
+    <h2 id="proj-title" class="led glow">://projects.</h2>
+    <p class="micro right">we make nights<br>go out of bounds<br><span class="idx">2</span></p>
   </div>
-  <div class="section-inner">
-    <h2><a href="shelter/" style="text-decoration:none;color:inherit;">Killing Trends presents <span class="red">Shelter.</span></a></h2>
-    <br>
-    <a class="btn-outline" href="shelter/">Explore Project</a>
+  <div class="projects">
+    <a class="rv" href="shelter/">
+      <div class="frame duo"><img src="assets/shelter-collage.webp" alt="SHELTER — nuclear-age bunker installation" loading="lazy"></div>
+      <div class="caption"><span class="idx">0</span><span class="what">project<br>://shelter</span><span class="tag">immersive<br>installation</span></div>
+    </a>
+    <a class="rv p2" href="afterdark/">
+      <div class="frame duo"><img src="afterdark/bunker.jpg" alt="Artpark Afterdark — red bunker TV" loading="lazy"></div>
+      <div class="caption"><span class="idx">1</span><span class="what">project<br>://afterdark</span><span class="tag">transmission<br>oct 23</span></div>
+    </a>
+    <a class="rv" href="tickets/">
+      <div class="frame duo"><img src="assets/crowd.jpg" alt="Killing Trends crowd" loading="lazy"></div>
+      <div class="caption"><span class="idx">2</span><span class="what">project<br>://transmissions</span><span class="tag">tickets<br>live</span></div>
+    </a>
+    <a class="rv p2" href="events/">
+      <div class="frame duo"><img src="assets/event-01.jpeg" alt="Last Transmission 001 flyer" loading="lazy"></div>
+      <div class="caption"><span class="idx">3</span><span class="what">project<br>://archive</span><span class="tag">past<br>events</span></div>
+    </a>
   </div>
 </section>
 
-<section class="members" id="join">
-  <div class="section-bg blurred">
-    <video src="media/members.mp4" autoplay muted loop playsinline></video>
-  </div>
-  <div class="section-inner">
-    <h2>Members Only.</h2>
-    <div class="creed">
-      <p>In our realm,</p>
+<section class="pad wrap members" id="join" aria-labelledby="join-title">
+  <h2 id="join-title" class="vert led glow">Members only.</h2>
+  <div>
+    <div class="vid frame duo rv"><video src="media/members.mp4" autoplay muted loop playsinline aria-hidden="true"></video></div>
+    <div class="creed rv">
+      <p>in our realm,</p>
       <p>we honor the misfits,</p>
       <p>the renegades, and the rule-breakers</p>
     </div>
-    <form id="join-form">
-      <input type="text" name="first" placeholder="First Name" autocomplete="given-name">
-      <input type="text" name="last" placeholder="Last Name" autocomplete="family-name">
-      <input type="email" name="email" placeholder="Email Address" class="wide" autocomplete="email">
-      <button type="submit" class="btn-outline">Join Now</button>
+    <form id="join-form" class="rv">
+      <input type="text" name="first" placeholder="://first name" autocomplete="given-name" aria-label="First name">
+      <input type="text" name="last" placeholder="://last name" autocomplete="family-name" aria-label="Last name">
+      <input type="email" name="email" placeholder="://email" class="wide" autocomplete="email" aria-label="Email" required>
+      <button type="submit" class="btn">join now</button>
     </form>
   </div>
 </section>
 
+</main>
+
 <footer>
-  <div class="mark">Killing Trends. &mdash; Office of Civil Disobedience</div>
+  <div class="big led glow">Killing trends.</div>
+  <div class="row">
+    <span>office <span class="proto">of civil disobedience</span></span>
+    <span><a href="https://posh.vip/g/killingtrends" target="_blank" rel="noopener">posh</a> &middot; <a href="https://www.youtube.com/@killing-trends" target="_blank" rel="noopener">youtube</a></span>
+    <span>&copy; 21st century</span>
+  </div>
 </footer>
 
+<script src="js/site.js"></script>
 <script>
 document.getElementById('join-form').addEventListener('submit', function (e) {
   e.preventDefault();
@@ -100,6 +188,5 @@ document.getElementById('join-form').addEventListener('submit', function (e) {
   location.href = 'mailto:jesse@fremontphotoco.com?subject=' + encodeURIComponent('KILLING TRENDS — JOIN') + '&body=' + body;
 });
 </script>
-
 </body>
 </html>
