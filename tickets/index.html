@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Transmissions &mdash; Killing Trends</title>
 <meta name="description" content="Tickets for Killing Trends transmissions — underground events from the Office of Civil Disobedience, Las Vegas.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Killing Trends">
+<meta property="og:title" content="Transmissions — Killing Trends">
+<meta property="og:description" content="Tickets for Killing Trends transmissions — underground events from the Office of Civil Disobedience, Las Vegas.">
+<meta property="og:url" content="https://killingtrends.com/tickets/">
+<meta property="og:image" content="https://killingtrends.com/assets/og-afterdark.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="../assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +31,10 @@
 }
 .event-card .flyer .duo { aspect-ratio: auto; }
 .event-card .flyer img { width: 100%; height: auto; }
-.event-card .num { font-size: 12px; margin-bottom: 14px; display: block; }
+.event-card .num { font-size: 13px; margin-bottom: 14px; display: block; }
 .event-card h2 { font-size: clamp(54px, 7vw, 120px); }
 .event-card .meta { margin-top: 26px; display: grid; gap: 12px; font-size: 13px; text-transform: lowercase; }
-.event-card .meta .label { color: var(--red-dim); display: inline-block; min-width: 70px; margin: 0; }
+.event-card .meta .label { color: var(--red-soft); display: inline-block; min-width: 70px; margin: 0; }
 .event-card .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
 .event-card .btn-outline { margin-top: 32px; }
 .posh-embed { margin-top: 32px; padding: 8px; }
@@ -69,6 +79,7 @@
 </main>
 
 <footer>
+  <p class="creed-line">Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by</p>
   <div class="big led glow">Killing trends.</div>
   <div class="row">
     <span>office <span class="proto">of civil disobedience</span></span>
@@ -77,27 +88,9 @@
   </div>
 </footer>
 
+<script src="../js/events.js"></script>
 <script>
-// ---------------------------------------------------------------------------
-// EVENTS: add each Posh event here. Only poshSlug is needed for ticketing —
-// it's the last part of the event URL (posh.vip/e/<slug>). Fields:
-//   title, date, venue, img (flyer in ../assets/), poshSlug,
-//   embed (true = inline Posh checkout on this page; false = GET TICKETS
-//   button that opens the posh.vip event page), soldOut (optional: true)
-// ---------------------------------------------------------------------------
-var EVENTS = [
-  {
-    title: 'Afterdark in the Art Park',
-    date: 'FRI OCT 23 — 9PM–2AM',
-    venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
-    desc: 'Lee Reynolds, Brett Rubin & Wizdumb. BYOB. Limited capacity — 100 tickets.',
-    img: '../assets/event-afterdark-red.jpg',
-    poshSlug: 'after-dark-in-the-art-park-with-lee-reynolds',
-    embed: true,
-    soldOut: false
-  }
-];
-
+var EVENTS = window.KT_EVENTS || [];
 var wrap = document.getElementById('events');
 if (!EVENTS.length) {
   document.getElementById('empty').hidden = false;
@@ -106,7 +99,7 @@ if (!EVENTS.length) {
     var card = document.createElement('div');
     card.className = 'event-card';
     card.innerHTML =
-      '<div class="flyer frame"><div class="duo true-color"><img src="' + ev.img + '" alt="' + ev.title + ' flyer" loading="lazy"></div></div>' +
+      '<div class="flyer frame"><div class="duo true-color"><img src="../assets/' + ev.img + '" alt="' + ev.title + ' flyer" loading="lazy"></div></div>' +
       '<div>' +
         '<span class="num">[' + i + '] project ://transmission</span>' +
         '<h2 class="led glow">' + ev.title + '</h2>' +

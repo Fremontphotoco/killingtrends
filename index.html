@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Killing Trends</title>
 <meta name="description" content="Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by KILLING TRENDS.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Killing Trends">
+<meta property="og:title" content="Killing Trends">
+<meta property="og:description" content="Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by KILLING TRENDS.">
+<meta property="og:url" content="https://killingtrends.com/">
+<meta property="og:image" content="https://killingtrends.com/assets/og-afterdark.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,10 +92,10 @@
   .tx-head h2 { font-size: clamp(56px, 10.5vw, 190px); }
   .tx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; align-items: center; }
   .tx .flyer img { width: 100%; height: auto; }
-  .tx .num { display: block; font-size: 12px; margin-bottom: 14px; }
+  .tx .num { display: block; font-size: 13px; margin-bottom: 14px; }
   .tx h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .82; margin: 0; font-size: clamp(54px, 7.5vw, 130px); }
   .tx .meta { margin-top: 26px; display: grid; gap: 10px; font-size: 13px; text-transform: lowercase; }
-  .tx .meta .label { display: inline-block; min-width: 70px; margin: 0; color: var(--red-dim); }
+  .tx .meta .label { display: inline-block; min-width: 70px; margin: 0; color: var(--red-soft); }
   .tx .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
   .tx .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
   @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
@@ -118,8 +128,8 @@
 
 <a class="ticket-bar" href="tickets/">
   <span class="dot">&#9679;</span>
-  <span>fri oct 23 &mdash; afterdark in the art park</span>
-  <span class="mid">secret downtown las vegas location &middot; 100 tickets</span>
+  <span id="bar-what">fri oct 23 &mdash; afterdark in the art park</span>
+  <span class="mid" id="bar-where">secret downtown las vegas location &middot; 100 tickets</span>
   <span class="cta">get tickets &gt;&gt;</span>
 </a>
 
@@ -158,19 +168,19 @@
     <h2 id="tx-title" class="led glow type" aria-label="Current transmissions" data-type="://current|transmissions."></h2>
     <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
   </div>
-  <div class="tx">
-    <a class="flyer frame duo true-color rv" href="tickets/"><img src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer — Lee Reynolds, Brett Rubin, Wizdumb, October 23rd" loading="lazy"></a>
+  <div class="tx" id="tx-next">
+    <a class="flyer frame duo true-color rv" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
     <div class="rv">
       <span class="num">[0] project ://transmission</span>
-      <h3 class="led glow">Afterdark in the art park</h3>
+      <h3 class="led glow" id="tx-name">Afterdark in the art park</h3>
       <div class="meta">
-        <div><span class="label">when</span>fri oct 23 &mdash; 9pm&ndash;2am</div>
-        <div><span class="label">where</span>secret downtown las vegas art park &mdash; location revealed day of show</div>
+        <div><span class="label">when</span><span id="tx-when">fri oct 23 &mdash; 9pm&ndash;2am</span></div>
+        <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
       </div>
-      <p class="desc">Lee Reynolds, Brett Rubin &amp; Wizdumb. BYOB. Limited capacity &mdash; 100 tickets.</p>
+      <p class="desc" id="tx-desc">Lee Reynolds, Brett Rubin &amp; Wizdumb. BYOB. Limited capacity &mdash; 100 tickets.</p>
       <div class="actions">
-        <a class="btn" href="tickets/">get tickets &gt;&gt;</a>
-        <a class="btn" href="afterdark/">enter ://afterdark</a>
+        <a class="btn" id="tx-buy" href="tickets/">get tickets &gt;&gt;</a>
+        <a class="btn" id="tx-page" href="afterdark/">enter ://afterdark</a>
       </div>
     </div>
   </div>
@@ -197,6 +207,7 @@
 </main>
 
 <footer>
+  <p class="creed-line">Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by</p>
   <div class="big led glow">Killing trends.</div>
   <div class="row">
     <span>office <span class="proto">of civil disobedience</span></span>
@@ -205,6 +216,31 @@
   </div>
 </footer>
 
+<script src="js/events.js"></script>
+<script>
+// Current transmission: filled from js/events.js (first event)
+(function () {
+  var ev = (window.KT_EVENTS || [])[0];
+  var sec = document.getElementById('transmissions');
+  var bar = document.querySelector('.ticket-bar');
+  if (!ev) { sec.hidden = true; if (bar) bar.hidden = true; return; }
+  function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+  // ticket bar: "fri oct 23 — afterdark in the art park"
+  set('bar-what', ((ev.date || '').split('—')[0].trim() + ' — ' + ev.title).toLowerCase());
+  set('bar-where', ((ev.venue || '').split('—')[0].trim()).toLowerCase());
+  if (ev.soldOut && bar) bar.querySelector('.cta').textContent = 'sold out';
+  set('tx-name', ev.title);
+  set('tx-when', (ev.date || '').toLowerCase());
+  set('tx-where', (ev.venue || '').toLowerCase());
+  set('tx-desc', ev.desc || '');
+  var img = document.getElementById('tx-img');
+  img.src = 'assets/' + ev.img; img.alt = ev.title + ' flyer';
+  var buy = document.getElementById('tx-buy');
+  if (ev.soldOut) { buy.textContent = 'sold out'; buy.classList.add('soldout'); }
+  var pg = document.getElementById('tx-page');
+  if (ev.page) { pg.href = ev.page; pg.textContent = 'enter ://' + ev.page.replace(/\/$/, ''); } else { pg.remove(); }
+})();
+</script>
 <script src="js/site.js"></script>
 <script>
 // Typewriter headings: <h2 class="type" data-type="line one|line two">

@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Shelter &mdash; Killing Trends</title>
 <meta name="description" content="SHELTER — an 800-square-foot immersive environment that placed visitors inside a meticulously recreated 1950s-style bunker. A Killing Trends project, Las Vegas.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Killing Trends">
+<meta property="og:title" content="Shelter — Killing Trends">
+<meta property="og:description" content="SHELTER — an 800-square-foot immersive environment that placed visitors inside a meticulously recreated 1950s-style bunker. A Killing Trends project, Las Vegas.">
+<meta property="og:url" content="https://killingtrends.com/shelter/">
+<meta property="og:image" content="https://killingtrends.com/assets/og-shelter.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="../assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,14 +47,6 @@
   .slides > .frame { flex: 0 0 min(72vw, 820px); aspect-ratio: 3 / 2; scroll-snap-align: start; }
   .slides .duo { width: 100%; height: 100%; }
 
-  .listen { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: end; }
-  .listen .lede { font-size: clamp(15px, 1.35vw, 18px); max-width: 44ch; margin-top: 24px; }
-  .player-card { display: flex; align-items: center; gap: 22px; padding: 22px; }
-  .player-card button { width: 64px; height: 64px; border: 1px solid var(--red); background: transparent; cursor: pointer; font-size: 18px; }
-  .player-card button:hover { background: var(--red); color: #000; }
-  .player-card .bar { flex: 1; height: 1px; background: var(--red-dim); position: relative; }
-  .player-card .bar i { position: absolute; left: 0; top: -1px; height: 3px; width: 0; background: var(--red); }
-  @media (max-width: 860px) { .listen { grid-template-columns: 1fr; } }
 
   .closing { display: grid; grid-template-columns: 1fr; gap: 30px; }
   .yt { aspect-ratio: 16 / 9; }
@@ -71,7 +73,7 @@
     <p class="micro right">immersive<br>installation<br>las vegas, nv</p>
   </div>
   <h1 class="mega led glow">Shelter.</h1>
-  <div class="collage frame duo"><img src="../assets/shelter-collage.webp" alt="SHELTER — nuclear-age collage. Opens 01.21.23"></div>
+  <div class="collage frame duo"><img src="../assets/shelter-collage.jpg" alt="SHELTER — nuclear-age collage. Opens 01.21.23"></div>
 </section>
 
 <section class="pad wrap">
@@ -122,25 +124,7 @@
     <div class="frame"><div class="duo hover-reveal"><img src="../assets/shelter-s4.jpg" alt="Inside SHELTER" loading="lazy"></div></div>
     <div class="frame"><div class="duo hover-reveal"><img src="../assets/shelter-11.jpg" alt="Inside SHELTER" loading="lazy"></div></div>
   </div>
-  <p class="micro dim" style="margin-top:6px">hover to see it in color &middot; drag or use &lt;&lt; &gt;&gt;</p>
-</section>
-
-<section class="pad wrap">
-  <div class="listen">
-    <div class="rv">
-      <h2 class="led glow">Take a listen.</h2>
-      <p class="lede">Shelter featured a fully immersive audio experience woven throughout the installation. Take a listen to one of the soundscapes that played in the communications room.</p>
-    </div>
-    <div class="player-card frame rv" id="player-card">
-      <button id="play-btn" aria-label="Play">&#9654;</button>
-      <div style="flex:1">
-        <div class="micro">://communications room</div>
-        <div class="bar" style="margin:12px 0"><i id="play-bar"></i></div>
-        <div class="micro dim" id="play-time">4:07</div>
-      </div>
-      <audio id="soundscape" src="../media/communications-room.m4a" preload="none"></audio>
-    </div>
-  </div>
+  <p class="micro dim" style="margin-top:6px">hover or scroll to see it in color &middot; drag or use &lt;&lt; &gt;&gt;</p>
 </section>
 
 <section class="pad wrap">
@@ -155,6 +139,7 @@
 </main>
 
 <footer>
+  <p class="creed-line">Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by</p>
   <div class="big led glow">Killing trends.</div>
   <div class="row">
     <span>office <span class="proto">of civil disobedience</span></span>
@@ -171,23 +156,6 @@ function step() { var f = slides.querySelector('.frame'); return f ? f.getBoundi
 document.querySelector('.strip-ctrl .prev').onclick = function () { slides.scrollBy({ left: -step(), behavior: 'smooth' }); };
 document.querySelector('.strip-ctrl .next').onclick = function () { slides.scrollBy({ left: step(), behavior: 'smooth' }); };
 
-// audio player
-var audio = document.getElementById('soundscape');
-var btn = document.getElementById('play-btn');
-var timeEl = document.getElementById('play-time');
-var bar = document.getElementById('play-bar');
-btn.addEventListener('click', function () { if (audio.paused) { audio.play(); } else { audio.pause(); } });
-audio.addEventListener('play', function () { btn.innerHTML = '&#10074;&#10074;'; btn.setAttribute('aria-label', 'Pause'); });
-audio.addEventListener('pause', function () { btn.innerHTML = '&#9654;'; btn.setAttribute('aria-label', 'Play'); });
-audio.addEventListener('timeupdate', function () {
-  var t = Math.floor(audio.currentTime);
-  timeEl.textContent = Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2) + ' / 4:07';
-  if (audio.duration) bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
-});
-audio.addEventListener('error', function () {
-  document.getElementById('player-card').style.opacity = '0.45';
-  timeEl.textContent = 'soundscape returning soon';
-});
 </script>
 </body>
 </html>

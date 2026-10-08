@@ -1,4 +1,5 @@
-// Killing Trends — shared behaviour: viewport frame, first-visit loader, scroll reveals.
+// Killing Trends — shared behaviour: viewport frame, phone menu, scroll reveals,
+// colour-on-scroll for touch screens.
 (function () {
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -17,30 +18,51 @@
     f.appendChild(a); f.appendChild(b);
   });
 
-  // Percentage loader, once per session
-  var seen = false;
-  try { seen = sessionStorage.getItem('kt-loaded') === '1'; } catch (e) {}
-  if (!seen && !reduce) {
-    var l = document.createElement('div');
-    l.className = 'loader';
-    l.setAttribute('aria-hidden', 'true');
-    l.textContent = '0%';
-    document.body.appendChild(l);
-    var p = 0;
-    var t = setInterval(function () {
-      p = Math.min(100, p + 3 + Math.floor(Math.random() * 9));
-      l.textContent = p + '%';
-      if (p >= 100) {
-        clearInterval(t);
-        setTimeout(function () { l.classList.add('done'); }, 160);
-        try { sessionStorage.setItem('kt-loaded', '1'); } catch (e) {}
-      }
-    }, 45);
+  // Phone menu: one [menu] button opens a full-screen list of the header links
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var links = header.querySelectorAll('nav a');
+    var btn = document.createElement('button');
+    btn.className = 'menu-btn';
+    btn.type = 'button';
+    btn.textContent = 'menu';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'menu-panel');
+    header.appendChild(btn);
+
+    var panel = document.createElement('div');
+    panel.className = 'menu-panel';
+    panel.id = 'menu-panel';
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', 'Site menu');
+    var close = document.createElement('button');
+    close.className = 'btn close';
+    close.type = 'button';
+    close.textContent = 'close';
+    panel.appendChild(close);
+    links.forEach(function (l) {
+      var c = l.cloneNode(true);
+      panel.appendChild(c);
+    });
+    document.body.appendChild(panel);
+
+    function setOpen(open) {
+      panel.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      (open ? panel.querySelector('a') : btn).focus();
+    }
+    btn.addEventListener('click', function () { setOpen(true); });
+    close.addEventListener('click', function () { setOpen(false); });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) setOpen(false); });
   }
+
+  var hasIO = 'IntersectionObserver' in window;
 
   // Reveal on scroll
   var els = document.querySelectorAll('.rv');
-  if (reduce || !('IntersectionObserver' in window)) {
+  if (reduce || !hasIO) {
     els.forEach(function (e) { e.classList.add('in'); });
   } else {
     var io = new IntersectionObserver(function (entries) {
@@ -49,5 +71,13 @@
       });
     }, { rootMargin: '0px 0px -8% 0px' });
     els.forEach(function (e) { io.observe(e); });
+  }
+
+  // Touch screens can't hover: show photos in colour while they sit mid-screen
+  if (hasIO && matchMedia('(hover: none)').matches) {
+    var lit = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle('lit', en.isIntersecting); });
+    }, { rootMargin: '-35% 0px -35% 0px' });
+    document.querySelectorAll('.duo.hover-reveal').forEach(function (d) { lit.observe(d); });
   }
 })();
