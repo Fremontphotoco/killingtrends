@@ -443,3 +443,5 @@ footer {
 }
 
 footer .mark { text-transform: uppercase; letter-spacing: 1.5px; }
+
+.site-header nav.nav-right { justify-content: flex-end; }
