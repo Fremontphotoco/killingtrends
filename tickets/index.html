@@ -27,8 +27,8 @@
 .event-card .meta .label { color: var(--red-dim); display: inline-block; min-width: 70px; margin: 0; }
 .event-card .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
 .event-card .btn-outline { margin-top: 32px; }
-.posh-embed { margin-top: 32px; padding: 14px; }
-.posh-embed iframe { width: 100%; border: 0; min-height: 480px; }
+.posh-embed { margin-top: 32px; padding: 8px; }
+.posh-embed iframe { width: 100%; border: 0; height: 340px; display: block; }
 @media (max-width: 860px) { .event-card { grid-template-columns: 1fr; gap: 28px; } }
 
 .empty-state { margin-top: 90px; padding: 70px 30px; text-align: center; }
@@ -116,7 +116,7 @@ if (!EVENTS.length) {
         '</div>' +
         (ev.desc ? '<p class="desc">' + ev.desc + '</p>' : '') +
         (ev.embed && !ev.soldOut
-          ? '<div class="posh-embed frame"><iframe src="https://posh.vip/embed/checkout/' + ev.poshSlug + '" height="700px" width="100%" style="border:none" title="' + ev.title + ' tickets"></iframe></div>'
+          ? '<div class="posh-embed frame"><iframe src="https://posh.vip/embed/checkout/' + ev.poshSlug + '" height="340" width="100%" style="border:none" title="' + ev.title + ' tickets"></iframe></div>'
           : '<a class="btn-outline' + (ev.soldOut ? ' soldout' : '') + '" href="https://posh.vip/e/' + ev.poshSlug + '" target="_blank" rel="noopener">' + (ev.soldOut ? 'Sold Out' : 'Get Tickets') + '</a>') +
       '</div>';
     wrap.appendChild(card);
