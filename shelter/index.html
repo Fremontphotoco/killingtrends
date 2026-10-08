@@ -21,36 +21,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
 <style>
-  .sh-hero { padding-top: 20px; padding-bottom: 60px; }
-  .sh-hero .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
-  .sh-hero .mega { font-size: clamp(100px, 24vw, 440px); line-height: .78; }
-  .sh-hero .collage { margin-top: -3vw; margin-left: 34%; aspect-ratio: 16 / 9; }
-  @media (max-width: 720px) { .sh-hero .collage { margin: 20px 0 0; } }
+  /* one consistent section rhythm */
+  .sec { padding-top: clamp(56px, 7vw, 110px); }
+  .sec-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--red-dim); padding-top: 12px; margin-bottom: clamp(24px, 3vw, 44px);
+    font-size: 13px; text-transform: lowercase;
+  }
+  .sec-head .l { display: flex; gap: 12px; }
 
-  .intro { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-  .intro .lead { grid-column: 1 / span 3; font-size: 12px; }
-  .intro .body { grid-column: 5 / span 7; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.45; margin: 0; }
-  @media (max-width: 860px) { .intro .lead, .intro .body { grid-column: 1 / -1; } }
+  .sh-hero { padding-top: 20px; }
+  .sh-hero .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .sh-hero .mega { font-size: clamp(96px, 23vw, 420px); line-height: .78; }
+  .sh-hero .collage { margin-top: clamp(18px, 2vw, 30px); aspect-ratio: 2470 / 1800; max-height: 82vh; width: 100%; }
+  .sh-hero .collage img { object-position: center; }
+  @media (max-width: 720px) { .sh-hero .top .right { text-align: left; } }
+
+  .intro { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; align-items: start; }
+  .intro .facts { grid-column: 1 / span 3; display: grid; gap: 14px; margin: 0; font-size: 13px; text-transform: lowercase; }
+  .intro .facts dt { color: var(--red-soft); }
+  .intro .facts dd { margin: 0; }
+  .intro .body { grid-column: 5 / span 8; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.35; margin: 0; }
+  @media (max-width: 860px) { .intro .facts, .intro .body { grid-column: 1 / -1; } .intro .facts { grid-template-columns: repeat(3, 1fr); } }
 
   .split { display: grid; grid-template-columns: 5fr 7fr; gap: 5vw; align-items: center; }
-  .split .lede { font-size: clamp(15px, 1.35vw, 18px); max-width: 44ch; margin-top: 24px; }
+  .split h2 { font-size: clamp(48px, 6.4vw, 110px); }
+  .split .lede { font-size: clamp(15px, 1.35vw, 18px); max-width: 44ch; margin-top: 22px; }
   .split video { width: 100%; aspect-ratio: 16 / 9; background: #000; }
   @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
 
-  .dates { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; border-top: 1px solid var(--red-dim); border-bottom: 1px solid var(--red-dim); padding: 40px 0; }
-  .dates h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: clamp(34px, 5vw, 84px); line-height: .9; margin: 0; }
-  @media (max-width: 720px) { .dates { grid-template-columns: 1fr; } }
+  .dates { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; }
+  .dates .label { color: var(--red-soft); }
+  .dates h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: clamp(34px, 4.6vw, 80px); line-height: .9; margin: 6px 0 0; white-space: nowrap; }
+  @media (max-width: 720px) { .dates { grid-template-columns: 1fr; gap: 28px; } .dates h3 { font-size: 11vw; } }
 
-  .strip-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 16px; }
   .strip-ctrl { display: flex; gap: 8px; }
-  .slides { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 18px; scrollbar-width: thin; scrollbar-color: var(--red) #000; }
-  .slides > .frame { flex: 0 0 min(72vw, 820px); aspect-ratio: 3 / 2; scroll-snap-align: start; }
+  .slides { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 16px; scrollbar-width: thin; scrollbar-color: var(--red) #000; }
+  .slides > .frame { flex: 0 0 min(46vw, 640px); aspect-ratio: 3 / 2; scroll-snap-align: start; }
   .slides .duo { width: 100%; height: 100%; }
+  @media (max-width: 720px) { .slides > .frame { flex-basis: 84vw; } }
 
-
-  .closing { display: grid; grid-template-columns: 1fr; gap: 30px; }
   .yt { aspect-ratio: 16 / 9; }
   .yt iframe { width: 100%; height: 100%; border: 0; }
+  main { padding-bottom: clamp(60px, 8vw, 120px); }
 </style>
 </head>
 <body>
@@ -69,44 +82,50 @@
 
 <section class="sh-hero wrap">
   <div class="top">
-    <p class="micro"><span class="idx">0</span><br>killing trends presents<br>project <span class="proto">shelter</span></p>
-    <p class="micro right">immersive<br>installation<br>las vegas, nv</p>
+    <p class="micro"><span class="idx">1</span> project <span class="proto">shelter</span><br>killing trends presents</p>
+    <p class="micro right">immersive installation<br>las vegas, nv</p>
   </div>
   <h1 class="mega led glow">Shelter.</h1>
   <div class="collage frame duo"><img src="../assets/shelter-collage.jpg" alt="SHELTER — nuclear-age collage. Opens 01.21.23"></div>
 </section>
 
-<section class="pad wrap">
+<section class="sec wrap" aria-labelledby="about-h">
+  <div class="sec-head"><span class="l"><span class="idx">1.1</span><span id="about-h">://about</span></span><span>the installation</span></div>
   <div class="intro">
-    <p class="lead rv"><span class="idx">1</span><br><br>800 sq ft<br>1950s bunker<br><br>&gt;&gt;<br><br>nevada &amp; the<br>atomic age</p>
+    <dl class="facts rv">
+      <div><dt>size</dt><dd>800 sq ft</dd></div>
+      <div><dt>setting</dt><dd>1950s bunker</dd></div>
+      <div><dt>subject</dt><dd>nevada &amp; the atomic age</dd></div>
+    </dl>
     <p class="body rv">An <strong>800-square-foot immersive environment</strong> that placed visitors inside a meticulously recreated 1950s-style bunker, prompting them to consider how daily life and personal space might shift under the pressure of global instability. By grounding viewers in a confined, historically inspired setting, the installation made the vast, abstract nature of nuclear destruction feel immediate and human&mdash;while also illuminating Nevada&rsquo;s deep ties to the era of atomic testing.</p>
   </div>
 </section>
 
-<section class="pad wrap">
+<section class="sec wrap" aria-labelledby="int-h">
+  <div class="sec-head"><span class="l"><span class="idx">1.2</span><span>://interview</span></span><span>brian paco &aacute;lvarez</span></div>
   <div class="split">
     <div class="rv">
-      <h2 class="led glow">Take a step inside.</h2>
+      <h2 id="int-h" class="led glow">Take a step inside.</h2>
       <p class="lede">We spoke with cultural historian Brian Paco &Aacute;lvarez about <em>Shelter&rsquo;s</em> significance and its lasting impact on both viewers and the cultural fabric of the Las Vegas Valley.</p>
     </div>
-    <div class="frame rv"><video src="../media/interview.mp4" poster="../assets/interview-poster.jpg" controls preload="metadata"></video></div>
+    <div class="frame rv"><video src="../media/interview.mp4" poster="../assets/interview-poster.jpg" controls preload="none"></video></div>
   </div>
 </section>
 
-<section class="wrap">
+<section class="sec wrap" aria-label="Timeline">
+  <div class="sec-head"><span class="l"><span class="idx">1.3</span><span>://timeline</span></span><span>2021 &ndash; 2024</span></div>
   <div class="dates">
-    <div class="rv"><span class="label"><span class="idx">2</span> build time</span><h3>Nov 2021 &ndash;<br>Dec 2022</h3></div>
-    <div class="rv"><span class="label"><span class="idx">3</span> opened</span><h3>Jan 21, 2023 &ndash;<br>Mar 1, 2024</h3></div>
+    <div class="rv"><span class="label">build time</span><h3>Nov 2021 &ndash; Dec 2022</h3></div>
+    <div class="rv"><span class="label">open to the public</span><h3>Jan 21, 2023 &ndash; Mar 1, 2024</h3></div>
   </div>
 </section>
 
-<section class="pad wrap" aria-label="Inside Shelter photos">
-  <div class="strip-head">
-    <h2 class="led glow">://inside.</h2>
-    <div class="strip-ctrl">
-      <button class="btn prev" aria-label="Previous image">&lt;&lt;</button>
-      <button class="btn next" aria-label="Next image">&gt;&gt;</button>
-    </div>
+<section class="sec wrap" aria-label="Inside Shelter photos">
+  <div class="sec-head"><span class="l"><span class="idx">1.4</span><span>://inside</span></span>
+    <span class="strip-ctrl">
+      <button class="btn prev" aria-label="Previous photo">&lt;&lt;</button>
+      <button class="btn next" aria-label="Next photo">&gt;&gt;</button>
+    </span>
   </div>
   <div class="slides" id="slides">
     <div class="frame"><div class="duo hover-reveal"><img src="../assets/shelter-09.jpg" alt="Inside SHELTER" loading="lazy"></div></div>
@@ -124,22 +143,20 @@
     <div class="frame"><div class="duo hover-reveal"><img src="../assets/shelter-s4.jpg" alt="Inside SHELTER" loading="lazy"></div></div>
     <div class="frame"><div class="duo hover-reveal"><img src="../assets/shelter-11.jpg" alt="Inside SHELTER" loading="lazy"></div></div>
   </div>
-  <p class="micro dim" style="margin-top:6px">hover or scroll to see it in color &middot; drag or use &lt;&lt; &gt;&gt;</p>
+  <p class="micro dim" style="margin-top:4px">hover or scroll to see it in color</p>
 </section>
 
-<section class="pad wrap">
-  <div class="closing">
-    <div class="row"><span class="micro"><span class="idx">4</span> live from shelter</span><span class="micro">eskuche &middot; ep 002</span></div>
-    <div class="yt frame rv">
-      <iframe src="https://www.youtube.com/embed/KKmsvpkmudc" title="Eskuche | Live From Shelter: EP 002" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-    </div>
+<section class="sec wrap" aria-label="Live from Shelter">
+  <div class="sec-head"><span class="l"><span class="idx">1.5</span><span>://live from shelter</span></span><span>eskuche &middot; ep 002</span></div>
+  <div class="yt frame rv">
+    <iframe src="https://www.youtube.com/embed/KKmsvpkmudc" title="Eskuche | Live From Shelter: EP 002" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <p class="creed-line">Tools that aid the power of the individual to conduct his own education, find his own inspiration, and shape his own environment are sought and promoted by</p>
+  <p class="creed-line">Tools that aid the power of the individual to conduct their own education, find their own inspiration, and shape their own environment are sought and promoted by</p>
   <div class="big led glow">Killing trends.</div>
   <div class="row">
     <span>office <span class="proto">of civil disobedience</span></span>
@@ -152,7 +169,7 @@
 <script>
 // photo strip
 var slides = document.getElementById('slides');
-function step() { var f = slides.querySelector('.frame'); return f ? f.getBoundingClientRect().width + 22 : slides.clientWidth; }
+function step() { var f = slides.querySelector('.frame'); return f ? f.getBoundingClientRect().width + 18 : slides.clientWidth; }
 document.querySelector('.strip-ctrl .prev').onclick = function () { slides.scrollBy({ left: -step(), behavior: 'smooth' }); };
 document.querySelector('.strip-ctrl .next').onclick = function () { slides.scrollBy({ left: step(), behavior: 'smooth' }); };
 

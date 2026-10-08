@@ -86,17 +86,33 @@ h2    { font-size: clamp(48px, 7.5vw, 128px); }
 /* ---------- Ticket bar ---------- */
 .ticket-bar {
   position: relative; z-index: 60;
-  display: flex; justify-content: center; align-items: center; gap: 18px;
-  height: 38px; padding: 0 16px; overflow: hidden;
+  display: flex; justify-content: center; align-items: center; gap: 22px;
+  min-height: 52px; padding: 8px 18px; overflow: hidden;
   background: var(--red); color: #000;
-  font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .04em;
-  text-transform: lowercase; text-decoration: none; white-space: nowrap;
+  text-decoration: none; white-space: nowrap;
 }
-.ticket-bar .dot { animation: kt-pulse 1.2s infinite; }
-.ticket-bar .cta { border: 1px solid #000; padding: 2px 10px; }
-.ticket-bar:hover .cta { background: #000; color: var(--red); }
-@keyframes kt-pulse { 50% { opacity: .2; } }
-@media (max-width: 720px) { .ticket-bar { justify-content: space-between; gap: 10px; font-size: 12px; } .ticket-bar .mid { display: none; } .ticket-bar > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; } }
+.ticket-bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #000; flex: none; animation: kt-pulse 1.2s infinite; }
+.ticket-bar .what {
+  font-family: var(--head); font-stretch: 75%; font-weight: 800;
+  font-size: 19px; letter-spacing: .02em; text-transform: uppercase; line-height: 1;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.ticket-bar .mid {
+  font-family: var(--mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em;
+  padding-left: 22px; border-left: 1px solid rgba(0,0,0,.45);
+}
+.ticket-bar .cta {
+  flex: none; font-family: var(--mono); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  background: #000; color: var(--red); padding: 8px 14px;
+}
+.ticket-bar:hover .cta { background: #fff; color: #000; }
+@keyframes kt-pulse { 50% { opacity: .25; } }
+@media (max-width: 900px) { .ticket-bar .mid { display: none; } }
+@media (max-width: 720px) {
+  .ticket-bar { justify-content: space-between; gap: 12px; padding: 8px 14px; }
+  .ticket-bar .what { font-size: 16px; flex: 1; }
+  .ticket-bar .cta { font-size: 12px; padding: 7px 10px; }
+}
 
 /* ---------- Header ---------- */
 .site-header {
