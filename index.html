@@ -48,6 +48,35 @@
     .hero .notes { position: static; transform: none; margin-top: 14px; text-align: left; }
   }
 
+  /* ---------- Hero glitch: brief slice + jitter bursts on one line at a time ---------- */
+  .hero .stack .mega { position: relative; }
+  .hero .stack .mega::before, .hero .stack .mega::after {
+    content: attr(data-text); position: absolute; inset: 0; padding-left: inherit;
+    pointer-events: none; opacity: 0;
+  }
+  .hero .stack .mega::before { color: var(--red); background: #000; background-clip: content-box; }
+  .hero .stack .mega::after  { color: var(--red-dim); }
+  .hero .stack .mega.glitch { animation: g-base .32s steps(2) 1; }
+  .hero .stack .mega.glitch::before { opacity: 1; animation: g-a .32s steps(3) 1; }
+  .hero .stack .mega.glitch::after  { opacity: 1; animation: g-b .32s steps(3) 1; }
+  @keyframes g-base { 0%,100% { transform: none; } 50% { transform: translateX(.012em); } }
+  @keyframes g-a {
+    0%   { clip-path: inset(8% 0 72% 0);  transform: translateX(-.05em); }
+    33%  { clip-path: inset(55% 0 20% 0); transform: translateX(.04em); }
+    66%  { clip-path: inset(30% 0 52% 0); transform: translateX(-.025em); }
+    100% { clip-path: inset(80% 0 4% 0);  transform: translateX(.03em); }
+  }
+  @keyframes g-b {
+    0%   { clip-path: inset(62% 0 14% 0); transform: translateX(.045em); }
+    33%  { clip-path: inset(12% 0 70% 0); transform: translateX(-.035em); }
+    66%  { clip-path: inset(44% 0 38% 0); transform: translateX(.02em); }
+    100% { clip-path: inset(2% 0 86% 0);  transform: translateX(-.04em); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero .stack .mega.glitch, .hero .stack .mega.glitch::before, .hero .stack .mega.glitch::after { animation: none; opacity: 0; }
+    .hero .stack .mega.glitch { opacity: 1; }
+  }
+
   /* ---------- Manifesto ---------- */
   .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
   .manifesto .lead { grid-column: 1 / span 4; font-size: 12px; text-transform: lowercase; }
@@ -109,10 +138,10 @@
 <section class="hero" id="hero" aria-labelledby="hero-title">
   <div class="pin">
     <h1 id="hero-title" class="stack glow">
-      <span class="mega led l1">What will</span>
-      <span class="mega led l2">the dark side</span>
-      <span class="mega led l2b">of innovation</span>
-      <span class="mega led l3">create?</span>
+      <span class="mega led l1" data-text="What will">What will</span>
+      <span class="mega led l2" data-text="the dark side">the dark side</span>
+      <span class="mega led l2b" data-text="of innovation">of innovation</span>
+      <span class="mega led l3" data-text="create?">create?</span>
     </h1>
     <div class="vid frame">
       <div class="duo true-color"><video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline aria-label="Killing Trends reel"></video></div>
@@ -196,6 +225,24 @@
 </footer>
 
 <script src="js/site.js"></script>
+<script>
+// Hero glitch: every few seconds one headline line glitches for a split second
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var lines = document.querySelectorAll('.hero .stack .mega');
+  function burst() {
+    if (!document.hidden) {
+      var l = lines[Math.floor(Math.random() * lines.length)];
+      l.classList.remove('glitch'); void l.offsetWidth; l.classList.add('glitch');
+      // occasionally a quick double hit
+      if (Math.random() < .35) setTimeout(function () { l.classList.remove('glitch'); void l.offsetWidth; l.classList.add('glitch'); }, 380);
+    }
+    setTimeout(burst, 1800 + Math.random() * 3200);
+  }
+  lines.forEach(function (l) { l.addEventListener('animationend', function (e) { if (e.animationName === 'g-base') l.classList.remove('glitch'); }); });
+  setTimeout(burst, 1200);
+})();
+</script>
 <script>
 // Hero zoom: the page opens on the type alone; scrolling opens the video frame in
 // the middle of it, then grows the video until it fills the screen.
