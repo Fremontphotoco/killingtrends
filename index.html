@@ -152,6 +152,14 @@
   .members form .wide, .members form button { grid-column: 1 / -1; }
   .members form button { justify-self: start; margin-top: 18px; }
   .members .vid { aspect-ratio: 16 / 9; margin-bottom: 40px; }
+  .members form .consent { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; cursor: pointer; font-size: 13px; line-height: 1.45; text-transform: none; }
+  .members form .consent input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .members form .consent .box { flex: none; width: 20px; height: 20px; border: 1px solid var(--red); margin-top: 1px; position: relative; }
+  .members form .consent input:checked + .box { background: var(--red); }
+  .members form .consent input:checked + .box::after { content: ""; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border: solid #000; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .members form .consent input:focus-visible + .box { outline: 1px dashed var(--red); outline-offset: 3px; }
+  .members form .join-err { grid-column: 1 / -1; margin: 0; min-height: 1.3em; }
+
   @media (max-width: 860px) { .members { grid-template-columns: 1fr; } .members .vert { writing-mode: horizontal-tb; transform: none; font-size: clamp(70px, 18vw, 140px); } }
 </style>
 </head>
@@ -225,10 +233,16 @@
       <p>we honor the misfits,</p>
       <p>the renegades, and the rule-breakers</p>
     </div>
-    <form id="join-form" class="rv">
+    <form id="join-form" class="rv" novalidate>
       <input type="text" name="first" placeholder="://first name" autocomplete="given-name" aria-label="First name">
       <input type="text" name="last" placeholder="://last name" autocomplete="family-name" aria-label="Last name">
       <input type="email" name="email" placeholder="://email" class="wide" autocomplete="email" aria-label="Email" required>
+      <label class="consent wide">
+        <input type="checkbox" name="marketing" value="yes" required>
+        <span class="box" aria-hidden="true"></span>
+        <span class="txt">I agree to receive emails from Killing Trends about events, tickets and news. Unsubscribe anytime.</span>
+      </label>
+      <p class="join-err micro" id="join-err" role="status" aria-live="polite"></p>
       <button type="submit" class="btn">join now</button>
     </form>
   </div>
@@ -399,10 +413,15 @@
 })();
 </script>
 <script>
+document.getElementById('join-form').marketing.addEventListener('change', function () { if (this.checked) document.getElementById('join-err').textContent = ''; });
 document.getElementById('join-form').addEventListener('submit', function (e) {
   e.preventDefault();
-  var f = new FormData(this);
-  var body = encodeURIComponent('Name: ' + f.get('first') + ' ' + f.get('last') + '\nEmail: ' + f.get('email'));
+  var f = new FormData(this), err = document.getElementById('join-err');
+  if (!this.email.value.trim() || !this.email.checkValidity()) { err.textContent = '// a real email is needed'; this.email.focus(); return; }
+  if (!this.marketing.checked) { err.textContent = '// tick the box to agree to emails, then join'; this.marketing.focus(); return; }
+  err.textContent = '';
+  var body = encodeURIComponent('Name: ' + f.get('first') + ' ' + f.get('last') + '\nEmail: ' + f.get('email') +
+    '\nMarketing consent: YES — agreed to receive emails about events, tickets and news (' + new Date().toISOString().slice(0, 10) + ')');
   location.href = 'mailto:killtrends@gmail.com?subject=' + encodeURIComponent('KILLING TRENDS — JOIN') + '&body=' + body;
 });
 </script>
