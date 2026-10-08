@@ -66,21 +66,32 @@
   }
   .hero .stack .mega::before { color: var(--red); background: #000; background-clip: content-box; }
   .hero .stack .mega::after  { color: var(--red-dim); }
-  .hero .stack .mega.glitch { animation: g-base .32s steps(2) 1; }
-  .hero .stack .mega.glitch::before { opacity: 1; animation: g-a .32s steps(3) 1; }
-  .hero .stack .mega.glitch::after  { opacity: 1; animation: g-b .32s steps(3) 1; }
-  @keyframes g-base { 0%,100% { transform: none; } 50% { transform: translateX(.012em); } }
+  .hero .stack .mega.glitch { animation: g-base .5s steps(5) 1; }
+  .hero .stack .mega.glitch::before { opacity: 1; animation: g-a .5s steps(5) 1; }
+  .hero .stack .mega.glitch::after  { opacity: 1; animation: g-b .5s steps(5) 1; }
+  @keyframes g-base {
+    0%   { transform: none; }
+    20%  { transform: translateX(-.04em) skewX(-4deg); }
+    40%  { transform: translateX(.05em); opacity: .7; }
+    60%  { transform: translateX(-.02em) skewX(3deg); }
+    80%  { transform: translateX(.03em); opacity: .85; }
+    100% { transform: none; opacity: 1; }
+  }
   @keyframes g-a {
-    0%   { clip-path: inset(8% 0 72% 0);  transform: translateX(-.05em); }
-    33%  { clip-path: inset(55% 0 20% 0); transform: translateX(.04em); }
-    66%  { clip-path: inset(30% 0 52% 0); transform: translateX(-.025em); }
-    100% { clip-path: inset(80% 0 4% 0);  transform: translateX(.03em); }
+    0%   { clip-path: inset(6% 0 70% 0);  transform: translateX(-.14em); }
+    20%  { clip-path: inset(52% 0 22% 0); transform: translateX(.12em); }
+    40%  { clip-path: inset(28% 0 50% 0); transform: translateX(-.09em); }
+    60%  { clip-path: inset(74% 0 6% 0);  transform: translateX(.16em); }
+    80%  { clip-path: inset(14% 0 64% 0); transform: translateX(-.06em); }
+    100% { clip-path: inset(40% 0 44% 0); transform: translateX(.1em); }
   }
   @keyframes g-b {
-    0%   { clip-path: inset(62% 0 14% 0); transform: translateX(.045em); }
-    33%  { clip-path: inset(12% 0 70% 0); transform: translateX(-.035em); }
-    66%  { clip-path: inset(44% 0 38% 0); transform: translateX(.02em); }
-    100% { clip-path: inset(2% 0 86% 0);  transform: translateX(-.04em); }
+    0%   { clip-path: inset(60% 0 12% 0); transform: translateX(.13em); }
+    20%  { clip-path: inset(10% 0 72% 0); transform: translateX(-.15em); }
+    40%  { clip-path: inset(42% 0 36% 0); transform: translateX(.08em); }
+    60%  { clip-path: inset(2% 0 84% 0);  transform: translateX(-.12em); }
+    80%  { clip-path: inset(66% 0 18% 0); transform: translateX(.1em); }
+    100% { clip-path: inset(30% 0 56% 0); transform: translateX(-.07em); }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero .stack .mega.glitch, .hero .stack .mega.glitch::before, .hero .stack .mega.glitch::after { animation: none; opacity: 0; }
@@ -282,21 +293,24 @@
 })();
 </script>
 <script>
-// Hero glitch: every few seconds one headline line glitches for a split second
+// Hero glitch: every 1–3 seconds one or two headline lines glitch hard for half a second
 (function () {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var lines = document.querySelectorAll('.hero .stack .mega');
+  function hit(l) { l.classList.remove('glitch'); void l.offsetWidth; l.classList.add('glitch'); }
   function burst() {
     if (!document.hidden) {
-      var l = lines[Math.floor(Math.random() * lines.length)];
-      l.classList.remove('glitch'); void l.offsetWidth; l.classList.add('glitch');
-      // occasionally a quick double hit
-      if (Math.random() < .35) setTimeout(function () { l.classList.remove('glitch'); void l.offsetWidth; l.classList.add('glitch'); }, 380);
+      var i = Math.floor(Math.random() * lines.length), l = lines[i];
+      hit(l);
+      // often a second line glitches with it
+      if (Math.random() < .45) { var j = (i + 1 + Math.floor(Math.random() * (lines.length - 1))) % lines.length; setTimeout(function () { hit(lines[j]); }, 90); }
+      // and frequently a quick re-hit
+      if (Math.random() < .55) setTimeout(function () { hit(l); }, 560);
     }
-    setTimeout(burst, 1800 + Math.random() * 3200);
+    setTimeout(burst, 1100 + Math.random() * 2000);
   }
   lines.forEach(function (l) { l.addEventListener('animationend', function (e) { if (e.animationName === 'g-base') l.classList.remove('glitch'); }); });
-  setTimeout(burst, 1200);
+  setTimeout(burst, 700);
 })();
 </script>
 <script>
