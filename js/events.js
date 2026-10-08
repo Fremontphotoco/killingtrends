@@ -13,10 +13,12 @@
 //   embed      true = inline Posh checkout on /tickets/; false = button to posh.vip
 //   soldOut    true when sold out
 //   bar        short line for the red banner at the top of the homepage
+//   headline   optional big header for the homepage section; '|' starts a new line
 // ---------------------------------------------------------------------------
 window.KT_EVENTS = [
   {
     title: 'Afterdark in the Art Park',
+    headline: 'Lee Reynolds|in the Art Park',
     date: 'FRI OCT 23 — 9PM–2AM',
     venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
     desc: 'Lee Reynolds, Brett Rubin & Wizdumb. BYOB. Limited capacity — 100 tickets.',

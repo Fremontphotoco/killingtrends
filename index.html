@@ -64,6 +64,7 @@
     .tx-head h2 { font-size: 12.8vw; }
     .tx-head { margin-bottom: 28px; }
     .tx { gap: 24px; }
+    .tx .meta > div { grid-template-columns: 4.2em 1fr; }
     .members { gap: 22px; }
     .members .vid { margin-bottom: 26px; }
     .members .creed { margin-bottom: 26px; }
@@ -118,10 +119,13 @@
   .tx .flyer img { width: 100%; height: auto; }
   .tx .num { display: block; font-size: 13px; margin-bottom: 14px; }
   .tx h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .82; margin: 0; font-size: clamp(54px, 7.5vw, 130px); }
-  .tx .meta { margin-top: 26px; display: grid; gap: 10px; font-size: 13px; text-transform: lowercase; }
-  .tx .meta .label { display: inline-block; min-width: 70px; margin: 0; color: var(--red-soft); }
-  .tx .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
-  .tx .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .tx .meta { margin-top: 30px; display: grid; gap: 14px; font-size: clamp(17px, 1.55vw, 24px); line-height: 1.3; text-transform: lowercase; }
+  .tx .meta > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; }
+  .tx .meta .label { margin: 0; color: var(--red-soft); font-size: .72em; letter-spacing: .06em; padding-top: .3em; }
+  .tx .desc { margin-top: 26px; font-size: clamp(19px, 1.9vw, 30px); line-height: 1.3; max-width: 34ch; }
+  .tx .actions { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .tx .btn.buy { font-size: clamp(14px, 1.15vw, 17px); padding: 15px 26px; background: var(--red); color: #000; font-weight: 700; }
+  .tx .btn.buy:hover { background: #000; color: var(--red); }
   @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
   .type .ch { visibility: hidden; }
   .type .ch.on { visibility: visible; }
@@ -196,15 +200,15 @@
     <a class="flyer frame duo true-color rv" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
     <div class="rv">
       <span class="num">[0] project ://transmission</span>
-      <h3 class="led glow" id="tx-name">Afterdark in the art park</h3>
+      <h3 class="led glow" id="tx-name"><span style="display:block">Lee Reynolds</span><span style="display:block">in the art park</span></h3>
+      <div class="actions">
+        <a class="btn buy" id="tx-buy" href="tickets/">get tickets &gt;&gt;</a>
+      </div>
       <div class="meta">
         <div><span class="label">when</span><span id="tx-when">fri oct 23 &mdash; 9pm&ndash;2am</span></div>
         <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
       </div>
       <p class="desc" id="tx-desc">Lee Reynolds, Brett Rubin &amp; Wizdumb. BYOB. Limited capacity &mdash; 100 tickets.</p>
-      <div class="actions">
-        <a class="btn" id="tx-buy" href="tickets/">get tickets &gt;&gt;</a>
-      </div>
     </div>
   </div>
 </section>
@@ -252,7 +256,12 @@
   set('bar-what', (ev.date || '').split('—')[0].trim() + ' — ' + ev.title);
   set('bar-where', ev.bar || (ev.venue || '').split('—')[0].trim());
   if (ev.soldOut && bar) bar.querySelector('.cta').textContent = 'Sold out';
-  set('tx-name', ev.title);
+  // homepage header: ev.headline if set ("line one|line two"), else the title
+  var nm = document.getElementById('tx-name');
+  nm.textContent = '';
+  (ev.headline || ev.title).split('|').forEach(function (line) {
+    var sp = document.createElement('span'); sp.style.display = 'block'; sp.textContent = line; nm.appendChild(sp);
+  });
   set('tx-when', (ev.date || '').toLowerCase());
   set('tx-where', (ev.venue || '').toLowerCase());
   set('tx-desc', ev.desc || '');
