@@ -29,6 +29,7 @@
     transform: translate(-50%, -50%); will-change: transform;
   }
   .hero .vid .duo { width: 100%; height: 100%; }
+  @media (min-width: 721px) and (prefers-reduced-motion: no-preference) { .hero .vid { opacity: 0; clip-path: inset(50% 8%); } }
   .hero .notes { position: absolute; z-index: 3; font-size: 12px; text-transform: lowercase; line-height: 1.35; will-change: opacity; }
   .hero .n1 { left: calc(var(--gutter) + 14px); bottom: 34px; }
   .hero .n2 { right: calc(var(--gutter) + 14px); bottom: 34px; text-align: right; }
@@ -118,7 +119,7 @@
     </div>
     <div class="notes n1"><span class="idx">0</span><br>office<br><span class="proto">of civil disobedience</span></div>
     <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
-    <div class="notes n3 dim">scroll to zoom &darr;</div>
+    <div class="notes n3 dim">scroll &darr;</div>
     <div class="bar" aria-hidden="true"><i id="heroBar"></i></div>
   </div>
 </section>
@@ -196,8 +197,8 @@
 
 <script src="js/site.js"></script>
 <script>
-// Hero zoom: while the hero is pinned, the type zooms past the viewer and the
-// framed video grows until it fills the screen.
+// Hero zoom: the page opens on the type alone; scrolling opens the video frame in
+// the middle of it, then grows the video until it fills the screen.
 (function () {
   var hero = document.getElementById('hero');
   var stack = hero.querySelector('.stack');
@@ -209,7 +210,7 @@
   function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
   function clamp(v) { return Math.max(0, Math.min(1, v)); }
   function reset() {
-    stack.style.transform = stack.style.opacity = vid.style.transform = '';
+    stack.style.transform = stack.style.opacity = vid.style.transform = vid.style.clipPath = vid.style.opacity = '';
     notes.forEach(function (n) { n.style.opacity = ''; });
   }
   function update() {
@@ -217,15 +218,17 @@
     if (mq.matches) { reset(); return; }
     var r = hero.getBoundingClientRect();
     var p = clamp(-r.top / (r.height - innerHeight));
-    // type: zooms toward the viewer and dissolves over the first 60%
-    var tp = ease(clamp(p / .6));
-    stack.style.transform = 'scale(' + (1 + tp * 2.4) + ')';
-    stack.style.opacity = String(1 - clamp(p / .5));
-    // video: grows from its frame to cover the whole viewport
-    var vp = ease(clamp((p - .08) / .82));
+    // 1) 0–45%: text holds; the video frame opens from a thin line in the centre
+    var op = ease(clamp(p / .45));
+    vid.style.clipPath = 'inset(calc(' + ((1 - op) * 50) + '% - 4px) calc(' + ((1 - op) * 8) + '% - 4px))';
+    vid.style.opacity = String(clamp(p / .06));
+    // 2) 45–100%: the video grows to cover the screen while the type falls back
+    var gp = ease(clamp((p - .45) / .55));
     var w = vid.offsetWidth, h = vid.offsetHeight;
     var cover = Math.max(innerWidth / w, innerHeight / h) * 1.02;
-    vid.style.transform = 'translate(-50%, -50%) scale(' + (1 + (cover - 1) * vp) + ')';
+    vid.style.transform = 'translate(-50%, -50%) scale(' + (1 + (cover - 1) * gp) + ')';
+    stack.style.transform = 'scale(' + (1 + gp * .35) + ')';
+    stack.style.opacity = String(1 - gp * .85);
     notes.forEach(function (n) { n.style.opacity = String(1 - clamp(p / .25)); });
     bar.style.width = (p * 100) + '%';
   }
