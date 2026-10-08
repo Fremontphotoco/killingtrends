@@ -89,6 +89,16 @@
   .tx .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
   .tx .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
   @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
+  .type .ch { visibility: hidden; }
+  .type .ch.on { visibility: visible; }
+  .type .ch.cur { position: relative; }
+  .type .ch.cur::after {
+    content: ""; position: absolute; left: 100%; top: .06em; width: .42em; height: .74em;
+    background: var(--red); animation: tcur .7s steps(1) infinite;
+  }
+  .type.done .ch.cur::after { animation-duration: 1s; }
+  @keyframes tcur { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .type .ch { visibility: visible; } .type .ch.cur::after { animation: none; opacity: 0; } }
 
   /* ---------- Manifesto ---------- */
   .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
@@ -159,7 +169,7 @@
 
 <section class="pad wrap" id="transmissions" aria-labelledby="tx-title">
   <div class="tx-head">
-    <h2 id="tx-title" class="led glow">://transmissions.</h2>
+    <h2 id="tx-title" class="led glow type" aria-label="Current transmissions" data-type="://current|transmissions."></h2>
     <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
   </div>
   <div class="tx">
@@ -227,6 +237,45 @@
 </footer>
 
 <script src="js/site.js"></script>
+<script>
+// Typewriter headings: <h2 class="type" data-type="line one|line two">
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.type[data-type]').forEach(function (el) {
+    var chars = [];
+    el.data = el.getAttribute('data-type').split('|');
+    el.data.forEach(function (line, li) {
+      var row = document.createElement('span');
+      row.style.display = 'block';
+      row.setAttribute('aria-hidden', 'true');
+      line.split('').forEach(function (c) {
+        var sp = document.createElement('span');
+        sp.className = 'ch';
+        sp.textContent = c === ' ' ? '\u00a0' : c;
+        row.appendChild(sp); chars.push(sp);
+      });
+      el.appendChild(row);
+    });
+    if (reduce) { chars.forEach(function (c) { c.classList.add('on'); }); return; }
+    var started = false;
+    function run() {
+      if (started) return; started = true;
+      var i = 0;
+      (function next() {
+        if (i > 0) chars[i - 1].classList.remove('cur');
+        if (i >= chars.length) { chars[chars.length - 1].classList.add('cur'); el.classList.add('done'); return; }
+        chars[i].classList.add('on', 'cur');
+        var c = chars[i].textContent; i++;
+        setTimeout(next, c === '/' || c === ':' ? 55 : 70 + Math.random() * 70);
+      })();
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { run(); io.disconnect(); } }, { threshold: .4 });
+      io.observe(el);
+    } else run();
+  });
+})();
+</script>
 <script>
 // Hero glitch: every few seconds one headline line glitches for a split second
 (function () {
