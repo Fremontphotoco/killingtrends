@@ -12,7 +12,6 @@
 //   poshSlug   last part of the Posh event URL (posh.vip/e/<slug>)
 //   embed      true = inline Posh checkout on /tickets/; false = button to posh.vip
 //   soldOut    true when sold out
-//   page       optional extra link shown on the homepage, e.g. 'afterdark/'
 //   bar        short line for the red banner at the top of the homepage
 // ---------------------------------------------------------------------------
 window.KT_EVENTS = [
@@ -25,7 +24,6 @@ window.KT_EVENTS = [
     poshSlug: 'after-dark-in-the-art-park-with-lee-reynolds',
     embed: true,
     soldOut: false,
-    page: 'afterdark/',
     bar: 'Downtown Las Vegas · BYOB · 100 tickets'
   }
 ];

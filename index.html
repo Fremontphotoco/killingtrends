@@ -51,12 +51,25 @@
     .hero .bar { display: none; }
   }
   @media (max-width: 720px) {
-    .hero .l1, .hero .l2, .hero .l2b, .hero .l3 { margin-left: 0; padding-left: 0; }
-    .hero .stack { font-size: 18.5vw; }
-    .hero .stack .mega { white-space: normal; width: auto; }
-    .hero .vid { position: relative; left: auto; top: auto; transform: none; width: 100%; margin: 28px 0; }
-    .hero .notes { position: static; transform: none; margin-top: 14px; text-align: left; }
+    /* four tidy lines, same as desktop, sized so the longest line fits */
+    .hero .pin { padding-top: 22px; padding-bottom: 28px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+    .hero .stack { grid-column: 1 / -1; font-size: 15.6vw; }
+    .hero .stack .mega { white-space: nowrap; width: auto; line-height: .84; }
+    .hero .l1, .hero .l2, .hero .l2b { margin-left: 0; padding-left: 0; }
+    .hero .l3 { padding-left: 1.2em; }
+    .hero .vid { grid-column: 1 / -1; position: relative; left: auto; top: auto; transform: none; width: 100%; margin: 26px 0 18px; aspect-ratio: 4 / 3; }
+    .hero .notes { position: static; transform: none; margin: 0; text-align: left; }
+    .hero .n2 { text-align: right; }
+    .hero .n3 { display: none; }
+    .tx-head h2 { font-size: 12.8vw; }
+    .tx-head { margin-bottom: 28px; }
+    .tx { gap: 24px; }
+    .members { gap: 22px; }
+    .members .vid { margin-bottom: 26px; }
+    .members .creed { margin-bottom: 26px; }
   }
+  /* the reel has wide black margins baked in: crop into the action */
+  .hero .vid video { transform: scale(1.45); }
 
   /* ---------- Hero glitch: brief slice + jitter bursts on one line at a time ---------- */
   .hero .stack .mega { position: relative; }
@@ -141,7 +154,7 @@
   <span class="dot" aria-hidden="true"></span>
   <span class="what" id="bar-what">Fri Oct 23 &mdash; Afterdark in the Art Park</span>
   <span class="mid" id="bar-where">Downtown Las Vegas &middot; BYOB &middot; 100 tickets</span>
-  <span class="cta">Get tickets &rarr;</span>
+  <span class="cta"><span class="long">Get </span>tickets &rarr;</span>
 </a>
 
 <header class="site-header">
@@ -191,7 +204,6 @@
       <p class="desc" id="tx-desc">Lee Reynolds, Brett Rubin &amp; Wizdumb. BYOB. Limited capacity &mdash; 100 tickets.</p>
       <div class="actions">
         <a class="btn" id="tx-buy" href="tickets/">get tickets &gt;&gt;</a>
-        <a class="btn" id="tx-page" href="afterdark/">enter ://afterdark</a>
       </div>
     </div>
   </div>
@@ -200,7 +212,7 @@
 <section class="pad wrap members" id="join" aria-labelledby="join-title">
   <h2 id="join-title" class="vert led glow">Members only.</h2>
   <div>
-    <div class="vid frame duo rv"><video src="media/members.mp4" autoplay muted loop playsinline aria-hidden="true"></video></div>
+    <div class="vid frame duo rv"><video src="media/members.mp4" poster="assets/members-poster.jpg" autoplay muted loop playsinline aria-hidden="true"></video></div>
     <div class="creed rv">
       <p>in our realm,</p>
       <p>we honor the misfits,</p>
@@ -248,8 +260,6 @@
   img.src = 'assets/' + ev.img; img.alt = ev.title + ' flyer';
   var buy = document.getElementById('tx-buy');
   if (ev.soldOut) { buy.textContent = 'sold out'; buy.classList.add('soldout'); }
-  var pg = document.getElementById('tx-page');
-  if (ev.page) { pg.href = ev.page; pg.textContent = 'enter ://' + ev.page.replace(/\/$/, ''); } else { pg.remove(); }
 })();
 </script>
 <script src="js/site.js"></script>

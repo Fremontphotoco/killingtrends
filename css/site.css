@@ -252,3 +252,31 @@ footer a:hover { background: var(--red); color: #000; }
   .menu-btn::before { content: "["; } .menu-btn::after { content: "]"; }
 }
 body.menu-open { overflow: hidden; }
+
+/* =========================================================================
+   Phone layout pass
+   ========================================================================= */
+@media (max-width: 720px) {
+  :root { --gutter: 10px; }
+  .pad { padding-top: 64px; padding-bottom: 64px; }
+
+  /* page-title side notes: read left-to-right, no odd right alignment */
+  body .page-head .top, body .sh-hero .top { flex-wrap: nowrap; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  body .page-head .top > *, body .sh-hero .top > * { margin: 0; }
+  .page-head .top .right, .sh-hero .top .right { text-align: right; }
+  .tx-head { gap: 10px 24px; }
+  .tx-head .right { text-align: left; }
+
+  /* forms: 16px inputs stop iOS zooming in on tap; full-width tap targets */
+  input, textarea { font-size: 16px; padding: 14px 0; }
+  form .btn, .actions .btn, .cx .send .btn { width: 100%; justify-content: center; padding: 15px 16px; font-size: 14px; }
+  .actions { flex-direction: column; }
+
+  /* footer: stack the small print */
+  footer { padding-top: 56px; }
+  footer .row { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  /* ticket bar: short CTA so the event name fits */
+  .ticket-bar .cta .long { display: none; }
+  .ticket-bar .what { font-size: 14px; white-space: normal; line-height: 1.1; overflow: visible; }
+}
