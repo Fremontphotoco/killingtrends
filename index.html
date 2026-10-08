@@ -100,20 +100,6 @@
   @keyframes tcur { 50% { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { .type .ch { visibility: visible; } .type .ch.cur::after { animation: none; opacity: 0; } }
 
-  /* ---------- Manifesto ---------- */
-  .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-  .manifesto .lead { grid-column: 1 / span 4; font-size: 12px; text-transform: lowercase; }
-  .manifesto .body { grid-column: 6 / span 6; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.5; }
-  .manifesto .body p { margin: 0 0 1.1em; }
-  .manifesto .body p:nth-child(2) { padding-left: 12%; }
-  .manifesto .sign { grid-column: 1 / -1; margin-top: 40px; }
-  .scatter { position: relative; height: 0; }
-  .scatter span { position: absolute; font-size: 12px; text-transform: lowercase; white-space: nowrap; }
-  @media (max-width: 860px) {
-    .manifesto .lead, .manifesto .body { grid-column: 1 / -1; }
-    .scatter { display: none; }
-  }
-
   /* ---------- Members ---------- */
   .members { display: grid; grid-template-columns: auto 1fr; gap: 6vw; align-items: center; overflow: hidden; }
   .members .vert { writing-mode: vertical-rl; transform: rotate(180deg); justify-self: start; font-size: clamp(70px, 8.5vw, 150px); }
@@ -144,7 +130,7 @@
     <a href="tickets/"><span class="n">[2]</span>transmissions</a>
   </nav>
   <a class="logo" href="./"><img src="assets/logo.png" alt="Killing Trends — Office of Civil Disobedience"></a>
-  <nav class="nav-right"><a href="events/"><span class="n">[3]</span>events archive</a></nav>
+  <nav class="nav-right"><a href="events/"><span class="n">[3]</span>events archive</a><a href="connect/"><span class="n">[4]</span>connect</a></nav>
 </header>
 
 <main>
@@ -187,23 +173,6 @@
         <a class="btn" href="afterdark/">enter ://afterdark</a>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="pad wrap" aria-label="Manifesto">
-  <div class="scatter" aria-hidden="true">
-    <span style="left:58%;top:-40px">*</span>
-    <span style="left:4%;top:120px" class="dim">://</span>
-    <span style="right:2%;top:40px">&gt;&gt;</span>
-  </div>
-  <div class="manifesto">
-    <div class="lead rv"><span class="idx">1</span> purpose</div>
-    <div class="body rv">
-      <p>We are as gods and might as well get good at it. So far, remotely done power and glory&mdash;as via government, big business, formal education, and church&mdash;has succeeded to the point where gross defects obscure actual gains.</p>
-      <p>In response to this dilemma and to these gains a realm of intimate, personal power is developing&mdash;power of the individual to conduct his own education, find his own inspiration, shape his own environment, and share his adventure with whoever is interested.</p>
-      <p>Tools that aid this process are sought and promoted by</p>
-    </div>
-    <div class="sign rv"><h2 class="big led glow">Killing<br>&nbsp;&nbsp;&nbsp;trends.</h2></div>
   </div>
 </section>
 
