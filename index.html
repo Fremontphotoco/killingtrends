@@ -77,6 +77,19 @@
     .hero .stack .mega.glitch { opacity: 1; }
   }
 
+  /* ---------- Transmissions (next event) ---------- */
+  .tx-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
+  .tx-head h2 { font-size: clamp(56px, 10.5vw, 190px); }
+  .tx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; align-items: center; }
+  .tx .flyer img { width: 100%; height: auto; }
+  .tx .num { display: block; font-size: 12px; margin-bottom: 14px; }
+  .tx h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .82; margin: 0; font-size: clamp(54px, 7.5vw, 130px); }
+  .tx .meta { margin-top: 26px; display: grid; gap: 10px; font-size: 13px; text-transform: lowercase; }
+  .tx .meta .label { display: inline-block; min-width: 70px; margin: 0; color: var(--red-dim); }
+  .tx .desc { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); max-width: 48ch; }
+  .tx .actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
+
   /* ---------- Manifesto ---------- */
   .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
   .manifesto .lead { grid-column: 1 / span 4; font-size: 12px; text-transform: lowercase; }
@@ -141,6 +154,29 @@
     <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
     <div class="notes n3 dim">scroll &darr;</div>
     <div class="bar" aria-hidden="true"><i id="heroBar"></i></div>
+  </div>
+</section>
+
+<section class="pad wrap" id="transmissions" aria-labelledby="tx-title">
+  <div class="tx-head">
+    <h2 id="tx-title" class="led glow">://transmissions.</h2>
+    <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
+  </div>
+  <div class="tx">
+    <a class="flyer frame duo true-color rv" href="tickets/"><img src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer — Lee Reynolds, Brett Rubin, Wizdumb, October 23rd" loading="lazy"></a>
+    <div class="rv">
+      <span class="num">[0] project ://transmission</span>
+      <h3 class="led glow">Afterdark in the art park</h3>
+      <div class="meta">
+        <div><span class="label">when</span>fri oct 23 &mdash; 9pm&ndash;2am</div>
+        <div><span class="label">where</span>secret downtown las vegas art park &mdash; location revealed day of show</div>
+      </div>
+      <p class="desc">Lee Reynolds, Brett Rubin &amp; Wizdumb. BYOB. Limited capacity &mdash; 100 tickets.</p>
+      <div class="actions">
+        <a class="btn" href="tickets/">get tickets &gt;&gt;</a>
+        <a class="btn" href="afterdark/">enter ://afterdark</a>
+      </div>
+    </div>
   </div>
 </section>
 
