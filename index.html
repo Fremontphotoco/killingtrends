@@ -205,7 +205,7 @@
       <span class="num">[0] project ://transmission</span>
       <h3 class="led glow" id="tx-name"><span style="display:block">Lee Reynolds</span><span style="display:block">in the art park</span></h3>
       <div class="actions">
-        <a class="btn buy" id="tx-buy" href="tickets/">get tickets &gt;&gt;</a>
+        <a class="btn buy" id="tx-buy" href="https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds" target="_blank" rel="noopener">get tickets &gt;&gt;</a>
       </div>
       <div class="meta">
         <div><span class="label">when</span><span id="tx-when">fri oct 23 &mdash; 9pm&ndash;2am</span></div>
@@ -271,6 +271,8 @@
   var img = document.getElementById('tx-img');
   img.src = 'assets/' + ev.img; img.alt = ev.title + ' flyer';
   var buy = document.getElementById('tx-buy');
+  // main ticket button goes straight to the event's Posh checkout page
+  if (ev.poshSlug) buy.href = 'https://posh.vip/e/' + ev.poshSlug;
   if (ev.soldOut) { buy.textContent = 'sold out'; buy.classList.add('soldout'); }
 })();
 </script>
