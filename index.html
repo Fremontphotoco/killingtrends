@@ -11,25 +11,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
-  /* ---------- Hero: stacked giant type around a framed video ---------- */
-  .hero { min-height: calc(100vh - 38px); padding-top: 10px; padding-bottom: 60px; overflow: hidden; }
-  .hero .stack { position: relative; z-index: 1; }
-  .hero .stack .mega { display: block; font-size: clamp(64px, 12.5vw, 230px); white-space: nowrap; }
-  .hero .l2 { padding-left: 16vw; }
-  .hero .l2b { padding-left: 4vw; }
-  .hero .l3 { text-align: right; }
+  /* ---------- Hero: zoomed-in giant type, pinned while it zooms into the video ---------- */
+  .hero { height: 230vh; padding: 0; }
+  .hero .pin {
+    position: sticky; top: 0; height: 100vh; overflow: hidden;
+    padding: 70px calc(var(--gutter) + 14px) 0;
+  }
+  .hero .stack { position: relative; z-index: 1; transform-origin: 50% 42%; will-change: transform, opacity; }
+  .hero .stack .mega { display: block; font-size: clamp(90px, 18.5vw, 360px); line-height: .79; white-space: nowrap; }
+  .hero .l1 { margin-left: -1.2vw; }
+  .hero .l2 { padding-left: 13vw; }
+  .hero .l2b { margin-left: -6vw; }
+  .hero .l3 { padding-left: 34vw; }
   .hero .vid {
-    position: absolute; z-index: 2; left: 50%; top: 52%;
-    width: min(36vw, 560px); aspect-ratio: 16 / 10; transform: translate(-50%, -50%);
+    position: absolute; z-index: 2; left: 50%; top: 50%;
+    width: min(34vw, 560px); aspect-ratio: 16 / 10;
+    transform: translate(-50%, -50%); will-change: transform;
   }
   .hero .vid .duo { width: 100%; height: 100%; }
-  .hero .notes { position: absolute; z-index: 3; font-size: 12px; text-transform: lowercase; line-height: 1.35; }
-  .hero .n1 { left: calc(var(--gutter) + 14px); bottom: 70px; }
-  .hero .n2 { right: calc(var(--gutter) + 14px); bottom: 70px; text-align: right; }
-  .hero .n3 { left: 50%; transform: translateX(-50%); bottom: 26px; }
+  .hero .notes { position: absolute; z-index: 3; font-size: 12px; text-transform: lowercase; line-height: 1.35; will-change: opacity; }
+  .hero .n1 { left: calc(var(--gutter) + 14px); bottom: 34px; }
+  .hero .n2 { right: calc(var(--gutter) + 14px); bottom: 34px; text-align: right; }
+  .hero .n3 { left: 50%; transform: translateX(-50%); bottom: 34px; }
+  .hero .bar { position: absolute; z-index: 3; left: calc(var(--gutter) + 14px); right: calc(var(--gutter) + 14px); bottom: 22px; height: 1px; background: var(--red-dim); }
+  .hero .bar i { position: absolute; left: 0; top: -1px; height: 3px; width: 0; background: var(--red); }
+  @media (max-width: 720px), (prefers-reduced-motion: reduce) {
+    .hero { height: auto; }
+    .hero .pin { position: relative; height: auto; overflow: hidden; padding-top: 10px; padding-bottom: 40px; }
+    .hero .bar { display: none; }
+  }
   @media (max-width: 720px) {
-    .hero { min-height: auto; padding-bottom: 40px; }
-    .hero .l2, .hero .l2b { padding-left: 0; }
+    .hero .l1, .hero .l2, .hero .l2b, .hero .l3 { margin-left: 0; padding-left: 0; }
     .hero .stack .mega { white-space: normal; font-size: 18.5vw; }
     .hero .vid { position: relative; left: auto; top: auto; transform: none; width: 100%; margin: 28px 0; }
     .hero .notes { position: static; transform: none; margin-top: 14px; text-align: left; }
@@ -93,19 +105,22 @@
 
 <main>
 
-<section class="hero wrap" aria-labelledby="hero-title">
-  <h1 id="hero-title" class="stack glow">
-    <span class="mega led l1">What will</span>
-    <span class="mega led l2">the dark side</span>
-    <span class="mega led l2b">of innovation</span>
-    <span class="mega led l3">create?</span>
-  </h1>
-  <div class="vid frame">
-    <div class="duo true-color"><video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline aria-label="Killing Trends reel"></video></div>
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="pin">
+    <h1 id="hero-title" class="stack glow">
+      <span class="mega led l1">What will</span>
+      <span class="mega led l2">the dark side</span>
+      <span class="mega led l2b">of innovation</span>
+      <span class="mega led l3">create?</span>
+    </h1>
+    <div class="vid frame">
+      <div class="duo true-color"><video src="media/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline aria-label="Killing Trends reel"></video></div>
+    </div>
+    <div class="notes n1"><span class="idx">0</span><br>office<br><span class="proto">of civil disobedience</span></div>
+    <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
+    <div class="notes n3 dim">scroll to zoom &darr;</div>
+    <div class="bar" aria-hidden="true"><i id="heroBar"></i></div>
   </div>
-  <div class="notes n1"><span class="idx">0</span><br>office<br><span class="proto">of civil disobedience</span></div>
-  <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
-  <div class="notes n3 dim">scroll &darr;</div>
 </section>
 
 <section class="pad wrap" aria-label="Manifesto">
@@ -180,6 +195,47 @@
 </footer>
 
 <script src="js/site.js"></script>
+<script>
+// Hero zoom: while the hero is pinned, the type zooms past the viewer and the
+// framed video grows until it fills the screen.
+(function () {
+  var hero = document.getElementById('hero');
+  var stack = hero.querySelector('.stack');
+  var vid = hero.querySelector('.vid');
+  var notes = hero.querySelectorAll('.notes');
+  var bar = document.getElementById('heroBar');
+  var mq = matchMedia('(max-width: 720px), (prefers-reduced-motion: reduce)');
+  var ticking = false;
+  function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function clamp(v) { return Math.max(0, Math.min(1, v)); }
+  function reset() {
+    stack.style.transform = stack.style.opacity = vid.style.transform = '';
+    notes.forEach(function (n) { n.style.opacity = ''; });
+  }
+  function update() {
+    ticking = false;
+    if (mq.matches) { reset(); return; }
+    var r = hero.getBoundingClientRect();
+    var p = clamp(-r.top / (r.height - innerHeight));
+    // type: zooms toward the viewer and dissolves over the first 60%
+    var tp = ease(clamp(p / .6));
+    stack.style.transform = 'scale(' + (1 + tp * 2.4) + ')';
+    stack.style.opacity = String(1 - clamp(p / .5));
+    // video: grows from its frame to cover the whole viewport
+    var vp = ease(clamp((p - .08) / .82));
+    var w = vid.offsetWidth, h = vid.offsetHeight;
+    var cover = Math.max(innerWidth / w, innerHeight / h) * 1.02;
+    vid.style.transform = 'translate(-50%, -50%) scale(' + (1 + (cover - 1) * vp) + ')';
+    notes.forEach(function (n) { n.style.opacity = String(1 - clamp(p / .25)); });
+    bar.style.width = (p * 100) + '%';
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  mq.addEventListener ? mq.addEventListener('change', update) : mq.addListener(update);
+  update();
+})();
+</script>
 <script>
 document.getElementById('join-form').addEventListener('submit', function (e) {
   e.preventDefault();
