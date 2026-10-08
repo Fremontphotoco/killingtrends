@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Killing Trends">
 <meta property="og:title" content="Lee Reynolds — Afterdark in the Art Park · Fri Oct 23">
-<meta property="og:description" content="Brett Rubin &amp; Wizdumb. 9PM–2AM, secret downtown Las Vegas art park. BYOB. Limited to 100 tickets.">
+<meta property="og:description" content="Brett Rubin &amp; Wizdumb. 9PM–2AM, secret downtown Las Vegas art park. BYOB. Limited capacity.">
 <meta property="og:url" content="https://killingtrends.com/">
 <meta property="og:image" content="https://killingtrends.com/assets/og-flyer.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -160,7 +160,7 @@
 <a class="ticket-bar" href="tickets/">
   <span class="dot" aria-hidden="true"></span>
   <span class="what" id="bar-what">Fri Oct 23 &mdash; Afterdark in the Art Park</span>
-  <span class="mid" id="bar-where">Downtown Las Vegas &middot; BYOB &middot; 100 tickets</span>
+  <span class="mid" id="bar-where">Downtown Las Vegas &middot; BYOB &middot; Limited capacity</span>
   <span class="cta"><span class="long">Get </span>tickets &rarr;</span>
 </a>
 
@@ -255,7 +255,7 @@
   var bar = document.querySelector('.ticket-bar');
   if (!ev) { sec.hidden = true; if (bar) bar.hidden = true; return; }
   function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
-  // ticket bar: "FRI OCT 23 — AFTERDARK IN THE ART PARK | DOWNTOWN LAS VEGAS · BYOB · 100 TICKETS"
+  // ticket bar: "FRI OCT 23 — AFTERDARK IN THE ART PARK | DOWNTOWN LAS VEGAS · BYOB · LIMITED CAPACITY"
   set('bar-what', (ev.date || '').split('—')[0].trim() + ' — ' + ev.title);
   set('bar-where', ev.bar || (ev.venue || '').split('—')[0].trim());
   if (ev.soldOut && bar) bar.querySelector('.cta').textContent = 'Sold out';

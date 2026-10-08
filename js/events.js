@@ -26,6 +26,6 @@ window.KT_EVENTS = [
     poshSlug: 'after-dark-in-the-art-park-with-lee-reynolds',
     embed: true,
     soldOut: false,
-    bar: 'Downtown Las Vegas · BYOB · 100 tickets'
+    bar: 'Downtown Las Vegas · BYOB · Limited capacity'
   }
 ];
