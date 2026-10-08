@@ -129,11 +129,12 @@ h2    { font-size: clamp(48px, 7.5vw, 128px); }
 .site-header nav a .n { color: var(--red-soft); margin-right: 4px; }
 .site-header nav a:hover, .site-header nav a.active { background: var(--red); color: #000; }
 .site-header nav a.active .n, .site-header nav a:hover .n { color: #000; }
-.logo { display: block; width: 52px; height: 52px; justify-self: center; }
+.logo { display: block; width: 76px; height: 76px; justify-self: center; transition: transform .2s; }
+.logo:hover { transform: scale(1.06); }
 .logo img { width: 100%; height: 100%; object-fit: contain; }
 @media (max-width: 720px) {
   .site-header { grid-template-columns: 1fr auto; row-gap: 10px; }
-  .site-header .logo { grid-column: 2; grid-row: 1; width: 38px; height: 38px; }
+  .site-header .logo { grid-column: 2; grid-row: 1; width: 54px; height: 54px; }
   .site-header { padding: 12px 22px; }
   .site-header nav { grid-column: 1; grid-row: 1; gap: 4px 12px; }
   .site-header nav a { font-size: 12px; }

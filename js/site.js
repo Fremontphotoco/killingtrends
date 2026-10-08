@@ -60,6 +60,40 @@
 
   var hasIO = 'IntersectionObserver' in window;
 
+  // Background videos: make sure they autoplay on phones. Some phones (iPhone Low
+  // Power Mode, data saver) ignore the autoplay attribute until the visitor touches
+  // the page, so we also start them when they scroll into view and on the first
+  // tap/scroll. Off-screen videos pause to save battery and data.
+  var bgVideos = Array.prototype.slice.call(document.querySelectorAll('video[autoplay]'));
+  if (bgVideos.length) {
+    var tryPlay = function (v) {
+      v.muted = true; v.defaultMuted = true; v.playsInline = true;
+      v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', '');
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    var visible = new Set();
+    if (hasIO) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var v = en.target;
+          if (en.isIntersecting) { visible.add(v); tryPlay(v); }
+          else { visible.delete(v); if (!v.paused) v.pause(); }
+        });
+      }, { threshold: 0.15 });
+      bgVideos.forEach(function (v) { vio.observe(v); });
+    } else {
+      bgVideos.forEach(tryPlay);
+    }
+    var kick = function () {
+      (hasIO ? Array.from(visible) : bgVideos).forEach(function (v) { if (v.paused) tryPlay(v); });
+    };
+    ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(function (ev) {
+      addEventListener(ev, kick, { passive: true });
+    });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+  }
+
   // Reveal on scroll
   var els = document.querySelectorAll('.rv');
   if (reduce || !hasIO) {
