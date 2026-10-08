@@ -14,35 +14,12 @@
   .page-head { padding-top: 20px; }
   .page-head .top { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
   .page-head .mega { font-size: clamp(90px, 24vw, 440px); line-height: .8; }
-  /* ---------- Manifesto ---------- */
-  .manifesto { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-  .manifesto .lead { grid-column: 1 / span 4; font-size: 12px; text-transform: lowercase; }
-  .manifesto .body { grid-column: 6 / span 6; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.5; }
-  .manifesto .body p { margin: 0 0 1.1em; }
-  .manifesto .body p:nth-child(2) { padding-left: 12%; }
-  .manifesto .sign { grid-column: 1 / -1; margin-top: 40px; }
-  .scatter { position: relative; height: 0; }
-  .scatter span { position: absolute; font-size: 12px; text-transform: lowercase; white-space: nowrap; }
-  @media (max-width: 860px) {
-    .manifesto .lead, .manifesto .body { grid-column: 1 / -1; }
-    .scatter { display: none; }
-  }
-
-
   /* ---------- Connect form ---------- */
   .cx { display: grid; grid-template-columns: repeat(12, 1fr); gap: 50px 20px; }
   .cx .grp { grid-column: span 6; }
   .cx .grp.full { grid-column: 1 / -1; }
   .cx .q { display: flex; gap: 16px; align-items: baseline; margin-bottom: 18px; font-size: 12px; text-transform: lowercase; }
   .cx .q .big-q { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: clamp(40px, 5.5vw, 96px); line-height: .85; }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; border: 0; padding: 0; margin: 0; }
-  .chips legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .chip { position: relative; }
-  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .chip span { display: inline-block; padding: 9px 14px; border: 1px solid var(--red-dim); font-size: 12px; text-transform: lowercase; cursor: pointer; }
-  .chip input:checked + span { background: var(--red); color: #000; border-color: var(--red); }
-  .chip input:focus-visible + span { outline: 1px dashed var(--red); outline-offset: 3px; }
-  .chip:hover span { border-color: var(--red); }
   .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; }
   .fields .wide { grid-column: 1 / -1; }
   .cx textarea { resize: vertical; min-height: 110px; text-transform: none; }
@@ -73,53 +50,15 @@
   <h1 class="mega led glow">Connect.</h1>
 </section>
 
-<section class="pad wrap" aria-label="Manifesto">
-  <div class="scatter" aria-hidden="true">
-    <span style="left:58%;top:-40px">*</span>
-    <span style="left:4%;top:120px" class="dim">://</span>
-    <span style="right:2%;top:40px">&gt;&gt;</span>
-  </div>
-  <div class="manifesto">
-    <div class="lead rv"><span class="idx">1</span> purpose</div>
-    <div class="body rv">
-      <p>We are as gods and might as well get good at it. So far, remotely done power and glory&mdash;as via government, big business, formal education, and church&mdash;has succeeded to the point where gross defects obscure actual gains.</p>
-      <p>In response to this dilemma and to these gains a realm of intimate, personal power is developing&mdash;power of the individual to conduct his own education, find his own inspiration, shape his own environment, and share his adventure with whoever is interested.</p>
-      <p>Tools that aid this process are sought and promoted by</p>
-    </div>
-    <div class="sign rv"><h2 class="big led glow">Killing<br>&nbsp;&nbsp;&nbsp;trends.</h2></div>
-  </div>
-</section>
 
 <section class="pad wrap" aria-labelledby="cx-title">
   <h2 id="cx-title" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Connect form</h2>
   <form class="cx" id="connect-form" novalidate>
-    <div class="grp rv">
-      <div class="q"><span class="idx">2</span><span>project<br>://type</span></div>
-      <fieldset class="chips" id="type-chips">
-        <legend>Project type</legend>
-        <label class="chip"><input type="checkbox" name="type" value="booking"><span>event booking</span></label>
-        <label class="chip"><input type="checkbox" name="type" value="artist"><span>artist / dj</span></label>
-        <label class="chip"><input type="checkbox" name="type" value="vendor"><span>vendor</span></label>
-        <label class="chip"><input type="checkbox" name="type" value="collab"><span>collaboration</span></label>
-        <label class="chip"><input type="checkbox" name="type" value="venue"><span>venue / space</span></label>
-        <label class="chip"><input type="checkbox" name="type" value="press"><span>press</span></label>
-      </fieldset>
-    </div>
-    <div class="grp rv">
-      <div class="q"><span class="idx">3</span><span>way to<br>://reach</span></div>
-      <fieldset class="chips" id="reach-chips">
-        <legend>Preferred way to reach you</legend>
-        <label class="chip"><input type="radio" name="reach" value="email" checked><span>email</span></label>
-        <label class="chip"><input type="radio" name="reach" value="call"><span>call</span></label>
-        <label class="chip"><input type="radio" name="reach" value="text"><span>text</span></label>
-        <label class="chip"><input type="radio" name="reach" value="instagram"><span>instagram</span></label>
-      </fieldset>
-    </div>
     <div class="grp full rv">
-      <div class="q"><span class="idx">5</span><span class="big-q led glow">Send a signal.</span></div>
+      <div class="q"><span class="idx">1</span><span class="big-q led glow">Send a signal.</span></div>
       <div class="fields">
         <input type="text" name="name" placeholder="://name" autocomplete="name" aria-label="Name" required>
-        <input type="text" name="contact" id="contact" placeholder="://email" autocomplete="email" aria-label="Contact" required>
+        <input type="text" name="contact" id="contact" placeholder="://email or phone" autocomplete="email" aria-label="Email or phone" required>
         <textarea name="message" class="wide" placeholder="://what are we building" aria-label="Message"></textarea>
       </div>
     </div>
@@ -142,30 +81,17 @@
 
 <script src="../js/site.js"></script>
 <script>
-// Connect form: placeholder follows the chosen reach method; opens a prefilled email
+// Connect form: opens a prefilled email to Killing Trends
 (function () {
   var f = document.getElementById('connect-form');
-  var contact = document.getElementById('contact');
-  var hints = { email: ['://email', 'email'], call: ['://phone', 'tel'], text: ['://phone', 'tel'], instagram: ['://@handle', 'off'] };
-  f.querySelectorAll('input[name=reach]').forEach(function (r) {
-    r.addEventListener('change', function () {
-      var h = hints[r.value]; contact.placeholder = h[0]; contact.autocomplete = h[1];
-      contact.type = r.value === 'email' ? 'email' : (h[1] === 'tel' ? 'tel' : 'text');
-    });
-  });
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     var d = new FormData(f), err = document.getElementById('cx-err');
     var name = (d.get('name') || '').trim(), c = (d.get('contact') || '').trim();
     if (!name || !c) { err.textContent = '// name and contact needed'; return; }
     err.textContent = '';
-    var types = d.getAll('type'), reach = d.get('reach');
-    var body = 'Name: ' + name + '\nReach me by ' + reach + ': ' + c +
-      '\nType: ' + (types.length ? types.join(', ') : '—') +
-      '\n\n' + (d.get('message') || '');
-    location.href = 'mailto:jesse@fremontphotoco.com?subject=' +
-      encodeURIComponent('KILLING TRENDS — CONNECT' + (types.length ? ' (' + types.join(', ') + ')' : '')) +
-      '&body=' + encodeURIComponent(body);
+    var body = 'Name: ' + name + '\nContact: ' + c + '\n\n' + (d.get('message') || '');
+    location.href = 'mailto:jesse@fremontphotoco.com?subject=' + encodeURIComponent('KILLING TRENDS — CONNECT') + '&body=' + encodeURIComponent(body);
   });
 })();
 </script>
