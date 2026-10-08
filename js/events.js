@@ -21,7 +21,7 @@ window.KT_EVENTS = [
     headline: 'Lee Reynolds|in the Art Park',
     date: 'FRI OCT 23 — 9PM–2AM',
     venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
-    desc: 'Lee Reynolds, Brett Rubin & Wizdumb. BYOB. Limited capacity — 100 tickets.',
+    desc: 'Limited Capacity',
     img: 'event-afterdark-red.jpg',
     poshSlug: 'after-dark-in-the-art-park-with-lee-reynolds',
     embed: true,
