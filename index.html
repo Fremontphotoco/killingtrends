@@ -68,6 +68,10 @@
     .tx-head { margin-bottom: 28px; }
     .tx { gap: 24px; }
     .tx .meta > div { grid-template-columns: 4.2em 1fr; }
+    /* selling first: name + ticket button above the flyer on phones */
+    .tx-top .tx .flyer { order: 2; }
+    .tx-top .tx-head { margin-bottom: 18px; }
+    .tx-top .tx-head .right { display: none; }
     .members { gap: 22px; }
     .members .vid { margin-bottom: 26px; }
     .members .creed { margin-bottom: 26px; }
@@ -118,6 +122,12 @@
   /* ---------- Transmissions (next event) ---------- */
   .tx-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
   .tx-head h2 { font-size: clamp(56px, 10.5vw, 190px); }
+  .tx-top { padding-top: clamp(14px, 2vw, 30px); padding-bottom: clamp(70px, 9vw, 140px); }
+  .tx-top .tx-head { margin-bottom: clamp(22px, 2.6vw, 40px); }
+  .tx-top .tx-head h2 { font-size: clamp(48px, 6.4vw, 120px); }
+  .tx-top .tx { align-items: start; }
+  .tx-top .flyer { max-height: calc(100vh - 150px); }
+  .tx-top .flyer img { max-height: calc(100vh - 150px); width: auto; max-width: 100%; margin: 0 auto; }
   .tx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; align-items: center; }
   .tx .flyer img { width: 100%; height: auto; }
   .tx .num { display: block; font-size: 13px; margin-bottom: 14px; }
@@ -184,6 +194,28 @@
 
 <main>
 
+<section class="wrap tx-top" id="transmissions" aria-labelledby="tx-title">
+  <div class="tx-head">
+    <h2 id="tx-title" class="led glow type" aria-label="Current transmissions" data-type="://current|transmissions."></h2>
+    <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
+  </div>
+  <div class="tx" id="tx-next">
+    <a class="flyer frame duo true-color" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
+    <div class="">
+      <span class="num">[0] project ://transmission</span>
+      <h3 class="led glow" id="tx-name"><span style="display:block">Afterdark</span><span style="display:block">in the Art Park</span><span style="display:block">Lee Reynolds</span></h3>
+      <div class="actions">
+        <a class="btn buy" id="tx-buy" href="https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds" target="_blank" rel="noopener">get tickets &gt;&gt;</a>
+      </div>
+      <div class="meta">
+        <div><span class="label">when</span><span id="tx-when">fri oct 23 &mdash; 9pm&ndash;2am</span></div>
+        <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
+      </div>
+      <p class="desc" id="tx-desc">Limited Capacity</p>
+    </div>
+  </div>
+</section>
+
 <section class="hero" id="hero" aria-labelledby="hero-title">
   <div class="pin">
     <h1 id="hero-title" class="stack glow">
@@ -199,28 +231,6 @@
     <div class="notes n2">las vegas<br>nevada<br>&gt;&gt; est. underground</div>
     <div class="notes n3 dim">scroll &darr;</div>
     <div class="bar" aria-hidden="true"><i id="heroBar"></i></div>
-  </div>
-</section>
-
-<section class="pad wrap" id="transmissions" aria-labelledby="tx-title">
-  <div class="tx-head">
-    <h2 id="tx-title" class="led glow type" aria-label="Current transmissions" data-type="://current|transmissions."></h2>
-    <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
-  </div>
-  <div class="tx" id="tx-next">
-    <a class="flyer frame duo true-color rv" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
-    <div class="rv">
-      <span class="num">[0] project ://transmission</span>
-      <h3 class="led glow" id="tx-name"><span style="display:block">Afterdark</span><span style="display:block">in the Art Park</span><span style="display:block">Lee Reynolds</span></h3>
-      <div class="actions">
-        <a class="btn buy" id="tx-buy" href="https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds" target="_blank" rel="noopener">get tickets &gt;&gt;</a>
-      </div>
-      <div class="meta">
-        <div><span class="label">when</span><span id="tx-when">fri oct 23 &mdash; 9pm&ndash;2am</span></div>
-        <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
-      </div>
-      <p class="desc" id="tx-desc">Limited Capacity</p>
-    </div>
   </div>
 </section>
 
@@ -390,12 +400,16 @@
   // Size the type so every line fits inside the pinned screen
   var pin = hero.querySelector('.pin');
   function fit() {
-    if (matchMedia('(max-width: 720px)').matches) { stack.style.removeProperty('--hero-fs'); hero.style.removeProperty('--hero-fs'); return; }
+    if (matchMedia('(max-width: 720px)').matches) { stack.style.removeProperty('--hero-fs'); hero.style.removeProperty('--hero-fs'); pin.style.paddingTop = ''; return; }
     hero.style.setProperty('--hero-fs', '100px');
     var cs = getComputedStyle(pin);
     var availW = pin.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     // the ticket bar + header sit above the hero on first load, so only the space below them counts
-    var availH = innerHeight - hero.offsetTop - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    // the pinned hero sits under the sticky header: pad it down by the header height
+    var hdr = document.querySelector('.site-header');
+    pin.style.paddingTop = ((hdr ? hdr.offsetHeight : 0) + 10) + 'px';
+    cs = getComputedStyle(pin);
+    var availH = innerHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     var lines = stack.querySelectorAll('.mega'), w = 0;
     lines.forEach(function (l) { w = Math.max(w, l.getBoundingClientRect().width); });
     var hgt = stack.scrollHeight;
