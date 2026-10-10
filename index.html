@@ -70,8 +70,6 @@
     .tx .meta > div { grid-template-columns: 4.2em 1fr; }
     /* selling first: name + ticket button above the flyer on phones */
     .tx-top .tx .flyer { order: 2; }
-    .tx-top .tx-head h2 { font-size: 20px; }
-    .tx .posh-embed iframe { height: 360px; }
     .tx-top .tx-head { margin-bottom: 18px; }
     .tx-top .tx-head .right { display: none; }
     .members { gap: 22px; }
@@ -124,12 +122,9 @@
   /* ---------- Transmissions (next event) ---------- */
   .tx-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
   .tx-head h2 { font-size: clamp(56px, 10.5vw, 190px); }
-  .tx-top { padding-top: clamp(10px, 1.2vw, 18px); padding-bottom: clamp(70px, 9vw, 140px); }
+  .tx-top { padding-top: clamp(14px, 2vw, 30px); padding-bottom: clamp(70px, 9vw, 140px); }
   .tx-top .tx-head { margin-bottom: clamp(22px, 2.6vw, 40px); }
-  .tx-top .tx-head h2 { font-size: clamp(22px, 2.2vw, 36px); }
-  .tx-top .tx-head { margin-bottom: clamp(12px, 1.4vw, 20px); }
-  .tx-top .tx h3 { font-size: clamp(44px, 5vw, 84px); }
-  .tx-top .tx .num { margin-bottom: 10px; }
+  .tx-top .tx-head h2 { font-size: clamp(48px, 6.4vw, 120px); }
   .tx-top .tx { align-items: start; }
   .tx-top .flyer { max-height: calc(100vh - 150px); }
   .tx-top .flyer img { max-height: calc(100vh - 150px); width: auto; max-width: 100%; margin: 0 auto; }
@@ -144,13 +139,8 @@
   .tx .actions { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
   .tx .btn.buy { font-size: clamp(14px, 1.15vw, 17px); padding: 15px 26px; background: var(--red); color: #000; font-weight: 700; }
   .tx .btn.buy:hover { background: #000; color: var(--red); }
-  .tx .posh-embed { margin-top: 18px; padding: 8px; }
+  .tx .posh-embed { margin-top: 30px; padding: 8px; }
   .tx .posh-embed iframe { width: 100%; border: 0; height: 340px; display: block; }
-  /* when the inline checkout is showing, the button turns into a quiet "open on posh" link */
-  .tx.has-embed .actions { margin-top: 12px; }
-  .tx.has-embed .btn.buy { background: transparent; border: 0; color: var(--red-soft); font-weight: 500; padding: 8px 0; font-size: 13px; letter-spacing: .04em; width: auto; }
-  .tx.has-embed .btn.buy:hover { color: var(--red); }
-  .tx.has-embed .meta { margin-top: 18px; }
   @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
   .type .ch { visibility: hidden; }
   .type .ch.on { visibility: visible; }
@@ -212,11 +202,10 @@
     <p class="micro right"><span class="idx">0</span> next frequency<br>&gt;&gt; tickets live</p>
   </div>
   <div class="tx" id="tx-next">
-    <a class="flyer frame duo true-color" id="tx-flyer" href="tickets/" aria-label="Open ticket page"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
-    <div class="info">
-      <span class="num" id="tx-num">[0] project ://afterdark</span>
+    <a class="flyer frame duo true-color" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
+    <div class="">
+      <span class="num">[0] project ://transmission</span>
       <h3 class="led glow" id="tx-name"><span style="display:block">Afterdark</span><span style="display:block">in the Art Park</span><span style="display:block">Lee Reynolds</span></h3>
-      <div class="posh-embed frame" id="tx-embed" hidden></div>
       <div class="actions">
         <a class="btn buy" id="tx-buy" href="https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds" target="_blank" rel="noopener">get tickets &gt;&gt;</a>
       </div>
@@ -225,6 +214,7 @@
         <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
       </div>
       <p class="desc" id="tx-desc">Limited Capacity</p>
+      <div class="posh-embed frame" id="tx-embed" hidden></div>
     </div>
   </div>
 </section>
@@ -294,12 +284,6 @@
   function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
   // ticket bar: "FRI OCT 23 — AFTERDARK IN THE ART PARK | DOWNTOWN LAS VEGAS · BYOB · LIMITED CAPACITY"
   set('bar-what', (ev.date || '').split('—')[0].trim() + ' — ' + ev.title);
-  set('tx-num', '[0] project ://' + (ev.project || 'transmission'));
-  var poshUrl = ev.poshSlug ? 'https://posh.vip/e/' + ev.poshSlug : 'tickets/';
-  // ticket bar + flyer go straight to the Posh event page
-  if (bar && ev.poshSlug && !ev.soldOut) { bar.href = poshUrl; bar.target = '_blank'; bar.rel = 'noopener'; }
-  var fly = document.getElementById('tx-flyer');
-  if (fly && ev.poshSlug && !ev.soldOut) { fly.href = poshUrl; fly.target = '_blank'; fly.rel = 'noopener'; }
   set('bar-where', ev.bar || (ev.venue || '').split('—')[0].trim());
   if (ev.soldOut && bar) bar.querySelector('.cta').textContent = 'Sold out';
   // homepage header: ev.headline if set ("line one|line two"), else the title
@@ -323,8 +307,6 @@
     var fr = document.createElement('iframe');
     fr.src = 'https://posh.vip/embed/checkout/' + ev.poshSlug; fr.title = ev.title + ' tickets'; fr.loading = 'lazy';
     emb.appendChild(fr); emb.hidden = false;
-    document.getElementById('tx-next').classList.add('has-embed');
-    buy.textContent = 'or open on posh.vip >>';
   }
 })();
 </script>
