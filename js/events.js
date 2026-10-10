@@ -18,7 +18,7 @@
 window.KT_EVENTS = [
   {
     title: 'Afterdark in the Art Park',
-    headline: 'Lee Reynolds|in the Art Park',
+    headline: 'Afterdark|in the Art Park|Lee Reynolds',
     date: 'FRI OCT 23 — 9PM–2AM',
     venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
     desc: 'Limited Capacity',
