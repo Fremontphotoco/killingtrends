@@ -14,10 +14,12 @@
 //   soldOut    true when sold out
 //   bar        short line for the red banner at the top of the homepage
 //   headline   optional big header for the homepage section; '|' starts a new line
+//   project    short project name for the '[0] project ://…' label on the homepage
 // ---------------------------------------------------------------------------
 window.KT_EVENTS = [
   {
     title: 'Afterdark in the Art Park',
+    project: 'afterdark',
     headline: 'Afterdark|in the Art Park|Lee Reynolds',
     date: 'FRI OCT 23 — 9PM–2AM',
     venue: 'SECRET DOWNTOWN LAS VEGAS ART PARK — LOCATION REVEALED DAY OF SHOW',
