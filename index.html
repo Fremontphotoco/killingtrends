@@ -139,7 +139,7 @@
   .tx .actions { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
   .tx .btn.buy { font-size: clamp(14px, 1.15vw, 17px); padding: 15px 26px; background: var(--red); color: #000; font-weight: 700; }
   .tx .btn.buy:hover { background: #000; color: var(--red); }
-  .tx .posh-embed { margin-top: 30px; padding: 8px; }
+  .tx .posh-embed { margin-top: 22px; padding: 8px; }
   .tx .posh-embed iframe { width: 100%; border: 0; height: 340px; display: block; }
   @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
   .type .ch { visibility: hidden; }
@@ -206,6 +206,7 @@
     <div class="">
       <span class="num">[0] project ://transmission</span>
       <h3 class="led glow" id="tx-name"><span style="display:block">Afterdark</span><span style="display:block">in the Art Park</span><span style="display:block">Lee Reynolds</span></h3>
+      <div class="posh-embed frame" id="tx-embed" hidden></div>
       <div class="actions">
         <a class="btn buy" id="tx-buy" href="https://posh.vip/e/after-dark-in-the-art-park-with-lee-reynolds" target="_blank" rel="noopener">get tickets &gt;&gt;</a>
       </div>
@@ -214,7 +215,6 @@
         <div><span class="label">where</span><span id="tx-where">secret downtown las vegas art park &mdash; location revealed day of show</span></div>
       </div>
       <p class="desc" id="tx-desc">Limited Capacity</p>
-      <div class="posh-embed frame" id="tx-embed" hidden></div>
     </div>
   </div>
 </section>
