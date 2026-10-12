@@ -64,14 +64,10 @@
     .hero .notes { position: static; transform: none; margin: 0; text-align: left; }
     .hero .n2 { text-align: right; }
     .hero .n3 { display: none; }
-    .tx-head h2 { font-size: 12.8vw; }
-    .tx-head { margin-bottom: 28px; }
     .tx { gap: 24px; }
     .tx .meta > div { grid-template-columns: 4.2em 1fr; }
     /* selling first: name + ticket button above the flyer on phones */
     .tx-top .tx .flyer { order: 2; }
-    .tx-top .tx-head { margin-bottom: 18px; }
-    .tx-top .tx-head .right { display: none; }
     .members { gap: 22px; }
     .members .vid { margin-bottom: 26px; }
     .members .creed { margin-bottom: 26px; }
@@ -120,20 +116,11 @@
   }
 
   /* ---------- Transmissions (next event) ---------- */
-  .tx-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
-  .tx-head h2 { font-size: clamp(56px, 10.5vw, 190px); }
   .tx-top { padding-top: clamp(24px, 3vw, 48px); padding-bottom: clamp(70px, 9vw, 140px); }
-  .tx-top .tx-head { margin-bottom: clamp(22px, 2.6vw, 40px); }
-  .tx-top .tx-head h2 { font-size: clamp(48px, 6.4vw, 120px); }
-  .tx-top .tx { align-items: start; }
-  .tx-top .flyer { max-height: calc(100vh - 150px); }
-  .tx-top .flyer img { max-height: calc(100vh - 150px); width: auto; max-width: 100%; margin: 0 auto; }
-  .tx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5vw; align-items: center; }
+  .tx { display: grid; grid-template-columns: 1fr; gap: 24px; }
   .tx .flyer img { width: 100%; height: auto; }
-  .tx .num { display: block; font-size: 13px; margin-bottom: 14px; }
-  .tx .kicker { font-family: var(--mono); font-weight: 500; text-transform: lowercase; letter-spacing: .04em; color: var(--red-soft); text-align: center; margin: 0 0 18px; line-height: 1.3; min-height: 1.3em; }
-  .tx h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .82; margin: 0; font-size: clamp(54px, 7.5vw, 130px); }
-  .tx h3 { text-align: center; }
+  .tx .kicker { display: block; font-family: var(--mono); font-size: 13px; font-weight: 500; text-transform: lowercase; letter-spacing: .04em; color: var(--red-soft); text-align: center; margin: 0 0 18px; line-height: 1.3; min-height: 1.3em; }
+  .tx h3 { font-family: var(--head); font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .82; margin: 0; font-size: clamp(54px, 7.5vw, 130px); text-align: center; }
   .tx h3 span { display: block; }
   .tx .meta { margin-top: 30px; display: grid; gap: 14px; font-size: clamp(17px, 1.55vw, 24px); line-height: 1.3; text-transform: lowercase; }
   .tx .meta > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; }
@@ -145,7 +132,24 @@
   .tx .btn.buy:hover { background: #000; color: var(--red); }
   .tx .posh-embed { margin-top: 22px; padding: 8px; }
   .tx .posh-embed iframe { width: 100%; border: 0; height: 340px; display: block; }
-  @media (max-width: 860px) { .tx { grid-template-columns: 1fr; gap: 30px; } }
+
+  /* desktop + tablet: the flyer is the hero, one centred column under it
+     (kicker, flyer, headline, when/where, note, checkout). Phones keep their own order below. */
+  @media (min-width: 721px) {
+    .tx { gap: 0; justify-items: center; }
+    .tx > .info { display: contents; }
+    .tx .kicker { order: 1; margin-bottom: clamp(18px, 2.4vw, 34px); }
+    .tx .flyer { order: 2; width: auto; max-width: 100%; }
+    .tx .flyer img { width: auto; max-width: 100%; height: auto; max-height: max(520px, calc(100vh - 235px)); }
+    .tx h3 { order: 3; margin-top: clamp(30px, 3.8vw, 60px); font-size: clamp(40px, 4.8vw, 88px); display: flex; flex-wrap: wrap; justify-content: center; column-gap: .32em; row-gap: .12em; }
+    .tx h3 span:nth-child(n+3) { flex-basis: 100%; }   /* event name on one row, artist on the next */
+    .tx .meta { order: 4; margin-top: clamp(18px, 2vw, 30px); display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 40px; font-size: clamp(16px, 1.3vw, 21px); }
+    .tx .meta > div { display: flex; gap: 10px; align-items: baseline; }
+    .tx .meta .label { padding-top: 0; }
+    .tx .desc { order: 5; margin-top: 14px; font-size: clamp(18px, 1.5vw, 24px); }
+    .tx .posh-embed { order: 6; width: min(100%, 680px); margin-top: clamp(22px, 2.6vw, 36px); }
+    .tx .actions { order: 7; justify-content: center; margin-top: clamp(22px, 2.6vw, 36px); }
+  }
   .type .ch { visibility: hidden; }
   .type .ch.on { visibility: visible; }
   .type .ch.cur { position: relative; }
@@ -196,8 +200,8 @@
 <section class="wrap tx-top" id="transmissions" aria-labelledby="tx-title">
   <div class="tx" id="tx-next">
     <a class="flyer frame duo true-color" id="tx-flyer" href="tickets/"><img id="tx-img" src="assets/event-afterdark-red.jpg" alt="Afterdark in the Art Park flyer" loading="lazy"></a>
-    <div class="">
-      <h2 id="tx-title" class="num kicker type" aria-label="Current transmission" data-type="[0] ://current transmission."></h2>
+    <div class="info">
+      <h2 id="tx-title" class="kicker type" aria-label="Current transmission" data-type="[0] ://current transmission."></h2>
       <h3 class="led glow" id="tx-name"><span class="gl" data-text="Afterdark">Afterdark</span><span class="gl" data-text="in the Art Park">in the Art Park</span><span class="gl" data-text="Lee Reynolds">Lee Reynolds</span></h3>
       <div class="posh-embed frame" id="tx-embed" hidden></div>
       <div class="actions" hidden>
@@ -272,8 +276,7 @@
 (function () {
   var ev = (window.KT_EVENTS || [])[0];
   var sec = document.getElementById('transmissions');
-  var bar = document.querySelector('.ticket-bar');
-  if (!ev) { sec.hidden = true; if (bar) bar.hidden = true; return; }
+  if (!ev) { sec.hidden = true; return; }
   function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
   // homepage header: ev.headline if set ("line one|line two"), else the title
   var nm = document.getElementById('tx-name');
@@ -410,7 +413,6 @@
     hero.style.setProperty('--hero-fs', '100px');
     var cs = getComputedStyle(pin);
     var availW = pin.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    // the ticket bar + header sit above the hero on first load, so only the space below them counts
     // the pinned hero sits under the sticky header: pad it down by the header height
     var hdr = document.querySelector('.site-header');
     pin.style.paddingTop = ((hdr ? hdr.offsetHeight : 0) + 10) + 'px';

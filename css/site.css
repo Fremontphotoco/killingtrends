@@ -83,37 +83,6 @@ h2    { font-size: clamp(48px, 7.5vw, 128px); }
 .vframe i:nth-child(3) { bottom: 14px; left: 14px; }
 .vframe i:nth-child(4) { bottom: 14px; right: 14px; }
 
-/* ---------- Ticket bar ---------- */
-.ticket-bar {
-  position: relative; z-index: 60;
-  display: flex; justify-content: center; align-items: center; gap: 22px;
-  min-height: 52px; padding: 8px 18px; overflow: hidden;
-  background: var(--red); color: #000;
-  text-decoration: none; white-space: nowrap;
-}
-.ticket-bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #000; flex: none; animation: kt-pulse 1.2s infinite; }
-.ticket-bar .what {
-  font-family: var(--head); font-stretch: 75%; font-weight: 800;
-  font-size: 19px; letter-spacing: .02em; text-transform: uppercase; line-height: 1;
-  overflow: hidden; text-overflow: ellipsis;
-}
-.ticket-bar .mid {
-  font-family: var(--mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em;
-  padding-left: 22px; border-left: 1px solid rgba(0,0,0,.45);
-}
-.ticket-bar .cta {
-  flex: none; font-family: var(--mono); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
-  background: #000; color: var(--red); padding: 8px 14px;
-}
-.ticket-bar:hover .cta { background: #fff; color: #000; }
-@keyframes kt-pulse { 50% { opacity: .25; } }
-@media (max-width: 900px) { .ticket-bar .mid { display: none; } }
-@media (max-width: 720px) {
-  .ticket-bar { justify-content: space-between; gap: 12px; padding: 8px 14px; }
-  .ticket-bar .what { font-size: 16px; flex: 1; }
-  .ticket-bar .cta { font-size: 12px; padding: 7px 10px; }
-}
-
 /* ---------- Header ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 80;
@@ -222,7 +191,6 @@ footer a:hover { background: var(--red); color: #000; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rv { opacity: 1; transform: none; transition: none; }
-  .ticket-bar .dot { animation: none; }
 }
 
 /* ---------- Phone menu ---------- */
@@ -277,7 +245,4 @@ body.menu-open { overflow: hidden; }
   footer { padding-top: 56px; }
   footer .row { flex-direction: column; align-items: flex-start; gap: 8px; }
 
-  /* ticket bar: short CTA so the event name fits */
-  .ticket-bar .cta .long { display: none; }
-  .ticket-bar .what { font-size: 14px; white-space: normal; line-height: 1.1; overflow: visible; }
 }
