@@ -147,6 +147,7 @@
   // admin: 5 taps on the title, or #admin in the URL
   let taps=0, tmr; $('title').addEventListener('click',()=>{taps++; clearTimeout(tmr); tmr=setTimeout(()=>taps=0,1500); if(taps>=5){taps=0; openAdmin();}});
   if(location.hash==='#admin') openAdmin();
+  addEventListener('hashchange',()=>{if(location.hash==='#admin') openAdmin();});
   function openAdmin(){
     const all=load(), e=ev(); $('evInput').value=e.name||''; $('evDateInput').value=e.date||'';
     $('adminCount').textContent=all.length+' signed'; $('rows').innerHTML=all.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.email||'')}</td><td>${r.over21?'Yes':'—'}</td><td>${new Date(r.ts).toLocaleString()}</td><td><img src="${r.sig}"></td></tr>`).join('');
