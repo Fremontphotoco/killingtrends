@@ -1,1 +1,180 @@
-<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/waiver/"><script>location.replace("/waiver/"+location.hash)</script><a href="/waiver/">Waiver</a>
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex">
+<title>Sign In &amp; Waiver — Killing Trends</title>
+<style>
+  :root { --bg:#06060c; --card:#111118; --line:#2a2a36; --text:#f2f2f6; --dim:#9a9aae; --accent:#ff2fa0; --ok:#fff; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; overscroll-behavior:none; background:var(--bg); color:var(--text); font-family:-apple-system,Helvetica,Arial,sans-serif; -webkit-text-size-adjust:100%; }
+  body { padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom)); }
+  .wrap { max-width:760px; margin:0 auto; }
+  header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--text); padding-bottom:10px; margin-bottom:14px; }
+  h1 { font-size:22px; line-height:1.05; margin:0; text-transform:uppercase; letter-spacing:-.3px; }
+  .meta { text-align:right; font-size:12px; color:var(--dim); line-height:1.4; }
+  .meta b { color:var(--text); font-size:13px; display:block; }
+  .event { font-size:15px; color:var(--text); margin:0 0 10px; }
+  .event span { color:var(--accent); font-weight:700; }
+  .legal { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; max-height:34vh; overflow:auto; font-size:13px; line-height:1.45; color:#d6d6e0; }
+  .legal p { margin:0 0 8px; } .legal p b { color:var(--text); text-transform:uppercase; font-size:12px; letter-spacing:.2px; }
+  .legal .intro { color:var(--text); font-weight:600; }
+  .ack { border:1.5px solid var(--text); border-radius:10px; padding:10px 12px; margin:12px 0; font-weight:700; font-size:13px; line-height:1.4; }
+  label.row { display:flex; gap:12px; align-items:flex-start; font-size:15px; margin:10px 0; line-height:1.35; }
+  input[type=checkbox] { width:26px; height:26px; flex:0 0 26px; accent-color:var(--accent); margin:0; }
+  .fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
+  .fields input { width:100%; font-size:18px; padding:14px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); }
+  .fields input:focus { outline:2px solid var(--accent); border-color:transparent; }
+  .sig { margin:10px 0 6px; }
+  .sig .lbl { display:flex; justify-content:space-between; font-size:13px; color:var(--dim); margin-bottom:6px; }
+  .sig button { background:none; border:0; color:var(--accent); font-size:13px; font-weight:600; padding:0; }
+  canvas { width:100%; height:200px; background:#fff; border-radius:12px; touch-action:none; display:block; }
+  .submit { width:100%; margin-top:14px; font-size:20px; font-weight:800; padding:18px; border-radius:14px; border:0; background:var(--text); color:#000; text-transform:uppercase; letter-spacing:.3px; }
+  .submit:disabled { opacity:.35; }
+  .err { color:var(--accent); font-size:14px; min-height:18px; margin-top:8px; text-align:center; }
+  #done { display:none; text-align:center; padding:12vh 0; }
+  #done h2 { font-size:34px; margin:0 0 8px; text-transform:uppercase; }
+  #done p { color:var(--dim); font-size:16px; }
+  #count { position:fixed; right:12px; bottom:10px; font-size:11px; color:#444; }
+  #admin { display:none; }
+  #admin table { width:100%; border-collapse:collapse; font-size:13px; }
+  #admin td,#admin th { border-bottom:1px solid var(--line); padding:6px 4px; text-align:left; vertical-align:middle; }
+  #admin img { height:40px; background:#fff; border-radius:4px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+  .btns button,.btns a { font-size:14px; font-weight:700; padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); text-decoration:none; }
+  .btns .danger { color:var(--accent); }
+  @media print { body { background:#fff; color:#000; padding:0; } .noprint { display:none !important; } #printview { display:block !important; } }
+  #printview { display:none; color:#000; background:#fff; }
+  .rec { page-break-after:always; padding:.4in .5in; font-family:Helvetica,Arial,sans-serif; font-size:8pt; line-height:1.3; }
+  .rec h3 { font-size:14pt; margin:0 0 4px; text-transform:uppercase; }
+  .rec .who { font-size:11pt; margin:10px 0 4px; font-weight:700; }
+  .rec img { height:90px; border-bottom:1px solid #000; }
+  .rec .legal { max-height:none; overflow:visible; background:none; border:0; padding:0; color:#000; font-size:7.6pt; }
+  .rec .legal p b { color:#000; }
+</style></head><body>
+<div class="wrap">
+<div id="form" class="noprint">
+<header>
+  <div><h1 id="title">Liability Waiver<br>&amp; Release of Claims</h1></div>
+  <div class="meta"><b>Killing Trends · Fremont Photo Co.</b>Jesse Hudson &amp; related parties<br>623 S 8th St, Las Vegas, NV</div>
+</header>
+<p class="event">Event: <span id="evName">—</span> · <span id="evDate"></span></p>
+<div class="legal" id="legal">
+<p class="intro">Read before signing. By signing below, each person listed agrees to all of the following on behalf of themselves, their heirs, and their legal representatives, for the event named above and for every future event or activity presented by the Released Parties. <u>This agreement covers injury of every kind, up to and including permanent disability and death.</u></p>
+<p><b>1. Who is released.</b> “Released Parties” means Killing Trends, Fremont Photo Co., Jesse Hudson, and each of their owners, members, employees, contractors, performers, artists, DJs, photographers, volunteers, co‑promoters, sponsors, vendors, and agents, together with the owners and managers of any venue or property where an Event is held, including 623 S 8th St, Las Vegas.</p>
+<p><b>2. What this covers.</b> “Event” means any event, show, party, pop‑up, screening, workshop, class, shoot, studio or lab use, rental, or other activity presented, hosted, or co‑hosted by any Released Party, at any location, including travel to and from it. This agreement applies to the Event named above and to every future Event I attend, and stays in effect until I revoke it in writing delivered to Fremont Photo Co. Revocation applies only to Events after it is received.</p>
+<p><b>3. Voluntary participation and assumption of risk.</b> I attend voluntarily. Events may involve indoor and outdoor spaces, uneven ground, gravel, stairs, ladders, art installations, low light, loud amplified music, strobe or flashing lights, fog, crowds, open flame or heat sources, photographic and darkroom chemicals, electrical equipment, vehicles in adjacent lots and streets, and alcohol brought by guests. I understand these carry risk of <b>serious bodily injury, permanent disability, paralysis, hearing loss, illness, property loss, and death</b>, and I knowingly accept and assume all such risks, known or unknown, foreseeable or not, including risks caused by the ordinary negligence of the Released Parties.</p>
+<p><b>4. Release and waiver.</b> To the fullest extent permitted by Nevada law, I release, waive, and discharge the Released Parties from any and all claims, demands, damages, or causes of action of every kind for bodily injury, illness, disability, <b>death (including wrongful death and survival claims)</b>, emotional distress, or loss of or damage to property arising out of any Event, including claims based on the ordinary negligence of the Released Parties. This release does not apply to gross negligence or intentional misconduct to the extent Nevada law prohibits their release.</p>
+<p><b>5. Binding on heirs and estate.</b> This agreement binds me and my spouse, children, heirs, estate, executors, administrators, next of kin, insurers, and anyone claiming through me. If I am injured or die, I intend that none of them may bring any claim released here, and my estate will indemnify the Released Parties against any such claim.</p>
+<p><b>6. Indemnity.</b> I will indemnify and hold harmless the Released Parties from any claim, loss, or expense (including reasonable attorney fees) arising from my conduct at any Event or from any guest I bring.</p>
+<p><b>7. Alcohol.</b> Unless a licensed vendor is on site, no alcohol is sold or served by the organizers. If I bring or consume alcohol, I confirm I am at least 21, I am solely responsible for my own consumption and conduct, I will not provide alcohol to anyone under 21, and I will not drive impaired. I may be asked for ID and may be refused entry or removed without refund.</p>
+<p><b>8. Conduct and removal.</b> I will follow staff instructions and respect the venue, the neighborhood, the art, equipment, and other guests. Weapons, illegal substances, fireworks, and harassment are prohibited. Organizers may refuse entry or remove anyone at their sole discretion without refund, and may enforce no re‑entry.</p>
+<p><b>9. Medical.</b> I consent to emergency medical treatment if I am unable to consent, and I am responsible for any resulting costs. I confirm I have no condition that makes attendance unsafe.</p>
+<p><b>10. Photo, video, and audio release.</b> Events are photographed and recorded. I grant the Released Parties the irrevocable, royalty‑free right to use my image, likeness, and voice in any media, worldwide and in perpetuity, for promotional, editorial, archival, and commercial purposes, without compensation or further approval.</p>
+<p><b>11. Personal property: theft, loss, and damage.</b> I bring all personal property at my own risk. The Released Parties are <b>not responsible for any property that is lost, stolen, misplaced, confiscated, or damaged</b> for any reason, including theft by other guests or third parties, whether the property is on my person, left unattended, left in a vehicle, or handed to staff or placed in any coat check, bag drop, or storage area. This includes phones, cameras, bags, wallets, jewelry, clothing, equipment, and vehicles, bicycles, and scooters and their contents, in any lot or on surrounding streets. Accepting an item for holding does not create a bailment or any duty of care. Items left behind may be discarded after 7 days. I waive all claims for such property and will look only to my own insurance.</p>
+<p><b>12. General.</b> Nevada law governs; venue is Clark County. If any part is held unenforceable, the rest remains in effect. This is the entire agreement about the subjects it covers. A signature on this sign‑in sheet, in ink or electronically, is as binding as a signature on a separate copy.</p>
+</div>
+<div class="ack">I HAVE READ THIS WAIVER AND RELEASE. I UNDERSTAND THAT ATTENDING MAY RESULT IN SERIOUS INJURY OR DEATH, THAT I AM GIVING UP SUBSTANTIAL LEGAL RIGHTS FOR MYSELF AND MY HEIRS, INCLUDING THE RIGHT TO SUE, AND I SIGN FREELY AND VOLUNTARILY. I AM AT LEAST 18 YEARS OF AGE.</div>
+<div class="fields">
+  <input id="name" type="text" placeholder="Full legal name" autocomplete="off" autocapitalize="words" enterkeyhint="next">
+  <input id="email" type="email" placeholder="Email (optional)" autocomplete="off" autocapitalize="off" enterkeyhint="done">
+</div>
+<label class="row"><input id="agree" type="checkbox"><span>I have read the waiver above and agree to all of it, for this event and all future events, for myself and my heirs.</span></label>
+<label class="row"><input id="over21" type="checkbox"><span>I am 21 or older <span style="color:var(--dim)">(required to drink; leave unchecked if under 21)</span></span></label>
+<div class="sig"><div class="lbl"><span>Sign with your finger</span><button type="button" id="clear">Clear</button></div><canvas id="pad"></canvas></div>
+<div class="err" id="err"></div>
+<button class="submit" id="submit">Agree &amp; Sign In</button>
+</div>
+
+<div id="done" class="noprint"><h2>You're in.</h2><p>Thanks, <span id="doneName"></span>. Hand the iPad back.</p></div>
+
+<div id="admin" class="noprint">
+  <header><div><h1>Signed waivers</h1></div><div class="meta"><b id="adminCount"></b></div></header>
+  <div class="fields"><input id="evInput" type="text" placeholder="Event name (shown to guests)"><input id="evDateInput" type="text" placeholder="Date (e.g. Oct 23, 2026)"></div>
+  <div class="btns">
+    <button id="saveEv">Save event</button>
+    <button id="printAll">Print / Save PDF (all)</button>
+    <button id="csv">Download CSV</button>
+    <button id="json">Backup JSON</button>
+    <button id="back">Back to kiosk</button>
+    <button id="wipe" class="danger">Delete all (after backup)</button>
+  </div>
+  <table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>21+</th><th>Time</th><th>Signature</th></tr></thead><tbody id="rows"></tbody></table>
+</div>
+</div>
+
+<div id="printview"></div>
+<div id="count" class="noprint"></div>
+
+<script>
+(function(){
+  const KEY='kt_waivers_v1', EV='kt_waiver_event';
+  const $=id=>document.getElementById(id);
+  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}};
+  const save=a=>localStorage.setItem(KEY,JSON.stringify(a));
+  const ev=()=>{try{return JSON.parse(localStorage.getItem(EV)||'{}')}catch(e){return {}}};
+  const todayStr=()=>new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  function showEv(){const e=ev(); $('evName').textContent=e.name||'Killing Trends event'; $('evDate').textContent=e.date||todayStr(); $('count').textContent=load().length+' signed';}
+  // preset event from URL once: /waiver/?event=After%20Dark&date=Oct%2023,%202026
+  (function(){const q=new URLSearchParams(location.search); if(q.get('event')){localStorage.setItem(EV,JSON.stringify({name:q.get('event'),date:q.get('date')||todayStr()})); history.replaceState(null,'',location.pathname+location.hash);}})();
+  showEv();
+
+  // signature pad
+  const c=$('pad'), ctx=c.getContext('2d'); let drawing=false, dirty=false, last=null;
+  function fit(){const r=c.getBoundingClientRect(), d=Math.min(window.devicePixelRatio||1,2); const img=dirty?c.toDataURL():null; c.width=r.width*d; c.height=r.height*d; ctx.scale(d,d); ctx.lineWidth=2.6; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#000'; if(img){const i=new Image(); i.onload=()=>ctx.drawImage(i,0,0,r.width,r.height); i.src=img;}}
+  fit(); addEventListener('resize',fit);
+  const pos=e=>{const r=c.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]};
+  const start=(x,y)=>{drawing=true; last=[x,y]; ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+.1,y); ctx.stroke(); dirty=true;};
+  let queue=[], raf=0;
+  const flush=()=>{raf=0; if(!queue.length) return; ctx.beginPath(); ctx.moveTo(last[0],last[1]); for(const q of queue){ctx.lineTo(q[0],q[1]); last=q;} ctx.stroke(); queue=[];};
+  const move=(x,y)=>{if(!drawing)return; queue.push([x,y]); if(!raf) raf=requestAnimationFrame(flush);};
+  const end=()=>{flush(); drawing=false;};
+  if(window.PointerEvent){
+    c.addEventListener('pointerdown',e=>{e.preventDefault(); try{c.setPointerCapture(e.pointerId);}catch(_){} const p=pos(e); start(p[0],p[1]);});
+    c.addEventListener('pointermove',e=>{if(!drawing)return; const evs=e.getCoalescedEvents?e.getCoalescedEvents():[]; for(const ev of (evs.length?evs:[e])){const p=pos(ev); move(p[0],p[1]);}});
+    c.addEventListener('pointerup',end); c.addEventListener('pointercancel',end); c.addEventListener('pointerleave',end);
+  } else {
+    const tp=e=>{const t=e.touches[0]||e.changedTouches[0]; const r=c.getBoundingClientRect(); return [t.clientX-r.left,t.clientY-r.top]};
+    c.addEventListener('touchstart',e=>{e.preventDefault(); const p=tp(e); start(p[0],p[1]);},{passive:false});
+    c.addEventListener('touchmove',e=>{e.preventDefault(); const p=tp(e); move(p[0],p[1]);},{passive:false});
+    c.addEventListener('touchend',end); c.addEventListener('touchcancel',end);
+    c.addEventListener('mousedown',e=>{const p=pos(e); start(p[0],p[1]);}); c.addEventListener('mousemove',e=>{const p=pos(e); move(p[0],p[1]);}); addEventListener('mouseup',end);
+  }
+
+  function clearPad(){ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.restore(); dirty=false;}
+  $('clear').onclick=clearPad;
+
+  $('submit').onclick=()=>{
+    const name=$('name').value.trim(); const err=$('err');
+    if(name.length<3) return err.textContent='Enter your full name.';
+    if(!$('agree').checked) return err.textContent='Check the box to agree to the waiver.';
+    if(!dirty) return err.textContent='Sign in the white box.';
+    err.textContent='';
+    const e=ev(); const rec={name, email:$('email').value.trim(), over21:$('over21').checked, agreed:true, event:e.name||'Killing Trends event', eventDate:e.date||todayStr(), ts:new Date().toISOString(), sig:c.toDataURL('image/png'), ua:navigator.userAgent};
+    const all=load(); all.push(rec); save(all);
+    $('doneName').textContent=name.split(' ')[0]; $('form').style.display='none'; $('done').style.display='block';
+    setTimeout(()=>{ $('name').value=''; $('email').value=''; $('agree').checked=false; $('over21').checked=false; clearPad(); $('legal').scrollTop=0; $('done').style.display='none'; $('form').style.display='block'; showEv(); fit(); window.scrollTo(0,0); },2500);
+  };
+
+  // admin: 5 taps on the title, or #admin in the URL
+  let taps=0, tmr; $('title').addEventListener('click',()=>{taps++; clearTimeout(tmr); tmr=setTimeout(()=>taps=0,1500); if(taps>=5){taps=0; openAdmin();}});
+  function openAdmin(){
+    const all=load(), e=ev(); $('evInput').value=e.name||''; $('evDateInput').value=e.date||'';
+    $('adminCount').textContent=all.length+' signed'; $('rows').innerHTML=all.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.email||'')}</td><td>${r.over21?'Yes':'—'}</td><td>${new Date(r.ts).toLocaleString()}</td><td><img src="${r.sig}"></td></tr>`).join('');
+    $('form').style.display='none'; $('done').style.display='none'; $('admin').style.display='block';
+  }
+  const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  $('saveEv').onclick=()=>{localStorage.setItem(EV,JSON.stringify({name:$('evInput').value.trim(),date:$('evDateInput').value.trim()})); showEv(); $('adminCount').textContent='Saved · '+load().length+' signed';};
+  $('back').onclick=()=>{location.hash=''; $('admin').style.display='none'; $('form').style.display='block'; showEv(); fit();};
+  $('wipe').onclick=()=>{const n=prompt('Type DELETE to erase all '+load().length+' signed waivers from this iPad. Back them up first.'); if(n==='DELETE'){save([]); openAdmin();}};
+  const dl=(name,type,data)=>{const b=new Blob([data],{type}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000);};
+  $('json').onclick=()=>dl('kt-waivers-'+Date.now()+'.json','application/json',JSON.stringify(load(),null,1));
+  $('csv').onclick=()=>{const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"'; const rows=[['#','Name','Email','21+','Agreed','Event','Event date','Signed at (ISO)','Signature PNG (data URL)']].concat(load().map((r,i)=>[i+1,r.name,r.email,r.over21?'Yes':'No','Yes',r.event,r.eventDate,r.ts,r.sig])); dl('kt-waivers-'+Date.now()+'.csv','text/csv',rows.map(r=>r.map(q).join(',')).join('\n'));};
+  $('printAll').onclick=()=>{const legal=$('legal').innerHTML; $('printview').innerHTML=load().map((r,i)=>`<div class="rec"><h3>Liability Waiver &amp; Release of Claims</h3><div>Killing Trends · Fremont Photo Co. · Jesse Hudson &amp; related parties · 623 S 8th St, Las Vegas, NV 89101</div><div class="who">${esc(r.event)} · ${esc(r.eventDate)} · Record ${i+1}</div><div class="legal">${legal}</div><div class="who">Signed by: ${esc(r.name)}${r.email?' · '+esc(r.email):''} · 21+: ${r.over21?'Yes':'Not confirmed'} · ${new Date(r.ts).toLocaleString()}</div><img src="${r.sig}"><div>Electronic signature captured on organizer device. Agreed to full waiver text above.</div></div>`).join(''); setTimeout(()=>window.print(),200);};
+  if(location.hash==='#admin') openAdmin();
+  addEventListener('hashchange',()=>{if(location.hash==='#admin') openAdmin();});
+})();
+</script>
+</body></html>
