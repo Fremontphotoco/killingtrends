@@ -117,6 +117,8 @@
   const ev=()=>{try{return JSON.parse(localStorage.getItem(EV)||'{}')}catch(e){return {}}};
   const todayStr=()=>new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   function showEv(){const e=ev(); $('evName').textContent=e.name||'Killing Trends event'; $('evDate').textContent=e.date||todayStr(); $('count').textContent=load().length+' signed';}
+  // preset event from URL once: /waiver/?event=After%20Dark&date=Oct%2023,%202026
+  (function(){const q=new URLSearchParams(location.search); if(q.get('event')){localStorage.setItem(EV,JSON.stringify({name:q.get('event'),date:q.get('date')||todayStr()})); history.replaceState(null,'',location.pathname);}})();
   showEv();
 
   // signature pad
