@@ -126,9 +126,23 @@
   function fit(){const r=c.getBoundingClientRect(), d=window.devicePixelRatio||1; const img=dirty?c.toDataURL():null; c.width=r.width*d; c.height=r.height*d; ctx.scale(d,d); ctx.lineWidth=2.6; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#000'; if(img){const i=new Image(); i.onload=()=>ctx.drawImage(i,0,0,r.width,r.height); i.src=img;}}
   fit(); addEventListener('resize',fit);
   const pos=e=>{const r=c.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]};
-  c.addEventListener('pointerdown',e=>{e.preventDefault(); c.setPointerCapture(e.pointerId); drawing=true; last=pos(e); ctx.beginPath(); ctx.moveTo(last[0],last[1]); ctx.lineTo(last[0]+.1,last[1]); ctx.stroke(); dirty=true;});
-  c.addEventListener('pointermove',e=>{if(!drawing)return; e.preventDefault(); const p=pos(e); ctx.beginPath(); ctx.moveTo(last[0],last[1]); ctx.lineTo(p[0],p[1]); ctx.stroke(); last=p;});
-  const up=e=>{drawing=false;}; c.addEventListener('pointerup',up); c.addEventListener('pointercancel',up); c.addEventListener('pointerleave',up);
+  const start=(x,y)=>{drawing=true; last=[x,y]; ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+.1,y); ctx.stroke(); dirty=true;};
+  const move=(x,y)=>{if(!drawing)return; ctx.beginPath(); ctx.moveTo(last[0],last[1]); ctx.lineTo(x,y); ctx.stroke(); last=[x,y];};
+  const end=()=>{drawing=false;};
+  if(window.PointerEvent){
+    c.addEventListener('pointerdown',e=>{e.preventDefault(); try{c.setPointerCapture(e.pointerId);}catch(_){} const p=pos(e); start(p[0],p[1]);});
+    c.addEventListener('pointermove',e=>{if(!drawing)return; e.preventDefault(); const p=pos(e); move(p[0],p[1]);});
+    c.addEventListener('pointerup',end); c.addEventListener('pointercancel',end); c.addEventListener('pointerleave',end);
+  } else {
+    const tp=e=>{const t=e.touches[0]||e.changedTouches[0]; const r=c.getBoundingClientRect(); return [t.clientX-r.left,t.clientY-r.top]};
+    c.addEventListener('touchstart',e=>{e.preventDefault(); const p=tp(e); start(p[0],p[1]);},{passive:false});
+    c.addEventListener('touchmove',e=>{e.preventDefault(); const p=tp(e); move(p[0],p[1]);},{passive:false});
+    c.addEventListener('touchend',end); c.addEventListener('touchcancel',end);
+    c.addEventListener('mousedown',e=>{const p=pos(e); start(p[0],p[1]);}); c.addEventListener('mousemove',e=>{const p=pos(e); move(p[0],p[1]);}); addEventListener('mouseup',end);
+  }
+  // block page scroll/gestures while drawing on the pad (iOS Safari)
+  document.addEventListener('touchmove',e=>{if(drawing) e.preventDefault();},{passive:false});
+  c.addEventListener('gesturestart',e=>e.preventDefault());
   function clearPad(){ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.restore(); dirty=false;}
   $('clear').onclick=clearPad;
 
